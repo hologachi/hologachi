@@ -2,23 +2,20 @@ import React from 'react';
 import Header from "../main/header";
 import Footer from "../main/footer";
 import AdminNav from "./adminNav"
-import SearchUser from "./searchUser"
+import ListGB from "./ListGB"
 import '../../css/adminpage.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ListUser from './ListUser';
 
-function manageUser() {
+function manageGB() {
     return (
-         <div className="AdminPage">
+         <div className="MGB">
             <Header />
             <AdminNav />
 
-            <SearchUser />
-
-            <ListUser />
+            <ListGB />
 
             <Footer />
          </div>
      )
  }
- export default manageUser
+ export default manageGB
