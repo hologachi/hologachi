@@ -5,7 +5,7 @@ target/
 !**/src/test/**/target/
 
 ### Project Properties ###
-/backend/src/main/resources/config
+/src/main/resources/config
 
 ### STS ###
 .apt_generated
