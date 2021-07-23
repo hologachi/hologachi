@@ -44,10 +44,7 @@
     background-color: gray;
     color: white;  
 }
-.chatOnline {
-    flex: 3;
-}
-.chatMenuWrapper, .chatBoxWrapper, .chatOnlineWrapper {
+.chatMenuWrapper, .chatBoxWrapper {
     padding: 10px;
     height: 100%;
 }
