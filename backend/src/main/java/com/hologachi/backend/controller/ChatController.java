@@ -17,7 +17,7 @@ public class ChatController {
 	@Autowired
 	private ChatRepository chatRepository;
 	
-	@GetMapping("/list")
+	@GetMapping("/message")
 	public List<Chat> getAllChats() {
 		return chatRepository.findAll();
 	}

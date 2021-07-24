@@ -3,7 +3,7 @@ import  MUser  from "./js/adminpage/manageUser";
 import  MGB  from "./js/adminpage/manageGB";
 import  MGBPost  from "./js/adminpage/manageGBPost";
 import  MGBCategory  from "./js/adminpage/manageGBCategory";
-import  ChatList  from "./js/chat/chatList";
+import  Chat  from "./js/chat/chatList";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
@@ -16,7 +16,7 @@ function App() {
           <Route path="/mGB" component={MGB} />
           <Route path="/mGBPost" component={MGBPost} />
           <Route path="/mGBCategory" component={MGBCategory} />
-          <Route path="/chat/List" component={ChatList} />
+          <Route path="/chat/List" component={Chat} />
         </Switch>
       </BrowserRouter>
     </div>

@@ -1,20 +1,25 @@
-.conversation {
+.room {
     display: flex;
     align-items: center;
     padding: 10px;
     margin-top: 20px;
     cursor: pointer;
 }
-.conversation:hover { 
+.room:hover { 
     background-color: #f2f2f2;
 }
-.conversationImg {
+.roomImg {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
     margin-right: 20px;
 }
-.convesationName {
+.roomName {
     font-weight: 500;
+}
+.roomLastChat {
+    font-size: 15px;
+    color: gray;
+    padding: 15px;
 }

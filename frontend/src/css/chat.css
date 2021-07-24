@@ -2,29 +2,29 @@
     height: calc(100vh - 70px);
     display: flex;
 }
-.chatMenu {
+.chatRoom {
     flex: 3.5;
 }
-.chatMenuInput {
+.chatRoomInput {
     width: 90%;
     padding: 10px 0;
     border: none;
     border-bottom: 1px solid gray;
 }
-.chatBox {
+.chatMessage {
     flex : 5.5;
 }
-.chatBoxWrapper {
+.chatMessageWrapper {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
-.chatBoxTop {
+.chatMessageTop {
     height: 100%;
     overflow-y: scroll;
     padding-right: 10px;
 }
-.chatBoxBottom {
+.chatMessageBottom {
     margin-top: 5px;
     display: flex;
     align-items: center;
@@ -44,7 +44,7 @@
     background-color: gray;
     color: white;  
 }
-.chatMenuWrapper, .chatBoxWrapper {
+.chatRoomWrapper, .chatMessageWrapper {
     padding: 10px;
     height: 100%;
 }

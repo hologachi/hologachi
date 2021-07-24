@@ -1,12 +1,12 @@
 import '../../css/chat.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Message from './messages/message';
+import Message from './message';
 
-export default function ChatBox() {
+export default function ChatMessage() {
     return (
-        <div className="chatBox">
-            <div className="chatBoxWrapper">
-                <div className="chatBoxTop">
+        <div className="chatMessage">
+            <div className="chatMessageWrapper">
+                <div className="chatMessageTop">
                     <Message />
                     <Message own={true}/>
                     <Message /> 
@@ -30,7 +30,7 @@ export default function ChatBox() {
                     <Message /> 
                     <Message /> 
                 </div>
-                <div className="chatBoxBottom">
+                <div className="chatMessageBottom">
                     <textarea className="chatMessageInput" placeholder="메세지 작성..."></textarea>
                     <button className="chatSubmitButton">전송</button>
                 </div>

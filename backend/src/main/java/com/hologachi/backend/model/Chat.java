@@ -23,6 +23,7 @@ public class Chat {
 		
 	}
 	
+	public int getChat_id() {
 		return chat_id;
 	}
 	public void setChat_id(int chat_id) {

@@ -1,4 +1,4 @@
-import '../../../css/message.css';
+import '../../css/message.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Message({own}) {
