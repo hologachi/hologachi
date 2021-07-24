@@ -1,0 +1,14 @@
+#pageDropDown{
+    visibility: hidden;
+}
+#pageDropDown:hover{
+    width: 66px;
+    box-shadow: none;
+}
+.pagination{
+    float: left;
+}
+#clearbtn:hover{
+    width: 47px;
+    box-shadow: none;
+}
