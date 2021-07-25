@@ -1,8 +1,8 @@
 import React from 'react'
-// import Feed from "./feed"
+import Feed from "./feed"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from "./header"
-// import Post from "./post"
+import Post from "./post"
 import Footer from "./footer"
 
 function home() {
@@ -10,8 +10,8 @@ function home() {
         <div className="Home">
             <Header />
             <div className="home__body">
-                {/* <Feed />
-                <Post /> */}
+                <Feed />
+                <Post />
             </div>
             <Footer />
         </div>
