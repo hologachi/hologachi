@@ -48,3 +48,6 @@
     padding: 10px;
     height: 100%;
 }
+.chatMessageCover {
+    flex : 5.5; 
+}

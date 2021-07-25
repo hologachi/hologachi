@@ -29,8 +29,8 @@ class ListGBCategory extends Component {
                                     <tr key = {category.subCatId}>
                                         <td>{category.mainCatName}</td>
                                         <td>{category.subCatName}</td>
-                                        <td><button>카테고리 삭제</button></td>
-                                        <td><button>카테고리 수정</button></td>
+                                        <td><button onClick={() => alert('click')}>카테고리 삭제</button></td>
+                                        <td><button onClick={() => alert('click')}>카테고리 수정</button></td>
                                     </tr>
                                 )
                             }
