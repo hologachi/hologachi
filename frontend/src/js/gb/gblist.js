@@ -1,6 +1,4 @@
 import React from 'react'
-import Header from "../main/header";
-import Footer from "../main/footer";
 import '../../css/post.css'
 import '../../css/gblist.css'
 import { Container, Grid, Card, CardMedia, CardContent, Typography, makeStyles, } from '@material-ui/core';
@@ -138,6 +136,7 @@ const products = [
             </Grid>
           ))}
         </Grid>
+        <Paginate id="pagi"/>
       </Container>
     )
   }
@@ -161,12 +160,10 @@ const products = [
 function gblist() {
     return (
         <div className="gblist">
-            <Header />
             <div className="gblist__body">
                 <Board />
-                <Paginate />
+                
             </div>
-            <Footer id="footerW" />
         </div>
     )
 }

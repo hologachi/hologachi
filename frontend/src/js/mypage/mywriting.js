@@ -1,6 +1,4 @@
 import React from 'react';
-import Header from "../main/header";
-import Footer from "../main/footer";
 import SideMenu from "./mypageside";
 import '../../css/mywriting.css'
 import '../../css/applygb.css'
@@ -182,12 +180,10 @@ class Board extends React.Component{
 function mywriting() {
     return (
       <div className="Mywriting">
-        <Header />
         <div className="mywriting__body">
           <Board/>
           <div style={{clear:"both"}}></div>
         </div>
-        <Footer id="footerW"/>
       </div>
       
      )

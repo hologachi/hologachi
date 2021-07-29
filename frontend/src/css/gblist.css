@@ -4,6 +4,10 @@
 #category{
     float: right;
 }
+#pagination{
+    margin-top: 20px;
+    
+}
 .pagination{
     align-items: center;
     justify-content: center;

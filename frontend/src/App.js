@@ -2,6 +2,8 @@ import '../src/css/App.css';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import '../src/css/App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Header from "./js/main/header";
+import Footer from "./js/main/footer";
 
 import  Home  from "./js/main/home";
 
@@ -14,10 +16,12 @@ import  Comment  from "./js/mypage/commentwrite";
 
 import  Gbwrite  from "./js/gb/gbwrite";
 import  Gblist from "./js/gb/gblist";
+// import Gbdetail from "./js/gb/gbdetail";
 
 function App() {
   return (
     <div className="App">
+    <Header />
       <BrowserRouter>
         <Switch>
           {/* Home */}
@@ -33,9 +37,11 @@ function App() {
           {/* GB */}
           <Route path="/gb/gbwrite" component={Gbwrite} />
           <Route path="/gb/gblist" component={Gblist} />
+          {/* <Route path="/gb/gbdetail/:gbId" component={Gbdetail} /> */}
 
         </Switch>
       </BrowserRouter>
+      <Footer />
     </div>
   );
 }

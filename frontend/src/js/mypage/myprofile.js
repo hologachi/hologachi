@@ -1,6 +1,4 @@
 import React from 'react';
-import Header from "../main/header";
-import Footer from "../main/footer";
 import '../../css/myprofile.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -145,11 +143,9 @@ class CardProfile extends React.Component {
 function myprofile() {
    return (
         <div className="Profile">
-          <Header />
           <div className="profile__body">
             <CardProfile/>
           </div>
-          <Footer />
         </div>
     )
 }

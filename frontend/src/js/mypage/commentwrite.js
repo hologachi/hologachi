@@ -1,6 +1,4 @@
 import React from 'react';
-import Header from "../main/header";
-import Footer from "../main/footer";
 import SideMenu from "./mypageside";
 import '../../css/mywriting.css'
 import '../../css/applygb.css'
@@ -185,12 +183,10 @@ class Board extends React.Component{
 function comment() {
     return (
       <div className="Comment">
-        <Header />
         <div className="comment__body">
           <Board/>
           <div style={{clear:"both"}}></div>
         </div>
-        <Footer id="footerW"/>
       </div>
       
      )
