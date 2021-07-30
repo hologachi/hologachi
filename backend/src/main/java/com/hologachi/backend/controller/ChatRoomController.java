@@ -20,7 +20,12 @@ public class ChatRoomController {
 	private ChatRoomRepository chatRoomRepository;
 	
 	@GetMapping("/list")
-	public List<ChatRoom> getAllChats() {
+	public List<ChatRoom> getMyChatrooms() {
+		return chatRoomRepository.findAll();
+	}
+	
+	@GetMapping("/getChatrooms")
+	public List<ChatRoom> getAllChatrooms() {
 		return chatRoomRepository.findAll();
 	}
 

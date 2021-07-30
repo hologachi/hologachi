@@ -6,8 +6,8 @@ class Room extends Component {
 
     click = () => {
         this.props.onClick(this.props.chatroom_id);
-        
-        console.log(this.props.chatroom_id);
+
+        console.log("채팅방 " + this.props.chatroom_id + "을 눌렀습니다.");
     }
 
     render() {

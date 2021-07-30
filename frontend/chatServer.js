@@ -1,19 +1,9 @@
 var app = require('express')();
 var http = require('http').createServer(app);
-const PORT = 8088;
+const PORT = 3001;
 var io = require('socket.io')(http);
 
-var STATIC_CHANNELS = [{
-    name: 'Global chat',
-    participants: 0,
-    id: 1,
-    sockets: []
-}, {
-    name: 'Funny',
-    participants: 0,
-    id: 2,
-    sockets: []
-}];
+var ACTIVE_CHATROOMS = [];
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -25,36 +15,23 @@ http.listen(PORT, () => {
     console.log(`listening on *:${PORT}`);
 });
 
-io.on('connection', (socket) => { // socket object may be used to send specific messages to the new connected client
-    console.log('new client connected');
-    socket.emit('connection', null);
-    socket.on('channel-join', id => {
-        console.log('channel join', id);
-        STATIC_CHANNELS.forEach(c => {
-            if (c.id === id) {
-                if (c.sockets.indexOf(socket.id) == (-1)) {
-                    c.sockets.push(socket.id);
-                    c.participants++;
-                    io.emit('channel', c);
-                }
-            } else {
-                let index = c.sockets.indexOf(socket.id);
-                if (index != (-1)) {
-                    c.sockets.splice(index, 1);
-                    c.participants--;
-                    io.emit('channel', c);
-                }
-            }
+io.on('connection', (socket) => { 
+    console.log('new client(socket) connected');
+    
+    socket.on('join', function (chatroom_id) {
+        socket.join(this.chatroom_id, () => {
+            console.log("채팅방 " + this.chatroom_id + "에 입장");
         });
-
-        return id;
     });
-    socket.on('send-message', message => {
-        io.emit('message', message);
+
+    socket.on('send', messageobject=>{
+        console.log(messageobject.name);
+        console.log(messageobject.body);
+        io.to(messageobject.name).emit("message",messageobject.body);
     });
 
     socket.on('disconnect', () => {
-        STATIC_CHANNELS.forEach(c => {
+        ACTIVE_CHATROOMS.forEach(c => {
             let index = c.sockets.indexOf(socket.id);
             if (index != (-1)) {
                 c.sockets.splice(index, 1);
@@ -65,6 +42,3 @@ io.on('connection', (socket) => { // socket object may be used to send specific 
     });
 
 });
-
-
-

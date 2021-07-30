@@ -5,8 +5,8 @@ import Room from "./room";
 
 class ChatRoom extends Component {
 
-    handleClick = chatroom_id => {
-        this.props.onSelectChatroom(chatroom_id);
+    handleClick = (chatroom_id) => {
+        this.props.onSelectChatroom(this.chatroom_id);
     }
 
     render() {

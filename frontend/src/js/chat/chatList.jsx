@@ -9,24 +9,32 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ChatRoomService from '../services/ChatRoomService';
 
 import socketClient from "socket.io-client";
-const SERVER = "http://127.0.0.1:8088";
-
+const SERVER = "http://localhost:3001";
+const socket = null;
 
 class ChatList extends Component {
 
-    // chat
     state = {
         chatrooms: null,
         socket: null,
-        chatroom: null
+        focus_chatroom: null,
+        new_message: null
     }
-    
-    socket;
     
     componentDidMount() {
         this.loadChatrooms();
         this.configureSocket();
     }
+
+    componentDidUpdate() {
+        if(this.state.new_message) {
+            socket.on('message', (new_message) => {
+                console.log(new_message);
+                this.receivemessage(new_message);
+            });
+        };
+    }
+
     
     loadChatrooms = () => {
         // 참여하고 있는 채팅방 id 목록 가져오기 
@@ -37,58 +45,39 @@ class ChatList extends Component {
 
     configureSocket = () => {
         var socket = socketClient(SERVER);
+
         socket.on('connection', () => {
-            if (this.state.chatroom) {
-                this.handleChannelSelect(this.state.chatroom.chatroom_id);
+            if (this.state.focus_chatroom) {
+                this.handleChannelSelect(this.state.focus_chatroom.chatroom_id);
             }
         });
-        socket.on('channel', channel => {
-            
-            let channels = this.state.chatrooms;
-            channels.forEach(c => {
-                if (c.id === channel.id) {
-                    c.participants = channel.participants;
-                }
-            });
-            this.setState({ channels });
-        });
-        socket.on('message', message => {
-            
-            let channels = this.state.chatrooms
-            channels.forEach(c => {
-                if (c.id === message.channel_id) {
-                    if (!c.messages) {
-                        c.messages = [message];
-                    } else {
-                        c.messages.push(message);
-                    }
-                }
-            });
-            this.setState({ channels });
-        });
+
         this.socket = socket;
     }
 
-    handleChatroomSelect = chatroom_id => {
-        let channel = this.state.chatrooms.find(c => {
-            return c.chatroom_id === chatroom_id;
-        });
-        this.setState({ channel });
-        this.socket.emit('channel-join', chatroom_id, ack => {
-        });
+    receivemessage = (message) => {
+        this.setState({
+            new_message:[...this.state.new_message,message]
+        })
+    }
+
+    handleChatroomSelect = (chatroom_id) => {
+        console.log(this.chatroom_id);
+        if(chatroom_id) {
+            socket.emit('join', this.chatroom_id);
+        }
     }
 
     handleSendMessage = (chatroom_id, text) => {
-        this.socket.emit('send-message', { chatroom_id, text, senderName: this.socket.id, id: Date.now() });
+        this.socket.emit('send', { chatroom_id, text, senderName: this.socket.id, id: Date.now() });
     }
 
-    render() {
-        const isChatRoomClicked = this.state.isChatRoomClicked;
 
+    render() {
         let chatmessage = null;
 
-        if(isChatRoomClicked) {
-            chatmessage = <ChatMessage onSendMessage={this.handleSendMessage} channel={this.state.chatroom} />;
+        if(this.state.focus_chatroom) {
+            chatmessage = <ChatMessage onSendMessage={this.handleSendMessage} channel={this.state.focus_chatroom} />;
         } else {
             chatmessage = <p>채팅방을 눌러보세요.</p>;
         }
