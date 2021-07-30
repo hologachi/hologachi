@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import Header from "../main/header";
-import Footer from "../main/footer";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -262,11 +260,9 @@ function Board() {
 function gbwrite() {
   return (
     <div className="Gbwrite" >
-      <Header />
       <div className="gbwrite__body">
         <Board />
       </div>
-      <Footer />
     </div>
   )
 }
