@@ -13,10 +13,11 @@ import  Applygb  from "./js/mypage/applygb";
 import  Sidemenu  from "./js/mypage/mypageside";
 import  Bookmark  from "./js/mypage/bookmark";
 import  Comment  from "./js/mypage/commentwrite";
+import  Privacy  from "./js/mypage/privacy";
 
 import  Gbwrite  from "./js/gb/gbwrite";
 import  Gblist from "./js/gb/gblist";
-// import Gbdetail from "./js/gb/gbdetail";
+import Gbdetail from "./js/gb/gbdetail";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Switch>
           {/* Home */}
           <Route exact path="/" component={Home} />
+
           {/* Mypage */}
           <Route path="/mypage/myprofile" component={Profile} />
           <Route path="/mypage/mywriting" component={Mywriting} />
@@ -33,11 +35,12 @@ function App() {
           <Route path="/mypage/bookmark" component={Bookmark} />
           <Route path="/mypage/mypageside" component={Sidemenu} />
           <Route path="/mypage/commentwrite" component={Comment} />
+          <Route path="/mypage/privacy" component={Privacy} />
 
           {/* GB */}
           <Route path="/gb/gbwrite" component={Gbwrite} />
           <Route path="/gb/gblist" component={Gblist} />
-          {/* <Route path="/gb/gbdetail/:gbId" component={Gbdetail} /> */}
+          <Route path="/gb/gbdetail/:productId" component={Gbdetail} />
 
         </Switch>
       </BrowserRouter>

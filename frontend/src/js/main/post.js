@@ -1,6 +1,8 @@
 import React from 'react';
 import { Container, Grid, Card, CardMedia, CardContent, Typography, makeStyles } from '@material-ui/core';
 import '../../css/post.css'
+import productsData from "../ProductData";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -23,59 +25,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const products = [
-  {
-    id: 0,
-    image: "https://i.postimg.cc/tT5w5HVn/football.jpg",
-    category: 'Sporting Goods',
-    price: '$49.99',
-    personnel: 7,
-    name: 'Football',
-    date: '~21/07/18',
-    status: "진행중"
-  },
-  {
-    id: 1,
-    image: "https://i.postimg.cc/CL7k7w19/image.jpg",
-    category: 'Electronics',
-    price: '$99.99',
-    personnel: 5,
-    name: '아이폰 12 미니',
-    date: '~21/07/20',
-    status: "모집중"
-  },
-  {
-    id: 2,
-    image: "https://i.postimg.cc/tCjNDrzn/image.jpg",
-    category: '식품',
-    price: '$1.99',
-    personnel: 8,
-    name: '신라면',
-    date: '~21/07/20',
-    status: "모집중"
-  },
-];
-
-function move() {
-  window.location.href = "/"
-}
-
 export default function Post() {
   const classes = useStyles();
 
-  return (
-
-    <Container className={classes.cardGrid} maxWidth="md">
-      <Grid container spacing={4}>
-        {products.map((product) => (
-          <Grid item key={product.id} xs={12} sm={6} md={4}>
-            <Card className={classes.product} onClick={move} id="card">
-              <CardMedia
+  const products = productsData.map(product => {
+    return (
+      <div key={product.id}>
+      <Card className={classes.products} id="card">
+          <Link to={`/gb/gbdetail/${product.id}`}>
+          <CardMedia
                 className={classes.cardMedia}
                 image={product.image}
                 title={product.name}
               />
-              <CardContent className={classes.cardContent}>
+          </Link>
+          <CardContent className={classes.cardContent}>
                 <Typography id="status">
                   {product.status}
                 </Typography>
@@ -86,15 +50,27 @@ export default function Post() {
                   {product.price}
                 </Typography>
                 <Typography>
-                  {product.personnel}
+                  {product.currentnum}/
+                  {product.goalnum}
                 </Typography>
                 <Typography>
-                  {product.date}
+                  {product.startdate}
+                </Typography>
+                <Typography>
+                  {product.finishdate}
                 </Typography>
               </CardContent>
-            </Card>
+              </Card>
+        <hr />
+      </div>
+    );
+  });
+  return (
+    <Container className={classes.cardGrid} maxWidth="md">
+      <Grid container spacing={4} >
+          <Grid item key={products.id} xs={12} sm={6} md={4} id="grid">
+              {products}
           </Grid>
-        ))}
       </Grid>
     </Container>
   )

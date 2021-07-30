@@ -10,3 +10,6 @@
 #status{
   font-weight: 700;
 }
+#grid{
+  display: inline-block;
+}

@@ -21,8 +21,8 @@ export default function Header() {
                             <NavDropdown.Item href="../mypage/bookmark">북마크</NavDropdown.Item>
                             <NavDropdown.Item href="../mypage/mywriting">내가 작성한 글</NavDropdown.Item>
                             <NavDropdown.Item href="../mypage/applygb">내가 신청한 글</NavDropdown.Item>
-                            <NavDropdown.Item href="./commentwrite">내가 댓글 남긴 글</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.6">개인정보 확인 및 수정</NavDropdown.Item>
+                            <NavDropdown.Item href="../mypage/commentwrite">내가 댓글 남긴 글</NavDropdown.Item>
+                            <NavDropdown.Item href="../mypage/privacy">개인정보 확인 및 수정</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="#action/3.7">평점 등록</NavDropdown.Item>
                         </NavDropdown>

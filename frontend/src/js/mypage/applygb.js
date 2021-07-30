@@ -9,76 +9,27 @@ import filterFactory from "react-bootstrap-table2-filter";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from "react-bootstrap-table2-paginator";
-
+import productsData from "../ProductData";
+import { Link } from "react-router-dom";
 
 const { SearchBar } = Search;
 
-// const ClearButton = props => {
-//   const handleClick = () => {
-//     props.onSearch("");
-//     props.clearAllFilter();
-//   };
-//   return (
-//     <Button
-//       id="clearbtn"
-//       variant="secondary"
-//       onClick={handleClick}
-//       style={{
-//         fontSize: "16px",
-//         padding: "5px",
-//         margin: "10px",
-//         height: "40px"
-//       }}
-//     >
-//       clear
-//     </Button>
-//   );
-// };
+const productFormatter = () => {
+  const products = productsData.map(product => {
+  return (
+    <Link to={`/gb/gbdetail/${product.id}`}>상세보기</Link>
+  );
+});
+return(
+  <div>
+ {products}
+  </div>
+ 
+)
+}
 
 class Board extends React.Component{
-  products = [
-    {
-      id: 0,
-      date: '21/07/25',
-      category: '식품',
-      title: '닭가슴살 공동구매',
-      proposer: 'hologachi',
-      Progress: '신청중',
-    },
-    {
-      id: 1,
-      date: '21/07/20',
-      category: '의류',
-      title: '양말 공동구매',
-      proposer: 'abc',
-      Progress: '진행중',
-    },
-    {
-      id: 2,
-      date: '21/06/20',
-      category: '전자제품',
-      title: '아이폰 12 공동구매',
-      proposer: 'apple',
-      Progress: '종료',
-    },
-    {
-      id: 3,
-      date: '21/08/10',
-      category: '전자제품',
-      title: '애플펜슬',
-      proposer: 'apple',
-      Progress: '신청중',
-    },
-    {
-      id: 4,
-      date: '21/08/01',
-      category: '식품',
-      title: '신라면',
-      proposer: '농심',
-      Progress: '종료',
-    }
-  ];
-
+    
   columns = [{
     dataField: 'id',
     text: 'id',
@@ -103,16 +54,24 @@ class Board extends React.Component{
     dataField: 'proposer',
     text: '제안자',
     headerStyle: () => {
-      return { width: "17%" };
+      return { width: "15%" };
     }
   }, {
-    dataField: 'Progress',
+    dataField: 'status',
     text: '진행상황',
     headerStyle: () => {
-      return { width: "15%" };
+      return { width: "13%" };
+    }
+  },{
+    dataField: 'follow',
+    text: '',
+    headerStyle: () => {
+      return { width: "13%" };
     },
-  }];
-  
+    formatter: productFormatter
+  }
+];
+
   render() {
     return (
       <div className="container py-4">
@@ -132,11 +91,11 @@ class Board extends React.Component{
           </div>
         </div>
         <div className="col-lg-10 py-2">
-          <div className=" h-100 p-5 bg-light border shadow rounded">
+          <div className=" h-100 p-5 bg-light border shadow rounded" id="boottable">
           <ToolkitProvider
           bootstrap4
           keyField="id"
-          data={this.products}
+          data={productsData}
           columns={this.columns}
           search
         >
@@ -146,6 +105,7 @@ class Board extends React.Component{
                 {...props.searchProps}
                 style={{ width: "300px", height: "40px" }}
               />
+              
               <BootstrapTable
                 {...props.baseProps}
                 filter={filterFactory()}
@@ -154,7 +114,6 @@ class Board extends React.Component{
                 deleteRow
                 pagination={paginationFactory({ sizePerPage: 10, display:'flex'}) }
               />
-            {/* <BootstrapTable keyField='id' data={products} columns={columns} pagination={paginationFactory({ sizePerPage: 10, display:'flex'})}/> */}
             </div>
           )}
         </ToolkitProvider>

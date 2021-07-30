@@ -27,21 +27,6 @@ const Name =({
   );
 }
 
-// const Grade =({
-//   value
-// })=>{
-//   return(
-//     <div className="field">
-//       <span>제시자로서 평점:</span>
-//       <label className="nickname" type="text" value="5.0" required/>
-
-//       <span>신청자로서 평점:</span>
-//       <label className="nickname" type="text" value="5.0" required/>
-//     </div>
-    
-//   );
-// }
-
 const Profile =({
   onSubmit,
   src,
