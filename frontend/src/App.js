@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import '../src/css/App.css';
+import  MUser  from "./js/adminpage/manageUser";
+import  MGB  from "./js/adminpage/manageGB";
+import  MGBPost  from "./js/adminpage/manageGBPost";
+import  MGBCategory  from "./js/adminpage/manageGBCategory";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/mUser" component={MUser} />
+          <Route path="/mGB" component={MGB} />
+          <Route path="/mGBPost" component={MGBPost} />
+          <Route path="/mGBCategory" component={MGBCategory} />
+        </Switch>
+      </BrowserRouter>
     </div>
   );
 }
