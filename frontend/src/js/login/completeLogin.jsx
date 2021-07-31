@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Header from "../main/header";
 import Footer from "../main/footer";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button } from 'react-bootstrap';
 
 class CompleteLogin extends Component {
 
@@ -23,7 +24,7 @@ class CompleteLogin extends Component {
                                 <td>{userNickname}회원님 환영합니다</td>
                             </tr>
                             <tr>
-                                <td colspan="2"><Link to="/" /></td>
+                                <td colspan="2"><Button href="/">홈으로</Button></td>
                             </tr>
                         </table>
                 </div>

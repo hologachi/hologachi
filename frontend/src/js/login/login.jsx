@@ -15,7 +15,7 @@ class Login extends Component {
                 <button>구글로 로그인하기</button>
                 <br />
                 <button>네이버로 로그인하기</button>
-                <td colspan="2"><Link to="/" /></td>
+                <td colspan="2"></td>
                 <Footer />
             </div>
         )
