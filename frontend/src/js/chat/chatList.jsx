@@ -79,7 +79,7 @@ class ChatList extends Component {
         if(this.state.focus_chatroom) {
             chatmessage = <ChatMessage onSendMessage={this.handleSendMessage} channel={this.state.focus_chatroom} />;
         } else {
-            chatmessage = <p>채팅방을 눌러보세요.</p>;
+            chatmessage = <div className="chatMessageCover">채팅방을 눌러보세요.</div>;
         }
 
         return (
