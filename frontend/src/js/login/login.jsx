@@ -4,29 +4,22 @@ import Header from "../main/header";
 import Footer from "../main/footer";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-class login extends Component {
+class Login extends Component {
 
     render() {
-        let chatmessage = null;
-
-        if(this.state.focus_chatroom) {
-            chatmessage = <ChatMessage onSendMessage={this.handleSendMessage} channel={this.state.focus_chatroom} />;
-        } else {
-            chatmessage =  <div className="chatMessageCover">채팅방을 눌러보세요.</div>;
-        }
 
         return (
-            <div className="chat">
+            <div className="login">
                 <Header />
                 
-                <div className="chatList">
-                    <ChatRoom chatrooms={this.state.chatrooms} onSelectChatroom={this.handleChatroomSelect} />
-                    {chatmessage}
-                </div>
+                <button>구글로 로그인하기</button>
+                <br />
+                <button>네이버로 로그인하기</button>
+                <td colspan="2"><Link to="/" /></td>
                 <Footer />
             </div>
         )
     }
 }
 
-export default login
+export default Login
