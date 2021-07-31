@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../css/adminpage.css'
+import '../../css/adminpage.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Nav } from 'react-bootstrap';
 
