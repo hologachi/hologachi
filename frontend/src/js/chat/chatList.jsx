@@ -7,10 +7,11 @@ import ChatMessage from "./chatMessage";
 import 'bootstrap/dist/css/bootstrap.min.css';
 //chat
 import ChatRoomService from '../services/ChatRoomService';
-
-import socketClient from "socket.io-client";
-const SERVER = "http://localhost:3001";
+import { io } from "socket.io-client";
 const socket = null;
+socket.on('receive-message', (chatroom_id, message) => {
+    console.log(chatroom_id, message)
+})
 
 class ChatList extends Component {
 
@@ -27,12 +28,12 @@ class ChatList extends Component {
     }
 
     componentDidUpdate() {
-        if(this.state.new_message) {
-            socket.on('message', (new_message) => {
-                console.log(new_message);
-                this.receivemessage(new_message);
-            });
-        };
+        // if(this.state.new_message) {
+        //     socket.on('message', (new_message) => {
+        //         console.log(new_message);
+        //         this.receivemessage(new_message);
+        //     });
+        // };
     }
 
     
@@ -44,32 +45,28 @@ class ChatList extends Component {
     }
 
     configureSocket = () => {
-        var socket = socketClient(SERVER);
+        // var socket = socketClient(SERVER);
 
-        socket.on('connection', () => {
-            if (this.state.focus_chatroom) {
-                this.handleChannelSelect(this.state.focus_chatroom.chatroom_id);
-            }
-        });
+        // socket.on('connection', () => {
+        //     if (this.state.focus_chatroom) {
+        //         this.handleChannelSelect(this.state.focus_chatroom.chatroom_id);
+        //     }
+        // });
 
-        this.socket = socket;
+        // this.socket = socket;
     }
 
-    receivemessage = (message) => {
-        this.setState({
-            new_message:[...this.state.new_message,message]
+    
+
+    handleChatroomSelect = (chatroom_id) => {
+        socket = io("http://localhost:3000/chat/list");
+        socket.on('connect', () => {
+            console.log(`You connected with id: ${socket.id}`)
         })
     }
 
-    handleChatroomSelect = (chatroom_id) => {
-        console.log(this.chatroom_id);
-        if(chatroom_id) {
-            socket.emit('join', this.chatroom_id);
-        }
-    }
-
-    handleSendMessage = (chatroom_id, text) => {
-        this.socket.emit('send', { chatroom_id, text, senderName: this.socket.id, id: Date.now() });
+    handleSendMessage = (chatroom_id, message) => {
+        socket.emit("send-message", chatroom_id, message)
     }
 
 
