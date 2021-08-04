@@ -1,7 +1,7 @@
 const { instrument } = require('@socket.io/admin-ui')
-const io  = require('socket.io')(3000, {
+const io  = require('socket.io')(3001, {
     cors: {
-        origin: ["http://localhost:8080", "https://admin.socket.io"],
+        origin: ["http://localhost:3000", "https://admin.socket.io"],
     },
 })
 
@@ -9,23 +9,16 @@ const chatIo = io.of('/chat/list')
 chatIo.on("connection", socket => {
     console.log(socket.id)
 
-    socket.on("join-room", () => {
-
+    socket.on("join-room", (chatroom_id) => {
+        socket.join(chatroom_id)
     })
 
-    socket.on("send-message", (chatroom_id, message) => {
-        if(chatroom_id === '') {
-            socket.broadcast.emit('reveive-message', message)
-        } else {
-            socket.to(chatroom_id).emit('reveive-message', message)
-        }
-        
-        console.log(message)
+    socket.on("send-message", (chatroom_id, message, sendAt) => {
+        console.log("send ", message, sendAt)
+
+        socket.to(chatroom_id).emit("receive-message", chatroom_id, message, sendAt)
     })
 
-    socket.on("", () => {
-        
-    })
 })
 
 instrument(io, { auth: false })
