@@ -55,9 +55,9 @@ class ChatList extends Component {
         this.state.focus_chatroom = chatroom_id;
     }
 
-    handleSendMessage = (message) => {
-        console.log("You got message :", message);
-        socket.emit("send-message", this.state.focus_chatroom, message, Date.now());
+    handleSendMessage = (param) => {
+        console.log("You got message :", param.m);
+        socket.emit("send-message", this.state.focus_chatroom, param.m, param.s);
     }
 
 

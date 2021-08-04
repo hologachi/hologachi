@@ -10,9 +10,19 @@ class ChatMessage extends Component {
     }
 
     onClickSend = () => {
-        const message = document.getElementById("messageInput").value
-        console.log("가져온 메세지", message)
-        this.props.onSendMessage(message)
+        const param = {
+            m: document.getElementById("messageInput").value, 
+            s: Date.now()
+        }
+        console.log("가져온 메세지", param.m)
+        this.props.onSendMessage(param)
+
+        import('./message').then(({message})=>{
+            const {messages} = this.state;
+            const position = messages.length +1;
+            const newMessage = <Message own={true} key={position} sendAt={param.s} message={param.m} />
+            this.setState({messages:[...messages,newMessage]})
+        })
 
         document.getElementById("messageInput").value = ''
     }
@@ -41,8 +51,6 @@ class ChatMessage extends Component {
                 <div className="chatMessageWrapper">
                     <div className="chatMessageTop">
                         {messages}
-                        {/* <Message sendAt={this.props.sendAt} message={this.props.message}/>
-                        <Message own={true} sendAt={this.props.sendAt} message={this.props.message}/> */}
                     </div>
                     <div className="chatMessageBottom">
                         <textarea className="chatMessageInput" id="messageInput" placeholder="메세지 작성..."></textarea>
