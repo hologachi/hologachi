@@ -13,7 +13,7 @@ class Message extends Component {
                         <img className="messageImg" src="https://placeimg.com/50/50/any" alt="" />
                         <p className="messageText">{this.props.message}</p>
                     </div>
-                    <div className="messageBottom">{this.props.sendAt}</div>
+                    <div className="messageBottom">{this.props.sendAt}초 전</div>
                 </div>
             </div>
         )

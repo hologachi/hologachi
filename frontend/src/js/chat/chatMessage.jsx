@@ -36,6 +36,9 @@ class ChatMessage extends Component {
         })
     }
     
+    saveToDos = (data) => {
+        localStorage.setItem(this.chatroom.chatroom_id, JSON.stringify(data))
+    }
 
     render() {
         // let cover = <div className="chatMessageCover">채팅방을 눌러보세요.</div>;

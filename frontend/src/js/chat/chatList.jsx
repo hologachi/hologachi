@@ -1,9 +1,9 @@
-import '../../css/chat.css';
 import React, { Component } from 'react';
 import Header from "../main/header";
 import Footer from "../main/footer";
 import ChatRoom from "./chatRoom";
 import ChatMessage from "./chatMessage";
+import '../../css/chat.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 //chat
 import ChatRoomService from '../services/ChatRoomService';
@@ -16,11 +16,17 @@ socket.on('connect', () => {
 
 class ChatList extends Component {
 
-    state = {
-        chatrooms: null,
-        focus_chatroom: null,
-        new_message: null
+    constructor(props) {
+        super();
+
+        this.state = {
+            chatrooms: null,
+            focus_chatroom: 0,
+            chatMessageList: [],
+        }
+        
     }
+    
     
     componentDidMount() {
         this.loadChatrooms();
@@ -29,8 +35,21 @@ class ChatList extends Component {
     loadChatrooms = () => {
         // 참여하고 있는 채팅방 id 목록 가져오기 
         ChatRoomService.getChatRoomList().then((res) => {
-            this.setState({ chatrooms: res.data });
+            this.setState(
+                { chatrooms: res.data }
+            );
+
+            console.log(this.state.chatrooms);
+            if (this.state.chatrooms != null) {
+                this.setState(
+                    { chatMessageList: this.state.chatrooms.map(
+                    (chatroom) => <ChatMessage ref={(cd) => this.child = cd} onSendMessage={this.handleSendMessage} chatroom={chatroom} /> )}
+                );
+                
+            }
         })
+
+        
     }
 
     componentDidUpdate() {
@@ -42,7 +61,7 @@ class ChatList extends Component {
                     m: message, 
                     s: sendAt
                 }
-                this.child.receiveMessage(param);
+                // this.child.receiveMessage(param);
             })
         }
     }
@@ -52,7 +71,9 @@ class ChatList extends Component {
         socket.emit("join-room", chatroom_id);
         console.log("You connected room:", chatroom_id);
 
-        this.state.focus_chatroom = chatroom_id;
+        this.setState({focus_chatroom : chatroom_id});
+        // console.log(this.state.chatMessageList);
+        // console.log(this.state.focus_chatroom);
     }
 
     handleSendMessage = (param) => {
@@ -63,14 +84,18 @@ class ChatList extends Component {
 
     render() {
         
+
         return (
             <div className="chat">
                 <Header />
                 
                 <div className="chatList">
                     <ChatRoom chatrooms={this.state.chatrooms} onSelectChatroom={this.handleChatroomSelect} />
-                    <ChatMessage ref={(cd) => this.child = cd} onSendMessage={this.handleSendMessage} chatroom={this.state.focus_chatroom} />
+                    
+                    {this.state.chatMessageList[this.state.focus_chatroom-1]}
+                    {/* <ChatMessage ref={(cd) => this.child = cd} onSendMessage={this.handleSendMessage} chatroom={this.state.focus_chatroom} /> */}
                 </div>
+                
                 <Footer />
             </div>
         )
