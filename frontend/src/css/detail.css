@@ -1,8 +1,82 @@
 #applybtn{
-    background-color: #007bff;
-    color: white;
+    color: #fff;
+    background-color: #0d6efd;
+    border-radius: 5px;
+}
+#applybtn:hover{
+    width: 88px;
+    box-shadow: none;
+    background-color: #0b58cc;
+}
+#submit-new-comment{
+    color: #fff;
+    background-color: #0d6efd;
+    border-radius: 5px;
+}
+#submit-new-comment:hover{
+    width: 99px;
+    box-shadow: none;
+    background-color: #0b58cc;
+}
+#writer{
+    font-size: 20px;
+}
+.product__details__pic__item--large{
+    width: 100%;
+    height: 450px;
+    margin-top: 60px;
+}
+#applycancel{
+    color: #fff;
+    background-color: #0d203b;
+    border-radius: 5px;
+}
+#applycancel:hover{
+    width: 93.5px;
+    box-shadow: none;
+    background-color: #0d203b;
+}
+#writerName{
+    width: 25%;
+}
+#content{
+    width: 45%;
+}
+#date{
+    width: 20%;
+}
+#commentContainer{
+   margin-top: 50px;
+   margin-bottom: 50px;
+}
+#writing-area{
+    margin-top: 50px;
+}
+#new-comment-content{
+    width: 100%;
+}
+#nickname{
+    float: left;
+}
+#submit-new-comment{
+    float: right;
+}
+#submit-new-comment:hover{
+    width: 88px;
+}
+.heart-icon{
+    float: right;
+}
+.product__details__text{
+    margin-top: 60px;
 }
 #replybtn{
-    background-color: #007bff;
-    color: white;
+    width: 90px;
+    color: #fff;
+    background-color: #0d6efd;
+    border-radius: 5px;
+}
+#replybtn:hover{
+    box-shadow: none;
+    background-color: #163c72;
 }

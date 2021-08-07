@@ -3,55 +3,102 @@ import productsData from "../ProductData";
 import { useParams } from "react-router-dom"
 import "../../css/detailcss/bootstrap.min.css";
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import { Button, Comment, Form, Header } from 'semantic-ui-react'
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import '../../css/detail.css'
 
-const CommentExampleComment = () => (
-  <Comment.Group minimal>
-    <Header as='h3' dividing>
-     댓글
-    </Header>
+class Comment extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      comments: [
+        {
+          id: 1,
+          writer: "홀로가치1",
+          date: "2021-01-01",
+          content: "안녕"
+        }, {
+          id: 2,
+          writer: "홀로가치2",
+          date: "2021-01-02",
+          content: "안녕2"
+        },
+      ]
+    }
+    this.addComment = this.addComment.bind(this);
+  }
+  addComment() {
+    let value = document.querySelector('#new-comment-content').value;
+    if (value !== '') {
+      this.setState({
+        comments: [...this.state.comments, {
+          id: this.state.comments.length + 1,
+          writer: "홀로가치",
+          date: new Date().toISOString().slice(0, 10),
+          content: value
+        }]
+      })
+    } else {
+      alert('입력된 댓글이 없습니다.')
+    }
+    document.querySelector('#new-comment-content').value = '';
+  }
+  render() {
+    return (
+      <div id="root">
+        <div>
+          <ul id="comments">
+            {
+              this.state.comments.map(comment => {
+                return <Singcomment key={comment.id} comment={comment} />
+              })
+            }
+          </ul>
+          <div id="writing-area">
+            <h5 id="nickname">홀로가치</h5>
+            <textarea id="new-comment-content" placeholder="댓글을 입력하세요"></textarea>
+            <button id="submit-new-comment" onClick={this.addComment}>댓글쓰기</button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
 
-    <Comment>
-      <Comment.Avatar as='a' src='https://react.semantic-ui.com/images/avatar/small/elliot.jpg' />
-      <Comment.Content>
-        <Comment.Author as='a'>holo</Comment.Author>
-        <Comment.Metadata>
-          <span>어제 12:30AM</span>
-        </Comment.Metadata>
-        <Comment.Text>
-          <p>무슨 디자인인가요?</p>
-        </Comment.Text>
-        <Comment.Actions>
-          <a>답글 쓰기</a>
-        </Comment.Actions>
-      </Comment.Content>
+function Singcomment({ comment }) {
+  return (
+    <div className="comment">
+      <table>
+        <tr>
+          <th id="writerName">{comment.writer}</th>
+          <td id="content">{comment.content}</td>
+          <td id="date">{comment.date}</td>
+          <td><button id="replybtn">답글달기</button></td>
+        </tr>
+      </table>
+    </div>
+  )
+}
 
-      <Comment.Group>
-        <Comment>
-          <Comment.Avatar as='a' src='https://react.semantic-ui.com/images/avatar/small/jenny.jpg' />
-          <Comment.Content>
-            <Comment.Author as='a'>ghffh</Comment.Author>
-            <Comment.Metadata>
-              <span>방금</span>
-            </Comment.Metadata>
-            <Comment.Text>2021 올림픽 축구공이에요</Comment.Text>
-            <Comment.Actions>
-              <a>답글 쓰기</a>
-            </Comment.Actions>
-          </Comment.Content>
-        </Comment>
-      </Comment.Group>
-    </Comment>
+function apply(e) {
+  e.preventDefault();
+  var answer;
+  answer = window.confirm(`신청하시겠습니까?`);
 
-    
+  if (answer == true) {
+    var apply = document.getElementById('apply');
+    const html = `<button id="applycancel" className="disabled">신청 완료</button>`;
+    apply.innerHTML = html;
+  }
+}
 
-    <Form reply>
-      <Form.TextArea />
-      <Button content='Add Reply' labelPosition='left' icon='edit' primary id="replybtn"/>
-    </Form>
-  </Comment.Group>
-)
+function bookmarkremove() {
+  document.getElementById("likebtn2").style.display = "none";
+  document.getElementById("likebtn").style.display = "block";
+}
+function bookmarkbtn() {
+  document.getElementById("likebtn").style.display = "none";
+  document.getElementById("likebtn2").style.display = "block";
+}
 
 function Board() {
   const { productId } = useParams()
@@ -59,10 +106,9 @@ function Board() {
 
   return (
     <div className="gbdetail">
-
       <section className="product-details spad">
         <div className="container">
-          <div className="row">
+          <div className="row" id="product">
             <div className="col-lg-6 col-md-6">
               <div className="product__details__pic">
                 <div className="product__details__pic__item">
@@ -71,37 +117,38 @@ function Board() {
                 </div>
               </div>
             </div>
-            <div className="col-lg-6 col-md-6">
+            <div className="col-lg-6 col-md-6" id="productDetail">
               <div className="product__details__text">
                 <h3>{thisProduct.title}</h3>
                 <div classNa="product__details__rating">
                 </div>
-                <div className="product__details__price"><strong>가격  </strong>{thisProduct.price}</div>
-                <div className="product__details__price"><strong>공동구매 시작  </strong>{thisProduct.startdate}</div>
-                <div className="product__details__price"><strong>공동구매 마감  </strong>{thisProduct.finishdate}</div>
-                <div className="product__details__price"><strong>카테고리  </strong>{thisProduct.category}</div>
-                <div className="product__details__price"><strong>목표 인원 </strong>{thisProduct.goalnum} </div>
-                <div className="product__details__price"><a href={thisProduct.site}>구매 사이트 </a></div>
-                  <div className="quantity">
-                    <div className="pro-qty">
-                      <button id="applybtn">신청하기</button>
+                <ul>
+                  <li><strong className="left">가격  </strong>{thisProduct.price}</li><hr />
+                  <li><strong className="left">공동구매 시작  </strong>{thisProduct.startdate}</li><hr />
+                  <li><strong className="left">공동구매 마감  </strong>{thisProduct.finishdate}</li><hr />
+                  <li><strong className="left">카테고리  </strong>{thisProduct.category}</li><hr />
+                  <li><strong className="left">목표 인원 </strong>{thisProduct.goalnum}</li><hr />
+                  <li><a href={thisProduct.site}>구매 사이트 </a></li><hr />
+                </ul>
+                <div className="quantity">
+                  <div className="pro-qty">
+                    <div id="apply">
+                      <button id="applybtn" onClick={apply}>신청하기</button>
+                      <a href="#" className="heart-icon" onClick={bookmarkbtn} id="likebtn"><FavoriteBorderIcon /></a>
+                      <a href="#" className="heart-icon" onClick={bookmarkremove} id="likebtn2" style={{ display: "none" }}><FavoriteIcon /></a>
                     </div>
                   </div>
-                <a href="#" className="primary-btn"><FavoriteBorderIcon/></a>
-                <a href="#" className="heart-icon"><span className="icon_heart_alt"></span></a>
+                </div>
               </div>
             </div>
-            <div className="col-lg-12">
+            <div className="col-lg-12" id="commentContainer">
               <div className="product__details__tab">
-                  <CommentExampleComment/>
+                <Comment />
               </div>
             </div>
           </div>
         </div>
       </section>
-
-      
-
     </div>
   )
 }

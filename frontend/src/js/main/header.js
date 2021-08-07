@@ -10,7 +10,7 @@ export default function Header() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
-                        <Nav.Link href="../gb/gblist" className="menu">공동구매</Nav.Link>
+                        <Nav.Link href="/gb/gblist" className="menu">공동구매</Nav.Link>
                         <NavDropdown title="카테고리" id="basic-nav-dropdown">
                             <NavDropdown.Item href="#action/3.1">식품</NavDropdown.Item>
                             <NavDropdown.Item href="#action/3.2">가전제품</NavDropdown.Item>
