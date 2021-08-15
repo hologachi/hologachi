@@ -17,7 +17,7 @@ socket.on('connect', () => {
 class ChatList extends Component {
 
     constructor(props) {
-        super();
+        super(props);
 
         this.state = {
             chatrooms: null,
@@ -40,10 +40,11 @@ class ChatList extends Component {
             );
 
             console.log(this.state.chatrooms);
+            
             if (this.state.chatrooms != null) {
                 this.setState(
                     { chatMessageList: this.state.chatrooms.map(
-                    (chatroom) => <ChatMessage ref={(cd) => this.child = cd} onSendMessage={this.handleSendMessage} chatroom={chatroom} /> )}
+                    (chatroom) => <ChatMessage ref={(cd) => this.child = cd} onSendMessage={this.handleSendMessage} /> )}
                 );
                 
             }

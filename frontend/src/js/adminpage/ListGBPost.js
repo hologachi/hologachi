@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Table } from 'react-bootstrap';
 
 class ListGBPost extends Component {
     constructor(props) {
@@ -29,7 +30,7 @@ class ListGBPost extends Component {
         return (
             <div className="managePost_body">
                 <div className="postList">
-                    <table>
+                    <Table striped bordered hover>
                         <thead>
                         <th>공동구매 글 목록</th>
                             <tr>
@@ -65,7 +66,7 @@ class ListGBPost extends Component {
                                 )
                             }
                         </tbody>
-                    </table>
+                    </Table>
                 </div>
            </div>
         );

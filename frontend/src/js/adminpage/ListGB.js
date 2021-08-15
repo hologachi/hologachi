@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Table } from 'react-bootstrap';
 
 class ListGB extends Component {
     constructor(props) {
@@ -14,17 +15,16 @@ class ListGB extends Component {
         return (
             <div className="manageGB_body">
                 <div className="GBList">
-                    <table>
+                    <Table striped bordered hover>
                         <thead>
-                        <th>공동구매 목록</th>
-                            <tr>
-                                <th>공동구매 id</th>
-                                <th>공동구매 글</th>
-                                <th>제안자 아이디</th>
-                                <th>진행 단계</th>
-                                <th>요청자가 매긴 제시자 평점</th>
-                                <th>제시자가 매긴 요청자 평점</th>
-                            </tr>
+                        <tr>
+                            <th>공동구매 ID</th>
+                            <th>공동구매 글</th>
+                            <th>제안자 아이디</th>
+                            <th>진행 단계</th>
+                            <th>요청자가 매긴 제시자 평점</th>
+                            <th>제시자가 매긴 요청자 평점</th>
+                        </tr>
                         </thead>
 
                         <tbody>
@@ -43,7 +43,7 @@ class ListGB extends Component {
                                 )
                             }
                         </tbody>
-                    </table>
+                    </Table>
                 </div>
            </div>
         );

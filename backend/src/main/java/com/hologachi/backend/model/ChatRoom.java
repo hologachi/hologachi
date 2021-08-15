@@ -7,12 +7,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+//import lombok.AccessLevel;
+//import lombok.Getter;
+//import lombok.NoArgsConstructor;
+//import lombok.Setter;
+
+//@NoArgsConstructor(access = AccessLevel.PROTECTED)
+//@Getter
+//@Setter
 @Entity
 @Table(name="TBL_CHATROOM")
 public class ChatRoom {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="CHATROOM_ID")
 	private int chatroom_id;
 	
 	@Column(name="LASTCHAT")
@@ -20,11 +29,12 @@ public class ChatRoom {
 	
 	@Column(name="ROOM_NAME")
 	private String room_name;
+
 	
-	public ChatRoom() {
+	ChatRoom() {
 		
 	}
-
+	
 	public int getChatroom_id() {
 		return chatroom_id;
 	}
@@ -48,6 +58,8 @@ public class ChatRoom {
 	public void setRoom_name(String room_name) {
 		this.room_name = room_name;
 	}
+	
+
 	
 	
 	

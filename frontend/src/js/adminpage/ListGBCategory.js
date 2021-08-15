@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Table } from 'react-bootstrap';
 
 class ListGBCategory extends Component {
     constructor(props) {
@@ -13,7 +14,7 @@ class ListGBCategory extends Component {
         return (
             <div className="manageCategory_body">
                 <div className="cateogoryList">
-                    <table>
+                    <Table striped bordered hover>
                         <thead>
                         <th>카테고리 목록</th>
                             <tr>
@@ -35,7 +36,7 @@ class ListGBCategory extends Component {
                                 )
                             }
                         </tbody>
-                    </table>
+                    </Table>
                 </div>
            </div>
         );
