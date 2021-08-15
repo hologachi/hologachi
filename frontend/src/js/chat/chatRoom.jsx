@@ -6,7 +6,7 @@ import Room from "./room";
 class ChatRoom extends Component {
 
     handleClick = (chatroom_id) => {
-        this.props.onSelectChatroom(this.chatroom_id);
+        this.props.onSelectChatroom(chatroom_id);
     }
 
     render() {
@@ -19,7 +19,9 @@ class ChatRoom extends Component {
             <div className="chatRoom">
                 <div className="chatRoomWrapper">
                     <input placeholder="참여한 공동구매 채팅 검색" className="chatRoomInput" />
-                    {list}
+                    <div className="roomList">
+                        {list}
+                    </div>
                 </div>
             </div>
         )
