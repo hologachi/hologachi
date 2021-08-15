@@ -8,11 +8,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //chat
 import ChatRoomService from '../services/ChatRoomService';
 import { io } from "socket.io-client";
-const socket = io("http://localhost:3001/chat/list");
-// 소켓 연결 확인
-socket.on('connect', () => {
-    console.log(`You connected with id: ${socket.id}`)
-})
+const socket = null;
+// const socket = io("http://localhost:3001/chat/list");
+// // 소켓 연결 확인
+// socket.on('connect', () => {
+//     console.log(`You connected with id: ${socket.id}`)
+// })
 
 class ChatList extends Component {
 
