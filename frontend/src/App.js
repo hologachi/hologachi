@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios'
+import React from 'react';
 import '../src/css/App.css';
-// import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 // import 'bootstrap/dist/css/bootstrap.min.css';
-// import Header from "./js/main/header";
-// import Footer from "./js/main/footer";
+import Header from "./js/main/header";
+import Footer from "./js/main/footer";
 
-// import  Home  from "./js/main/home";
+import  Home  from "./js/main/home";
 
 // import  Profile  from "./js/mypage/myprofile";
 // import  Mywriting  from "./js/mypage/mywriting";
@@ -74,34 +73,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 // }
 
 function App() {
-  // 요청받은 정보를 담아줄 변수 선언
-  const [ testStr, setTestStr ] = useState('');
-  console.log(testStr);
-
-  // 변수 초기화
-  function callback(str) {
-    setTestStr(str);
-  }
-
-  // 첫 번째 렌더링을 마친 후 실행
-  useEffect(
-      () => {
-        axios({
-            url: '/home',
-            method: 'GET'
-        }).then((res) => {
-            callback(res.data[0].postId);
-        })
-      }, []
-  );
-
   return (
-      <div className="App">
-          <header className="App-header">
-              {testStr}
-          </header>
-      </div>
+    <div className="App">
+    <Header />
+      <BrowserRouter>
+        <Switch>
+          {/* Home */}
+          <Route exact path="/home" component={Home} />
+        </Switch>
+      </BrowserRouter>
+      <Footer />
+    </div>
   );
 }
 
-export default App;
+export default App

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Grid, Card, CardMedia, CardContent, Typography, makeStyles } from '@material-ui/core';
 import '../../css/post.css'
-import productsData from "../ProductData";
+//import productsData from "../ProductData";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -30,64 +30,104 @@ const useStyles = makeStyles((theme) => ({
 export default function Post() {
   const classes = useStyles();
 
-  const api = axios.create({
-    baseURL: 'http://localhost:8080'
-  })
-  api.post('/home', { params: {
-    title : "holo"
-  }}).then(function(response) {
-    console.log(response);
-  }).catch(function (error){
-    console.log(error);
-  })
-  console.log(api);
+  // 요청받은 정보를 담아줄 변수 선언
+  const [ testStr, setTestStr ] = useState('');
+  console.log(testStr);
+  
 
-  // const products = productsData.map(product => {
-  //   return (
-  //     <div key={product.id}>
-  //     <Card className={classes.products} id="card">
-  //         <Link to={`/gb/gbdetail/${product.id}`}>
-  //         <CardMedia
-  //               className={classes.cardMedia}
-  //               image={product.image}
-  //               title={product.name}
-  //             />
-  //         </Link>
-  //         <CardContent className={classes.cardContent}>
-  //               <Typography id="status">
-  //                 {product.status}
-  //               </Typography>
-  //               <Typography gutterBottom variant="h5" component="h2">
-  //                 {product.name}
-  //               </Typography>
-  //               <Typography>
-  //                 {product.price}
-  //               </Typography>
-  //               <Typography>
-  //                 {product.currentnum}/
-  //                 {product.goalnum}
-  //               </Typography>
-  //               <Typography>
-  //                 {product.startdate}
-  //               </Typography>
-  //               <Typography>
-  //                 {product.finishdate}
-  //               </Typography>
-  //             </CardContent>
-  //             </Card>
-  //       <hr />
-  //     </div>
-  //   );
-  // });
+  // 변수 초기화
+  function callback(str) {
+    setTestStr(str);
+  }
+
+  // 첫 번째 렌더링을 마친 후 실행
+  useEffect(
+      () => {
+        axios({
+            url: '/home',
+            method: 'GET'
+        }).then((res) => {
+            callback(res.data);
+        })
+      }, []
+  );
+
+  const products = Object.values(testStr).map(product => {
+    return (
+      <div key={product.postId}>
+      <Card className={classes.products} id="card">
+          <Link to={`/gb/gbdetail/${product.postId}`}>
+          <CardMedia
+                className={classes.cardMedia}
+                image="https://i.postimg.cc/tT5w5HVn/football.jpg"
+                title={product.title}
+              />
+          </Link>
+          <CardContent className={classes.cardContent}>
+                <Typography id="status">
+                  {product.step}
+                </Typography>
+                <Typography gutterBottom variant="h5" component="h2">
+                  {product.title}
+                </Typography>
+                <Typography>
+                  {product.price}
+                </Typography>
+                <Typography>
+                  {product.matching}
+                </Typography>
+                <Typography>
+                  {product.rgstAt}
+                </Typography>
+                <Typography>
+                  {product.deadline}
+                </Typography>
+              </CardContent>
+              </Card>
+        <hr />
+      </div>
+    );
+  });
   return (
     <Container className={classes.cardGrid} maxWidth="md">
-      {/* <Grid container spacing={4} >
+      <Grid container spacing={4} >
           <Grid item key={products.id} xs={12} sm={6} md={4} id="grid">
-              {products}
-              {api}
+          {products}
           </Grid>
-      </Grid> */}
-      {api}
+      </Grid>
     </Container>
   )
 }
+
+// function App() {
+//   // 요청받은 정보를 담아줄 변수 선언
+//   const [ testStr, setTestStr ] = useState('');
+//   console.log(testStr);
+
+//   // 변수 초기화
+//   function callback(str) {
+//     setTestStr(str);
+//   }
+
+//   // 첫 번째 렌더링을 마친 후 실행
+//   useEffect(
+//       () => {
+//         axios({
+//             url: '/home',
+//             method: 'GET'
+//         }).then((res) => {
+//             callback(res.data[0].postId);
+//         })
+//       }, []
+//   );
+
+//   return (
+//       <div className="App">
+//           <header className="App-header">
+//               {testStr}
+//           </header>
+//       </div>
+//   );
+// }
+
+// export default App;
