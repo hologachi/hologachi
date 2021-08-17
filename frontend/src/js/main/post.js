@@ -32,7 +32,7 @@ export default function Post() {
 
   // 요청받은 정보를 담아줄 변수 선언
   const [ testStr, setTestStr ] = useState('');
-  console.log(testStr);
+  // console.log(testStr);
   
 
   // 변수 초기화

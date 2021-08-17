@@ -17,7 +17,7 @@ export default function Header() {
                             <NavDropdown.Item href="#action/3.3">의류</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title="마이페이지" id="basic-nav-dropdown" className="menu">
-                            <NavDropdown.Item href="../mypage/myprofile">나의 프로필</NavDropdown.Item>
+                            <NavDropdown.Item href="../mypage/profile">나의 프로필</NavDropdown.Item>
                             <NavDropdown.Item href="../mypage/bookmark">북마크</NavDropdown.Item>
                             <NavDropdown.Item href="../mypage/mywriting">내가 작성한 글</NavDropdown.Item>
                             <NavDropdown.Item href="../mypage/applygb">내가 신청한 글</NavDropdown.Item>

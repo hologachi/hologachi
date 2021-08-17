@@ -7,7 +7,7 @@ import Footer from "./js/main/footer";
 
 import  Home  from "./js/main/home";
 
-// import  Profile  from "./js/mypage/myprofile";
+import  Profile  from "./js/mypage/myprofile";
 // import  Mywriting  from "./js/mypage/mywriting";
 // import  Applygb  from "./js/mypage/applygb";
 // import  Sidemenu  from "./js/mypage/mypageside";
@@ -79,7 +79,11 @@ function App() {
       <BrowserRouter>
         <Switch>
           {/* Home */}
-          <Route exact path="/home" component={Home} />
+          <Route exact path="/" component={Home} />
+
+          {/* Mypage */}
+           <Route path="/mypage/profile" component={Profile} />
+
         </Switch>
       </BrowserRouter>
       <Footer />

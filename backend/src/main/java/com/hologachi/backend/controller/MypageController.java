@@ -34,7 +34,7 @@ public class MypageController {
 	MyBookmarkRepository myBookmarkRepository;
 	
 	// 프로필
-	@GetMapping("/profile")
+	@GetMapping("/mypage/profile")
 	public List<User> userFindByUserId() {
 		int userId = 3;
 		return profileRepository.findByUserId(userId);
