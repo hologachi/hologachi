@@ -7,7 +7,7 @@ class ListUser extends Component {
         show: false,
     }
 
-    isAdminTranslate(value) {
+    translationIsAdmin(value) {
         switch(value) {
             case 0:
                 return "일반 사용자";

@@ -1,14 +1,25 @@
 import React, { Component } from 'react';
-import { Table } from 'react-bootstrap';
+import { Table, Button, Modal } from 'react-bootstrap';
 
 class ListGB extends Component {
-    constructor(props) {
-        super(props)
 
-        this.state = {
-            gbs: [{id:1, postId:1, requesterId:1, 
-                step:"신청", rateSuggester:10, rateRequester:5 }]
-        }
+    translationStep(value) {
+        switch(value) {
+            case "agree":
+                return "수락";
+                break;
+            case "cancel":
+                return "취소";
+                break;
+            case "reject":
+                return "거절";
+                break;
+            case "finish":
+                return "완료";
+                break;
+            default:
+                return "알 수 없음";
+        }   
     }
 
     render() {
@@ -29,13 +40,13 @@ class ListGB extends Component {
 
                         <tbody>
                             {
-                                this.state.gbs.map(
-                                    gb => 
-                                    <tr key = {gb.id}>
-                                        <td>{gb.id}</td>
-                                        <td>{gb.postId}</td>
-                                        <td>{gb.requesterId}</td>
-                                        <td>{gb.step}</td>
+                                this.props.gbs && Object.values(this.props.gbs).map(
+                                    (gb, i) => 
+                                    <tr key = {i}>
+                                        <td>{gb.ptcptId}</td>
+                                        <td>{gb.post.title}</td>
+                                        <td>{gb.user.nickname}</td>
+                                        <td>{this.translationStep(gb.step)}</td>
                                         <td>{gb.rateSuggester}</td>
                                         <td>{gb.rateRequester}</td>
                                         <td><button>공동구매 삭제</button></td>

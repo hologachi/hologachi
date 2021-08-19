@@ -13,7 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
+//@Getter
 @Entity
 @Table(name="TBL_PTCPT")
 public class Ptcpt {
@@ -30,4 +30,32 @@ public class Ptcpt {
 	@JoinColumn(name="rqster_id")
 	private User user;
 	private String step;
+	
+	
+	public int getPtcptId() {
+		return ptcptId;
+	}
+	public void setPtcptId(int ptcptId) {
+		this.ptcptId = ptcptId;
+	}
+	public Post getPost() {
+		return post;
+	}
+	public void setPost(Post post) {
+		this.post = post;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	public String getStep() {
+		return step;
+	}
+	public void setStep(String step) {
+		this.step = step;
+	}
+	
+	
 }

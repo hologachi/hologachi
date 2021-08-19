@@ -3,7 +3,7 @@ import { Table, Button, Modal } from 'react-bootstrap';
 
 class ListGBPost extends Component {
 
-    deletedByTranslate(value) {
+    translationDeletedBy(value) {
         switch(value) {
             case 0:
                 return "작성자";
@@ -54,7 +54,7 @@ class ListGBPost extends Component {
                                         <td>{gbPost.content}</td>
                                         <td>{gbPost.matching}</td>
                                         <td>{gbPost.deadline}</td>
-                                        <td>{this.deletedByTranslate(gbPost.deleted_by)}</td>
+                                        <td>{this.translationDeletedBy(gbPost.deleted_by)}</td>
                                         <td>{gbPost.category}</td>
                                         <td><Button>글 삭제</Button></td>
                                         <td><Button>댓글 조회</Button></td>
