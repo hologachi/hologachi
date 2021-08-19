@@ -1,22 +1,42 @@
 import React, { Component } from 'react';
-import { Table } from 'react-bootstrap';
+import { Table, Button, Modal } from 'react-bootstrap';
 
 class ListUser extends Component {
+    
+    state = {
+        show: false,
+    }
 
     isAdminTranslate(value) {
         switch(value) {
             case 0:
-                return "사용자";
+                return "일반 사용자";
+                break;
             case 1:
                 return "관리자";
+                break;
             case -1:
                 return "정지된 회원";
+                break;
             default:
                 return "알 수 없음";
         }   
     }
 
+    handleClose = () => {
+        this.setState(
+            {show: false}
+        );
+    }
+
+    handleShow = () => {
+        this.setState(
+            {show: true}
+        );
+    }
+
     render() {
+        
         return (
             <div className="managerUser_body">
                 <div className="userList">
@@ -32,6 +52,7 @@ class ListUser extends Component {
                                 <th>권한</th>
                             </tr>
                         </thead>
+
                         <tbody>
                             {
                                 this.props.users && this.props.users.map(
@@ -43,19 +64,33 @@ class ListUser extends Component {
                                         <td>{user.email}</td>
                                         <td>{user.sgst_rate} 점</td>
                                         <td>{user.rqst_rate} 점</td>
-                                        <td>{this.isAdminTranslate(user.isAdmin)}</td>
-                                        <td><button>회원 권한 수정</button></td>
-                                        <td><button>작성글 조회</button></td>
+                                        <td>{this.isAdminTranslate(user.is_admin)}</td>
+                                        <td><Button onClick={this.handleShow}>회원 권한 수정</Button></td>
+                                        <td><Button>작성글 조회</Button></td>
                                     </tr>
                                 )
                             }
                         </tbody>
                     </Table>
+
+                    <Modal show={this.state.show} onHide={this.handleClose}>
+                        <Modal.Header closeButton>
+                        <Modal.Title>Modal heading</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                        <Modal.Footer>
+                        <Button variant="secondary" onClick={this.handleClose}>
+                            Close
+                        </Button>
+                        <Button variant="primary" onClick={this.handleClose}>
+                            Save Changes
+                        </Button>
+                        </Modal.Footer>
+                    </Modal>
                 </div>
            </div>
-        );
+        )
     }
 }
-
 
 export default ListUser;

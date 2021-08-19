@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import com.hologachi.backend.model.*;
 
 @Repository
-public interface PostRepository extends JpaRepository<Post, Integer> {
+public interface PtcptRepository extends JpaRepository<Ptcpt, Integer> {
 }

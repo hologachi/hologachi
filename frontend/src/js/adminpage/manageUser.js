@@ -6,18 +6,13 @@ import SearchUser from "./searchUser"
 import '../../css/adminpage.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ListUser from './ListUser';
-import AdminService from '../services/AdminService'; //백엔드 결과 get
+import AdminService from '../services/AdminService'; //백엔드 연결
 
 class manageUser extends Component {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            users: null,
-            userList : null,
-        }
-        
+    state = {
+        users: null,
+        userList : null,
     }
 
     componentDidMount() {
@@ -32,8 +27,7 @@ class manageUser extends Component {
             );
 
             console.log(this.state.users);
-        })
-        
+        }) 
         
     }
 
@@ -52,4 +46,4 @@ class manageUser extends Component {
         )
     }
  }
- export default manageUser
+ export default manageUser;

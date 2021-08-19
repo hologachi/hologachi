@@ -6,5 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.hologachi.backend.model.*;
 
 @Repository
-public interface PostRepository extends JpaRepository<Post, Integer> {
+public interface CategoryRepository extends JpaRepository<Category, Integer> {
+
+	Category findById(int id);
 }

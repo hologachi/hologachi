@@ -1,21 +1,46 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Header from "../main/header";
 import Footer from "../main/footer";
 import AdminNav from "./adminNav"
-import ListGBPost from "./ListGBPost";
 import '../../css/adminpage.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ListGBPost from "./ListGBPost";
+import AdminService from '../services/AdminService'; //백엔드 연결
 
-function manageGBPost() {
-    return (
-         <div className="MPost">
-            <Header />
-            <AdminNav />
+class manageGBPost extends Component {
 
-            <ListGBPost />
+    state = {
+        gbPosts: [],
+    }
 
-            <Footer />
-         </div>
-     )
+    componentDidMount() {
+        this.loadGBPosts();
+    }
+
+    loadGBPosts = () => {
+        // 공동구매 글 전체 조회 
+        AdminService.getAllGBPosts().then((res) => {
+            this.setState(
+                { gbPosts: res.data }
+            );
+
+            console.log(this.state.gbPosts);
+        }) 
+        
+    }
+
+    render() {
+        return (
+            <div className="MPost">
+                <Header />
+                <AdminNav />
+
+                <ListGBPost gbPosts={this.state.gbPosts}/>
+
+                <Footer />
+            </div>
+        )
+    }
  }
- export default manageGBPost
+
+ export default manageGBPost;

@@ -17,15 +17,10 @@ const socket = null;
 
 class ChatList extends Component {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
+    state = {
             chatrooms: null,
             focus_chatroom: 0,
             chatMessageList: [],
-        }
-        
     }
     
     

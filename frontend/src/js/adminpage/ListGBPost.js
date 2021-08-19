@@ -1,39 +1,34 @@
 import React, { Component } from 'react';
-import { Table } from 'react-bootstrap';
+import { Table, Button, Modal } from 'react-bootstrap';
 
 class ListGBPost extends Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            posts: [{id:1, registerId:"홍길동", registerAt:"210710", 
-                updateAt:"210711", title:"공동구매 해요~!", content:"친환경 빨대 공동구매해요", 
-                matching:"3", deadline:"211130", deletedBy:"-1",
-                category:"001" }]
-        }
-    }
 
     deletedByTranslate(value) {
         switch(value) {
             case 0:
                 return "작성자";
+                break;
             case 1:
                 return "관리자";
+                break;
             case -1:
                 return "미삭제";
+                break;
             default:
                 return "알 수 없음";
         }   
     }
 
     render() {
+        
         return (
             <div className="managePost_body">
                 <div className="postList">
+                    <h4>공동구매 글</h4>
                     <Table striped bordered hover>
                         <thead>
-                        <th>공동구매 글 목록</th>
                             <tr>
+                                <th>#</th>
                                 <th>제안자</th>
                                 <th>등록일</th>
                                 <th>수정일</th>
@@ -48,30 +43,30 @@ class ListGBPost extends Component {
 
                         <tbody>
                             {
-                                this.state.posts.map(
-                                    post => 
-                                    <tr key = {post.id}>
-                                        <td>{post.id}</td>
-                                        <td>{post.registerId}</td>
-                                        <td>{post.registerAt}</td>
-                                        <td>{post.title}</td>
-                                        <td>{post.content}</td>
-                                        <td>{post.matching}</td>
-                                        <td>{post.deadline}</td>
-                                        <td>{this.deletedByTranslate(post.deletedBy)}</td>
-                                        <td>{post.category}</td>
-                                        <td><button>글 삭제</button></td>
-                                        <td><button>댓글 조회</button></td>
+                                this.props.gbPosts && Object.values(this.props.gbPosts).map(
+                                    (gbPost, i) => (
+                                    <tr key = {i}>
+                                        <td>{gbPost.post_id}</td>
+                                        <td>{gbPost.user.nickname}</td>
+                                        <td>{gbPost.rgst_at}</td>
+                                        <td>{gbPost.update_at}</td>
+                                        <td>{gbPost.title}</td>
+                                        <td>{gbPost.content}</td>
+                                        <td>{gbPost.matching}</td>
+                                        <td>{gbPost.deadline}</td>
+                                        <td>{this.deletedByTranslate(gbPost.deleted_by)}</td>
+                                        <td>{gbPost.category}</td>
+                                        <td><Button>글 삭제</Button></td>
+                                        <td><Button>댓글 조회</Button></td>
                                     </tr>
-                                )
+                                ))
                             }
                         </tbody>
                     </Table>
                 </div>
            </div>
-        );
+        )
     }
 }
-
 
 export default ListGBPost;
