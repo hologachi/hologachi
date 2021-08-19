@@ -49,7 +49,7 @@ class ListGB extends Component {
                                         <td>{this.translationStep(gb.step)}</td>
                                         <td>{gb.rateSuggester}</td>
                                         <td>{gb.rateRequester}</td>
-                                        <td><button>공동구매 삭제</button></td>
+                                        <td><Button>공동구매 삭제</Button></td>
                                     </tr>
                                 )
                             }

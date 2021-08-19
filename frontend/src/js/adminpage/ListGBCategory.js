@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
-import { Table } from 'react-bootstrap';
+import { Table, Button, Modal } from 'react-bootstrap';
 
 class ListGBCategory extends Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            categories: [{mainCatId:1, mainCatName:"가전제품", subCatId:1, subCatName:"선풍기" }]
-        }
-    }
 
     render() {
         return (
@@ -25,13 +18,13 @@ class ListGBCategory extends Component {
 
                         <tbody>
                             {
-                                this.state.categories.map(
-                                    category => 
-                                    <tr key = {category.subCatId}>
-                                        <td>{category.mainCatName}</td>
-                                        <td>{category.subCatName}</td>
-                                        <td><button onClick={() => alert('click')}>카테고리 삭제</button></td>
-                                        <td><button onClick={() => alert('click')}>카테고리 수정</button></td>
+                                this.props.categories && this.props.categories.map(
+                                    (category) => 
+                                    <tr key = {category.id}>
+                                        <td>{category.cat1}</td>
+                                        <td>{category.cat2}</td>
+                                        <td><Button onClick={() => alert('click')}>카테고리 삭제</Button></td>
+                                        <td><Button onClick={() => alert('click')}>카테고리 수정</Button></td>
                                     </tr>
                                 )
                             }

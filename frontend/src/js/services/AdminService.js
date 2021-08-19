@@ -3,7 +3,7 @@ import axios from 'axios';
 const MUSER_SEARCH_URL = "http://localhost:8080/admin/mUser";
 const MGB_SEARCH_URL = "http://localhost:8080/admin/mGB";
 const MGBPOST_SEARCH_URL = "http://localhost:8080/admin/mGBPost";
-const MCATEGORY_SEARCH_URL = "http://localhost:8080/admin/mCategory";
+const MGBCATEGORY_SEARCH_URL = "http://localhost:8080/admin/mGBCategory";
 
 class AdminService {
 
@@ -24,7 +24,7 @@ class AdminService {
     }
 
     getAllCategories() { // 모든 카테고리 조회
-        return axios.get(MCATEGORY_SEARCH_URL);
+        return axios.get(MGBCATEGORY_SEARCH_URL);
     }
 }
 
