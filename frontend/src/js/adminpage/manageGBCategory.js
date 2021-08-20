@@ -24,7 +24,7 @@ class manageGBCategory extends Component {
                 { categories: res.data }
             );
 
-            console.log(this.state.categories);
+            // console.log(this.state.categories);
         }) 
         
     }

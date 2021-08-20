@@ -7,33 +7,51 @@ class ListGBCategory extends Component {
         super(props);
         this.state = {
             value: '',
-            show: false,
+            show: false, //모달 상태
+            cat1: '', // 추가할 카테고리 대분류
+            cat2: '', // 추가할 카테고리 소분류
+            hintData1: [], // 대분류 자동완성 데이터
+            hintData2: [], // 소분류 자동완성 데이터
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    makeHintData = () => {
+        
+    }
+
     handleSubmit(event) { // 카테고리 수정 및 삭제 
-        alert('카테고리 관련 수정이 요청되었습니다: ' + this.state.value);
+        alert('카테고리 관련 수정이 요청되었습니다');
         event.preventDefault();
     }
 
-    handleAddCat(event) {
-
+    handleAddCat = () => { // 카테고리 추가
+        
+        alert('카테고리 추가가 요청되었습니다');
     }
 
-    handleClose = () => {
+    handleClose = () => { // 모달 닫기
         this.setState(
             {show: false}
         );
     }
 
-    handleShow = () => {
+    handleShow = () => { // 모달 보이기
         this.setState(
             {show: true}
         );
     }
 
     render() {
+        this.props.categories && this.props.categories.map(
+            (category) => 
+                this.state.hintData1.push(category.cat1)
+        )
+        this.props.categories && this.props.categories.map(
+            (category) => 
+                this.state.hintData2.push(category.cat2)
+        )
+
         return (
             <div className="manageCategory_body">
                 <div className="cateogoryList">
@@ -74,48 +92,31 @@ class ListGBCategory extends Component {
                     </form>
 
                     <Modal show={this.state.show} onHide={this.handleClose}>
+                        <form onSubmit={this.handleAddCat}>
                         <Modal.Header closeButton>
-                        <Modal.Title>카테고리 추가</Modal.Title>
+                        <Modal.Title>카테고리를 추가하세요</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            카테고리를 추가하세요
-                            <form onSubmit={this.handleAddCat}>
                                 <ul>
                                     <li>
                                         대분류 : 
-                                        <select>
-                                            <option value="직접입력">직접입력</option>
-                                            {
-                                                this.props.categories && this.props.categories.map(
-                                                (category) => 
-                                                    <option value={category.cat1}>{category.cat1}</option>
-                                                )
-                                            }
-                                        </select>
+                                        <Hint options={this.state.hintData1} allowTabFill>
+                                            <input id="cat1" value={this.state.cat1} onChange={e => this.setState({cat1: e.target.value})} ></input>
+                                        </Hint>
                                     </li>
                                     <li>
                                         소분류 : 
-                                        <select>
-                                            <option value="직접입력">직접입력</option>
-                                            {
-                                                this.props.categories && this.props.categories.map(
-                                                (category) => 
-                                                    <option value={category.cat2}>{category.cat2}</option>
-                                                )
-                                            }
-                                        </select>
+                                        <Hint options={this.state.hintData2} allowTabFill>
+                                            <input id="cat2" value={this.state.cat2} onChange={e => this.setState({cat2: e.target.value})} ></input>
+                                        </Hint>
                                     </li>
                                 </ul>
-                            </form>
                         </Modal.Body>
                         <Modal.Footer>
-                        <Button variant="secondary" onClick={this.handleClose}>
-                            Close
-                        </Button>
-                        <Button variant="primary" onClick={this.handleClose}>
-                            Save Changes
-                        </Button>
+                        <Button variant="secondary" onClick={this.handleClose}>닫기</Button>
+                        <Button type="submit" value="Submit">추가</Button>
                         </Modal.Footer>
+                        </form>
                     </Modal>
                 </div>
            </div>
