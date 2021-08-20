@@ -9,4 +9,5 @@ import com.hologachi.backend.model.*;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Integer> {
+	public List<Post> findByPostId(int postId);
 }
