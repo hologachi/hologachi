@@ -64,7 +64,7 @@ class ListUser extends Component {
                                         <td>{user.email}</td>
                                         <td>{user.sgst_rate} 점</td>
                                         <td>{user.rqst_rate} 점</td>
-                                        <td>{this.isAdminTranslate(user.is_admin)}</td>
+                                        <td>{this.translationIsAdmin(user.is_admin)}</td>
                                         <td><Button onClick={this.handleShow}>회원 권한 수정</Button></td>
                                         <td><Button>작성글 조회</Button></td>
                                     </tr>
