@@ -122,5 +122,4 @@ public class MypageController {
 	public void deleteBookmark(@PathVariable("bookmarkId") int bookmarkId) {
 		myBookmarkRepository.deleteById(bookmarkId);
 	}
-
 }
