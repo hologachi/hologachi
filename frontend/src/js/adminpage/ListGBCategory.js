@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Button, Modal } from 'react-bootstrap';
-// import { Hint } from 'react-autocomplete-hint';
+import { Hint } from 'react-autocomplete-hint';
 
 class ListGBCategory extends Component {
     constructor(props) {
