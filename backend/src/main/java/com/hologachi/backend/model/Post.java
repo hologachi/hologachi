@@ -2,6 +2,7 @@ package com.hologachi.backend.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,17 +11,18 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AccessLevel;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
+@Data
 @Entity
 @Table(name="TBL_POST")
 public class Post {
 	
 	@Id @GeneratedValue
-	private int post_id;
+	@Column(name="post_id")
+	private int postId;
 	
 	@ManyToOne
 	@JoinColumn(name="sgster_id")
