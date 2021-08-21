@@ -26,6 +26,7 @@ class ListGB extends Component {
         return (
             <div className="manageGB_body">
                 <div className="GBList">
+                    <h4>공동구매 목록</h4>
                     <Table striped bordered hover>
                         <thead>
                         <tr>

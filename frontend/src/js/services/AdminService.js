@@ -26,6 +26,11 @@ class AdminService {
     getAllCategories() { // 모든 카테고리 조회
         return axios.get(MGBCATEGORY_SEARCH_URL);
     }
+
+    createCategory(category) { // 카테고리 추가
+        return axios.post(MGBCATEGORY_SEARCH_URL, category);
+    }
+    
 }
 
 export default new AdminService()

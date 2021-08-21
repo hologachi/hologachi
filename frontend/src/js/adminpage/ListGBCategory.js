@@ -3,31 +3,13 @@ import { Table, Button, Modal } from 'react-bootstrap';
 import { Hint } from 'react-autocomplete-hint';
 
 class ListGBCategory extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            value: '',
-            show: false, //모달 상태
-            cat1: '', // 추가할 카테고리 대분류
-            cat2: '', // 추가할 카테고리 소분류
-            hintData1: [], // 대분류 자동완성 데이터
-            hintData2: [], // 소분류 자동완성 데이터
-        };
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    makeHintData = () => {
-        
-    }
-
-    handleSubmit(event) { // 카테고리 수정 및 삭제 
-        alert('카테고리 관련 수정이 요청되었습니다');
-        event.preventDefault();
-    }
-
-    handleAddCat = () => { // 카테고리 추가
-        
-        alert('카테고리 추가가 요청되었습니다');
+    state = {
+        value: '',
+        show: false, //모달 상태
+        cat1: '', // 추가할 카테고리 대분류
+        cat2: '', // 추가할 카테고리 소분류
+        hintData1: [], // 대분류 자동완성 데이터
+        hintData2: [], // 소분류 자동완성 데이터
     }
 
     handleClose = () => { // 모달 닫기
@@ -43,10 +25,12 @@ class ListGBCategory extends Component {
     }
 
     render() {
+        // 대분류 힌트 데이터 생성
         this.props.categories && this.props.categories.map(
             (category) => 
                 this.state.hintData1.push(category.cat1)
         )
+        // 소분류 힌트 데이터 생성
         this.props.categories && this.props.categories.map(
             (category) => 
                 this.state.hintData2.push(category.cat2)
@@ -56,7 +40,7 @@ class ListGBCategory extends Component {
             <div className="manageCategory_body">
                 <div className="cateogoryList">
                     <h4>카테고리 목록</h4>
-                    <form onSubmit={this.handleSubmit}>
+                    <form onSubmit={() => {this.props.handleSubmit()}}>
                     <Table striped bordered hover>
                         <thead>
                             <tr>
@@ -71,9 +55,9 @@ class ListGBCategory extends Component {
                         {
                             this.props.categories && this.props.categories.map(
                                 (category) => 
-                                <tr key = {category.id}>
-                                    <td>{category.cat1}</td>
-                                    <td>{category.cat2}</td>
+                                <tr key = {category.id2}>
+                                    <td>{category.id1}. {category.cat1}</td>
+                                    <td>{category.id2}. {category.cat2}</td>
                                     <td><Button onClick={() => alert('click')}>카테고리 수정</Button></td>
                                     <td><input type="checkbox" label={category.cat2} id={category.cat2}></input></td>
                                 </tr>
@@ -92,7 +76,7 @@ class ListGBCategory extends Component {
                     </form>
 
                     <Modal show={this.state.show} onHide={this.handleClose}>
-                        <form onSubmit={this.handleAddCat}>
+                        <form onSubmit={() => this.props.handleAddCat(this.state.cat1, this.state.cat2)}>
                         <Modal.Header closeButton>
                         <Modal.Title>카테고리를 추가하세요</Modal.Title>
                         </Modal.Header>
@@ -114,7 +98,7 @@ class ListGBCategory extends Component {
                         </Modal.Body>
                         <Modal.Footer>
                         <Button variant="secondary" onClick={this.handleClose}>닫기</Button>
-                        <Button type="submit" value="Submit">추가</Button>
+                        <Button type="submit">추가</Button>
                         </Modal.Footer>
                         </form>
                     </Modal>

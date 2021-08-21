@@ -80,7 +80,16 @@ public class AdminController {
 		return categoryRepository.findAll();
 	}
 //	카테고리 삭제
+//	@PostMapping("/mGBCategory/delete")
+//	public Category deleteGBCategory(int[] ids) {
+//		return categoryRepository.deleteAllById(ids);
+//		
+//	}
 //	카테고리 수정
 //	카테고리 추가
+	@PostMapping("/mGBCategory")
+	public Category createGBCategory(@RequestBody Category category) {
+		return categoryRepository.save(category);
+	}
 
 }
