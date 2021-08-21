@@ -59,7 +59,7 @@ export default function Post() {
           <Link to={`/gb/gbdetail/${product.postId}`}>
           <CardMedia
                 className={classes.cardMedia}
-                image="https://i.postimg.cc/tT5w5HVn/football.jpg"
+                image="#"
                 title={product.title}
               />
           </Link>

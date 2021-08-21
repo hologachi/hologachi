@@ -1,10 +1,12 @@
-import React from 'react'
-import productsData from "../ProductData";
+import React, { useState, useEffect } from 'react';
+// import productsData from "../ProductData";
 import { useParams } from "react-router-dom"
 import "../../css/detailcss/bootstrap.min.css";
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import '../../css/detail.css'
+import axios from "axios";
+import moment from 'moment';
 
 class Comment extends React.Component {
   constructor(props) {
@@ -102,7 +104,29 @@ function bookmarkbtn() {
 
 function Board() {
   const { productId } = useParams()
-  const thisProduct = productsData.find(prod => prod.id == productId)
+
+// 요청받은 정보를 담아줄 변수 선언
+const [testStr, setTestStr] = useState('');
+console.log(testStr);
+
+// 변수 초기화
+function callback(str) {
+  setTestStr(str);
+}
+
+// 첫 번째 렌더링을 마친 후 실행
+useEffect(
+  () => {
+    axios({
+      url: `/gb/gbdetail/${productId}`,
+      method: 'GET'
+    }).then((res) => {
+      callback(res.data);
+    })
+  }, []
+);
+
+  const thisProduct = Object.values(testStr).find(prod => prod.post_id == productId)
 
   return (
     <div className="gbdetail">
@@ -113,7 +137,7 @@ function Board() {
               <div className="product__details__pic">
                 <div className="product__details__pic__item">
                   <img className="product__details__pic__item--large"
-                    src={thisProduct.image} alt="" />
+                    src="#" alt="" />
                 </div>
               </div>
             </div>

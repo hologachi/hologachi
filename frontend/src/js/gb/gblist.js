@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import '../../css/post.css'
 import '../../css/gblist.css'
 import { Container, Grid, Card, CardMedia, CardContent, Typography, makeStyles, } from '@material-ui/core';
 import { Form, Pagination } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import productsData from "../ProductData";
+// import productsData from "../ProductData";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
     icon: {
@@ -33,13 +35,40 @@ const useStyles = makeStyles((theme) => ({
   const sortProduct = sortProducts.map((label, index) => (<option key={index}>{label}</option>));
 
  function Board() {
-    const classes = useStyles();
+   const classes = useStyles();
 
-    const products = productsData.map(product => {
+   // 요청받은 정보를 담아줄 변수 선언
+   const [testStr, setTestStr] = useState('');
+   console.log(testStr);
+
+
+   // 변수 초기화
+   function callback(str) {
+     setTestStr(str);
+   }
+
+   // 첫 번째 렌더링을 마친 후 실행
+   useEffect(
+     () => {
+       axios({
+         url: '/gb/gblist',
+         method: 'GET'
+       }).then((res) => {
+         callback(res.data);
+       })
+     }, []
+   );
+
+   const products = Object.values(testStr).map(product => {
+      let rgst = product.rgst_at;
+      let rgst_result = moment(rgst).format('YYYY-MM-DD');
+      let deadLine = product.deadline;
+      let deadLinet_result = moment(deadLine).format('YYYY-MM-DD');
+
       return (
         <div key={product.id}>
         <Card className={classes.product} id="card">
-            <Link to={`/gb/gbdetail/${product.id}`}>
+            <Link to={`/gb/gbdetail/${product.post_id}`}>
             <CardMedia
                   className={classes.cardMedia}
                   image={product.image}
@@ -48,23 +77,22 @@ const useStyles = makeStyles((theme) => ({
             </Link>
             <CardContent className={classes.cardContent}>
                 <Typography id="status">
-                  {product.status}
+                  {product.step}
                 </Typography>
                 <Typography gutterBottom variant="h5" component="h2">
-                  {product.name}
+                  {product.title}
                 </Typography>
                 <Typography>
-                  {product.price}
+                  가격: {product.price}원
                 </Typography>
                 <Typography>
-                  {product.currentnum}/
-                  {product.goalnum}
+                  목표: {product.matching}명
                 </Typography>
                 <Typography>
-                  {product.startdate}
+                  시작: {rgst_result}
                 </Typography>
                 <Typography>
-                  {product.finishdate}
+                  마감: {deadLinet_result}
                 </Typography>
               </CardContent>
               </Card>

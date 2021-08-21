@@ -8,10 +8,6 @@
 #titlteh1{
     padding-top: 40px;
 }
-/* #titleContainer>h1{
-    text-align: left;
-    margin-left: 10px;
-} */
 #title{
     padding-top: 50px;
 }
@@ -19,13 +15,9 @@
     margin-bottom: 50px;
 }
 .inputform{
-    display: flex
-}
-#left{
-    text-align: left;
-}
-.rigth{
-    float: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .content{
     resize: none;

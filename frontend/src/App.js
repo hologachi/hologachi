@@ -15,9 +15,9 @@ import  Profile  from "./js/mypage/myprofile";
 // import  Comment  from "./js/mypage/commentwrite";
 // import  Privacy  from "./js/mypage/privacy";
 
-// import  Gbwrite  from "./js/gb/gbwrite";
-// import  Gblist from "./js/gb/gblist";
-// import Gbdetail from "./js/gb/gbdetail";
+import  Gbwrite  from "./js/gb/gbwrite";
+import  Gblist from "./js/gb/gblist";
+import Gbdetail from "./js/gb/gbdetail";
 // import  MUser  from "./js/adminpage/manageUser";
 // import  MGB  from "./js/adminpage/manageGB";
 // import  MGBPost  from "./js/adminpage/manageGBPost";
@@ -79,10 +79,15 @@ function App() {
       <BrowserRouter>
         <Switch>
           {/* Home */}
-          <Route exact path="/" component={Home} />
+          <Route exact path="/home" component={Home} />
 
           {/* Mypage */}
            <Route path="/mypage/profile" component={Profile} />
+
+          {/* GB */}
+           <Route path="/gb/gbwrite" component={Gbwrite} />
+           <Route path="/gb/gblist" component={Gblist} />
+           <Route path="/gb/gbdetail/:productId" component={Gbdetail} />
 
         </Switch>
       </BrowserRouter>

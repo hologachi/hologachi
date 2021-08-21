@@ -1,10 +1,19 @@
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
+import React, {
+  ChangeEvent,
+  useCallback,
+  useRef,
+  useState,
+  useEffect
+} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import '../../css/gbwrite.css'
 import { Form, Button } from 'react-bootstrap';
 import moment from 'moment';
+import ImageUploading from 'react-images-uploading';
+import { PictureOutlined } from '@ant-design/icons'
 
 
 //   state = {
@@ -77,7 +86,7 @@ import moment from 'moment';
 //           <ul>
 //             {list.map((item, index) => {
 //               return (
-                
+
 //               );
 //             })}
 //           </ul>
@@ -85,6 +94,72 @@ import moment from 'moment';
 //       </div>
 //     );
 //   }
+
+
+
+
+function UploadImage() {
+
+  const [images, setImages] = useState([]);
+  const maxNumber = 4;
+
+  const onChange = (imageList, addUpdateIndex) => {
+    // data for submit
+    console.log(imageList, addUpdateIndex);
+    setImages(imageList);
+  };
+
+  // 추가
+  const onError = (errors, files) => {
+    if (errors.maxNumber) {
+      alert("이미지는 4개까지만 첨부할 수 있습니다")
+    }
+  }
+
+  return (
+    <div className="imageup">
+      <ImageUploading
+        multiple
+        value={images}
+        onChange={onChange}
+        maxNumber={maxNumber}
+        dataURLKey="data_url"
+        onError={onError}
+      >
+        {({
+          imageList,
+          onImageUpload,
+          onImageRemove,
+          isDragging,
+          dragProps,
+        }) => (
+          // write your building UI
+          <div className="upload__image-wrapper">
+            <button
+              style={isDragging ? { color: 'red' } : undefined}
+              onClick={onImageUpload}
+              {...dragProps}
+            >
+              <PictureOutlined /> 사진추가
+            </button>
+            &nbsp;
+            {/* <button onClick={onImageRemoveAll}>Remove all images</button> */}
+            {imageList.map((image, index) => (
+              <div key={index} className="image-item">
+                <img src={image['data_url']} alt="" width="100" style={{ width: "100px" }} />
+                <div className="image-item__btn-wrapper">
+                  {/* <button onClick={() => onImageUpdate(index)}>수정</button> */}
+                  <button onClick={() => onImageRemove(index)}>삭제</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </ImageUploading>
+    </div>
+  )
+}
+
 
 function Board() {
 
@@ -108,7 +183,7 @@ function Board() {
       [name]: value
     });
   };
-  
+
 
   // const handleCreate = () => {
   //   const { title, content, link, category, joinnums, date, gbimg, list } = state;
@@ -130,13 +205,13 @@ function Board() {
 
   const plusNum = e => {
     e.preventDefault();
-    setNums(joinnums+1);
+    setNums(joinnums + 1);
   }
   const minusNum = e => {
     e.preventDefault();
-    if(joinnums>2){
-      setNums(joinnums-1);
-    } else{
+    if (joinnums > 2) {
+      setNums(joinnums - 1);
+    } else {
       alert('공동구매 인원은 최소 2명 입니다.')
     }
   }
@@ -150,7 +225,7 @@ function Board() {
 
   let profile_preview = null;
   if (postfiles.file !== null) {
-    profile_preview = <img src={postfiles.previewURL} alt="profileImg"/>
+    profile_preview = <img src={postfiles.previewURL} alt="profileImg" />
   }
 
   const uploadFile = (e) => {
@@ -158,14 +233,14 @@ function Board() {
     let reader = new FileReader();
     let file = e.target.files[0];
     const filesInArr = Array.from(e.target.files);
-  
+
     reader.onloadend = () => {
       setPostfiles({
         file: filesInArr,
         previewURL: reader.result,
       });
     };
-  
+
     if (file) {
       reader.readAsDataURL(file);
     }
@@ -173,24 +248,24 @@ function Board() {
 
   const addContent = e => {
     alert('글 등록 성공!')
-    window.location.href="/";
+    window.location.href = "/";
   }
 
   const { id, title, content, link, date, list } = state;
   const category = state.labels.map((label, index) => (<option key={index}>{label}</option>));
 
-  return(
+  return (
     <div id="container" className="container">
       <div id="inputform">
-      <h1 id="titlteh1">공동구매 등록</h1>
+        <h1 id="titlteh1">공동구매 등록</h1>
         <div id="title">
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
               <Form.Label id="left" className="content">글 제목</Form.Label>
-              <Form.Control required="required" type="text" name="title" onChange={handleChange} value={title} placeholder="Title"/>
+              <Form.Control required="required" type="text" name="title" onChange={handleChange} value={title} placeholder="Title" />
             </Form.Group>
           </Form>
-        </div>
+        </div><br />
         <div id="categoryList">
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
@@ -200,36 +275,36 @@ function Board() {
               </Form.Control>
             </Form.Group>
           </Form>
-        </div>
+        </div><br />
         <div id="link">
-            <Form>
+          <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
               <Form.Label id="left" className="link">구매 링크</Form.Label>
               <Form.Control type="text" name="link" onChange={handleChange} value={link} placeholder="Link" required="required" />
             </Form.Group>
           </Form>
-        </div>
+        </div><br />
         <div id="joinnum">
-        <Form>
+          <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-              <Form.Label id="left" className="joinnum">인원 수</Form.Label>
-                <Button id="numbtn" onClick={minusNum}>-</Button>
-                <span>{joinnums}</span>
-                <Button id="numbtn" onClick={plusNum}>+</Button>
+              <Form.Label id="left" className="joinnum">목표 인원</Form.Label>&nbsp;
+              <Button id="numbtn" onClick={minusNum}>-</Button>&nbsp;
+              <span>{joinnums}</span>&nbsp;
+              <Button id="numbtn" onClick={plusNum}>+</Button>
             </Form.Group>
           </Form>
-        </div>
-        <div id="date">
-        <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-              <Form.Label id="left" className="date">공동구매 마감일</Form.Label>
+        </div><br />
+        <div id="gbwriteDate">
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label className="date">공동구매 마감일</Form.Label>
               <DatePicker selected={startDate} minDate={moment().toDate()} onChange={(date) => setStartDate(date)} />
             </Form.Group>
           </Form>
-        </div>
+        </div><br />
         <div id="gbimg">
-        <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+          <Form>
+            {/* <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
             <label htmlFor="upload-file" id="uploadlabel">이미지 파일선택</label>
               <input
                 id="upload-file"
@@ -239,14 +314,15 @@ function Board() {
                 onChange={uploadFile}
               ></input>
               {profile_preview}
-            </Form.Group>
+            </Form.Group> */}
+            <UploadImage />
           </Form>
-        </div>
-        <div id="content">
+        </div><br />
+        <div id="gbwriteContent">
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
               <Form.Label id="left" >상품 소개 및 설명</Form.Label>
-              <Form.Control as="textarea" className="content" cols={70} rows={5} onChange={handleChange} value={content} placeholder="Content" style={{resize: "none"}}/>
+              <Form.Control as="textarea" className="content" cols={70} rows={5} onChange={handleChange} value={content} placeholder="Content" style={{ resize: "none" }} />
             </Form.Group>
             <Button id="submitbtn" onClick={addContent}>추가</Button>
           </Form>
