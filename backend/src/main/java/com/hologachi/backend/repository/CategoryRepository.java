@@ -17,6 +17,11 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
 //	@Transactional
 //	@Modifying
-//	@Query("delete form Category")
+//	@Query("delete from TBL_CATEGORY2 AS C where C.CATEGORY2_ID in :ids")
+//	Category deleteAllByIds(int[] ids);
+
+//	@Transactional
+//	@Modifying
+//	@Query("delete from Category")
 //	Category deleteAllById(int[] ids);
 }

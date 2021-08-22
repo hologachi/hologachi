@@ -10,6 +10,7 @@ class ListGBCategory extends Component {
         cat2: '', // 추가할 카테고리 소분류
         hintData1: [], // 대분류 자동완성 데이터
         hintData2: [], // 소분류 자동완성 데이터
+        ids: [], // 삭제할 카테고리2 id 배열
     }
 
     handleClose = () => { // 모달 닫기
@@ -22,6 +23,18 @@ class ListGBCategory extends Component {
         this.setState(
             {show: true}
         );
+    }
+
+    handleCheck = (e) => { // 삭제할 항목 선택 및 취소 
+        let choose = e.target.value; 
+
+        if(this.state.ids.findIndex(id => id == choose)) {
+            this.state.ids.push(choose)
+        } else {
+            this.state.ids.pop(choose)
+        }
+        
+        console.log(this.state.ids)
     }
 
     render() {
@@ -38,9 +51,9 @@ class ListGBCategory extends Component {
 
         return (
             <div className="manageCategory_body">
-                <div className="cateogoryList">
+                <div className="categoryList">
                     <h4>카테고리 목록</h4>
-                    <form onSubmit={() => {this.props.handleSubmit()}}>
+                    <form onSubmit={() => {this.props.handleDelete()}}>
                     <Table striped bordered hover>
                         <thead>
                             <tr>
@@ -56,10 +69,10 @@ class ListGBCategory extends Component {
                             this.props.categories && this.props.categories.map(
                                 (category) => 
                                 <tr key = {category.id2}>
-                                    <td>{category.id1}. {category.cat1}</td>
-                                    <td>{category.id2}. {category.cat2}</td>
+                                    <td>{category.cat1}</td>
+                                    <td>{category.cat2}</td>
                                     <td><Button onClick={() => alert('click')}>카테고리 수정</Button></td>
-                                    <td><input type="checkbox" label={category.cat2} id={category.cat2}></input></td>
+                                    <td><input type="checkbox" onChange={this.handleCheck} value={category.id2}></input></td>
                                 </tr>
                             )
                         }

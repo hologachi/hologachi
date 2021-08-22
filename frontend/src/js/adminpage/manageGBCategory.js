@@ -34,19 +34,27 @@ class manageGBCategory extends Component {
 
     handleAddCat(cat1, cat2) { // 카테고리 추가
         // event.preventDefault();
-        if(cat1 != null && cat2 != null) {
+        if(cat1 != '' && cat2 != '') {
             let category = {cat1: cat1, cat2: cat2};
-            console.log(category);
+            // console.log(category);
             
             AdminService.createCategory(category).then((_res) => {
-                // this.props.history.push('/mGB');
+                
             });
         }
         
-        // alert('카테고리 추가가 요청되었습니다');
+        alert('카테고리 추가가 요청되었습니다');
     }
     
-    handleSubmit = () => { // 카테고리 수정 및 삭제 
+    handleDelete(ids) { // 카테고리 삭제 
+        if(ids != null) {
+            console.log(ids);
+            
+            AdminService.deleteCategories(ids).then((_res) => {
+                
+            });
+        }
+
         alert('카테고리 관련 수정이 요청되었습니다');
     }
 
