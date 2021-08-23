@@ -17,11 +17,18 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
 	Category findByCat2(String cat2);
 	
 	@Transactional
+	@Modifying
+	@Query("DELETE FROM Category WHERE id2 = :id2")
+	Category deleteById2(@Param(value = "id2")int id2);
+	
+	@Transactional
 //	@Modifying
 	@Query("DELETE FROM Category WHERE id2 in :id2")
 	public Category deleteById2In(@Param(value = "id2") int[] id2);
 
 	Category findById2In(int[] temp);
+
+	
 
 	
 }

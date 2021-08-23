@@ -25,26 +25,25 @@ public class CategoryEntityTest {
 	public void init() 
 	{
 		categoryRepository.save(new Category("test","test"));
-		categoryRepository.save(new Category(2, "test", 2,"test"));
 	}
 	
 	@Test
 	public void 엔티티_제대로_됐나_테스트() 
 	{
 		Category category = categoryRepository.findByCat2("test");
-		
-		assertEquals(category.getCat1(), "test");
+//		
+		assertEquals(category.getCat2(), "test");
 		assertEquals(category.getCat2(), "test");
 	}
 	
 	@Test
 	public void 카테고리_삭제_테스트() 
 	{	
-		int[] temp = {2};
+		int id = 105;
 		
 		long beforeDelete = categoryRepository.count();
 		
-		categoryRepository.deleteById2In(temp);
+		categoryRepository.deleteById(id);
 		
 		long afterDelete = categoryRepository.count();
 		

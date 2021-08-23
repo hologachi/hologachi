@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -80,7 +81,12 @@ public class AdminController {
 	public List<Category> getAllGBCategory() {
 		return categoryRepository.findAll();
 	}
-//	카테고리 삭제
+//	카테고리 하나 삭제
+	@GetMapping("/mGBCategory/delete/{id2}")
+	public void deleteGBCategory(@PathVariable("id2") int id2) {
+		categoryRepository.deleteById2(id2);
+	}
+//	카테고리 여러 개 삭제 
 	@PostMapping("/mGBCategory/delete")
 	public Category deleteGBCategories(@RequestBody int[] id2s) {
 		System.out.println("ids : "+id2s.toString());
@@ -89,7 +95,6 @@ public class AdminController {
 //		}
 //		Integer[] temp = Arrays.stream(id2s).boxed().toArray(Integer[]::new);
 		return categoryRepository.deleteById2In(id2s);
-		
 	}
 //	카테고리 수정
 //	카테고리 추가

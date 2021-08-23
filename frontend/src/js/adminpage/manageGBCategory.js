@@ -46,18 +46,28 @@ class manageGBCategory extends Component {
         alert('카테고리 추가가 요청되었습니다');
     }
     
-    handleDelete(ids) { // 카테고리 삭제 
-        if(Array.isArray(ids) && ids.length !== 0) {
+    handleDelete(id2) { // 카테고리 삭제 
+        // if(Array.isArray(ids) && ids.length !== 0) {
 
-            console.log(ids);
-            ids.map(function(item) {
-                return parseInt(item, 10);
-            })
+        //     console.log(ids);
+        //     ids.map(function(item) {
+        //         return parseInt(item, 10);
+        //     })
 
-            AdminService.deleteCategories(ids).then((_res) => {
+        //     AdminService.deleteCategories(ids).then((_res) => {
                 
-            });
-            alert('카테고리 관련 수정이 요청되었습니다');
+        //     });
+        //     alert('카테고리 관련 수정이 요청되었습니다');
+        // } else {
+        //     alert('삭제할 카테고리를 선택하십시오');
+        // }
+
+        if(id2 != '') {
+
+            console.log(id2);
+            
+            AdminService.deleteCategory(id2).then((_res) => {});
+            alert('카테고리 관련 삭제가 요청되었습니다');
         } else {
             alert('삭제할 카테고리를 선택하십시오');
         }

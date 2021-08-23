@@ -31,8 +31,12 @@ class AdminService {
         return axios.post(MGBCATEGORY_URL + '/add', category);
     }
 
-    deleteCategories(ids) { // 카테고리 삭제
-        return axios.post(MGBCATEGORY_URL + '/delete', ids);
+    deleteCategory(id2) { // 카테고리 하나 삭제
+        console.log(id2);
+        return axios.delete(MGBCATEGORY_URL + '/' + id2);
+    }
+    deleteCategories(id2s) { // 카테고리 여러개 삭제
+        return axios.post(MGBCATEGORY_URL + '/delete', id2s);
     }
     
 }
