@@ -5,6 +5,7 @@ import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.hologachi.backend.model.*;
@@ -13,15 +14,14 @@ import com.hologachi.backend.model.*;
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
 	@Transactional
-	Category findById2(int id);
-
-//	@Transactional
+	Category findByCat2(String cat2);
+	
+	@Transactional
 //	@Modifying
-//	@Query("delete from TBL_CATEGORY2 AS C where C.CATEGORY2_ID in :ids")
-//	Category deleteAllByIds(int[] ids);
+	@Query("DELETE FROM Category WHERE id2 in :id2")
+	public Category deleteById2In(@Param(value = "id2") int[] id2);
 
-//	@Transactional
-//	@Modifying
-//	@Query("delete from Category")
-//	Category deleteAllById(int[] ids);
+	Category findById2In(int[] temp);
+
+	
 }

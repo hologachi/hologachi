@@ -17,7 +17,6 @@ import com.hologachi.backend.repository.CategoryRepository;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace=AutoConfigureTestDatabase.Replace.NONE)
 public class CategoryEntityTest {
-	String temp = "가전제품";
 	
 	@Autowired
 	private CategoryRepository categoryRepository;
@@ -25,26 +24,31 @@ public class CategoryEntityTest {
 	@Before
 	public void init() 
 	{
-		Category category = categoryRepository.save(new Category(2, "가전제품", 2, "노트북"));
+		categoryRepository.save(new Category("test","test"));
+		categoryRepository.save(new Category(2, "test", 2,"test"));
 	}
 	
 	@Test
 	public void 엔티티_제대로_됐나_테스트() 
 	{
-		Category category = categoryRepository.findById2(2);
-		assertEquals(category.getCat1(), "가전제품");
-		assertEquals(category.getCat2(), "노트북");
+		Category category = categoryRepository.findByCat2("test");
+		
+		assertEquals(category.getCat1(), "test");
+		assertEquals(category.getCat2(), "test");
 	}
 	
-//	@Test
-//	public void 카테고리_삭제_테스트() 
-//	{
-//		int[] ids = {30, 31};
-//		
-//		Category category = categoryRepository.deleteAllById(ids);
-//		
-//		assertEquals(category.getId(), "가전제품");
-//		assertEquals(category.getCat2(), "노트북");
-//	}
+	@Test
+	public void 카테고리_삭제_테스트() 
+	{	
+		int[] temp = {2};
+		
+		long beforeDelete = categoryRepository.count();
+		
+		categoryRepository.deleteById2In(temp);
+		
+		long afterDelete = categoryRepository.count();
+		
+		assertEquals(beforeDelete, afterDelete + 1);
+	}
 	
 }

@@ -47,15 +47,22 @@ class manageGBCategory extends Component {
     }
     
     handleDelete(ids) { // 카테고리 삭제 
-        if(ids != null) {
+        if(Array.isArray(ids) && ids.length !== 0) {
+
             console.log(ids);
-            
+            ids.map(function(item) {
+                return parseInt(item, 10);
+            })
+
             AdminService.deleteCategories(ids).then((_res) => {
                 
             });
+            alert('카테고리 관련 수정이 요청되었습니다');
+        } else {
+            alert('삭제할 카테고리를 선택하십시오');
         }
 
-        alert('카테고리 관련 수정이 요청되었습니다');
+        
     }
 
     render() {
@@ -67,7 +74,7 @@ class manageGBCategory extends Component {
                 <ListCategory 
                     categories={this.state.categories} 
                     handleAddCat={this.handleAddCat}
-                    handleSubmit={this.handleSubmit}
+                    handleDelete={this.handleDelete}
                 />
                 
                 <Footer />

@@ -1,5 +1,6 @@
 package com.hologachi.backend.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,11 +81,16 @@ public class AdminController {
 		return categoryRepository.findAll();
 	}
 //	카테고리 삭제
-//	@PostMapping("/mGBCategory/delete")
-//	public Category deleteGBCategory(int[] ids) {
-//		return categoryRepository.deleteAllByIds(ids);
-//		
-//	}
+	@PostMapping("/mGBCategory/delete")
+	public Category deleteGBCategories(@RequestBody int[] id2s) {
+		System.out.println("ids : "+id2s.toString());
+//		for(int i = 0 ;i < id2s.length(); i++) {
+//			System.out.println(id2s[i] + "\t");
+//		}
+//		Integer[] temp = Arrays.stream(id2s).boxed().toArray(Integer[]::new);
+		return categoryRepository.deleteById2In(id2s);
+		
+	}
 //	카테고리 수정
 //	카테고리 추가
 	@PostMapping("/mGBCategory/add")

@@ -27,11 +27,13 @@ class ListGBCategory extends Component {
 
     handleCheck = (e) => { // 삭제할 항목 선택 및 취소 
         let choose = e.target.value; 
-
-        if(this.state.ids.findIndex(id => id == choose)) {
+        console.log(choose)
+        let result = this.state.ids.findIndex((element, index, array) => element == choose);
+        console.log(result)
+        if(result == -1) {
             this.state.ids.push(choose)
         } else {
-            this.state.ids.pop(choose)
+            this.state.ids.splice(result, 1)
         }
         
         console.log(this.state.ids)
@@ -71,7 +73,7 @@ class ListGBCategory extends Component {
                                 <tr key = {category.id2}>
                                     <td>{category.cat1}</td>
                                     <td>{category.cat2}</td>
-                                    <td><Button onClick={() => alert('click')}>카테고리 수정</Button></td>
+                                    <td><Button onClick={() => alert('click')}>수정</Button></td>
                                     <td><input type="checkbox" onChange={this.handleCheck} value={category.id2}></input></td>
                                 </tr>
                             )
@@ -81,7 +83,7 @@ class ListGBCategory extends Component {
                                 <Button onClick={this.handleShow}>카테고리 추가</Button>
                             </td>
                             <td>
-                                <Button onClick={() => alert('click')}>카테고리 삭제</Button>
+                                <Button onClick={() => this.props.handleDelete(this.state.ids)}>선택 항목 삭제</Button>
                             </td>
                         </tr>
                         </tbody>
