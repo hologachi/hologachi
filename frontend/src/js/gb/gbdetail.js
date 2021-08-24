@@ -118,7 +118,7 @@ function callback(str) {
 useEffect(
   () => {
     axios({
-      url: `/gb/gbdetail/${productId}`,
+      url: `/post/postDetail/${productId}`,
       method: 'GET'
     }).then((res) => {
       callback(res.data);

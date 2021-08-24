@@ -10,25 +10,27 @@ import axios from "axios";
 import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
-    icon: {
-      marginRight: theme.spacing(2),
-    },
-    cardGrid: {
-      paddingTop: theme.spacing(8),
-      paddingBottom: theme.spacing(8),
-    },
-    card: {
-      height: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-    },
-    cardMedia: {
-      paddingTop: '56.25%', // 16:9
-    },
-    cardContent: {
-      flexGrow: 1,
-    },
-  }));
+  icon: {
+    marginRight: theme.spacing(2),
+  },
+  cardGrid: {
+    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(8),
+  },
+  card: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  cardMedia: {
+    paddingTop: '56.25%', // 16:9
+  },
+  cardContent: {
+    flexGrow: 1,
+    width: '300px',
+    height: '200px'
+  },
+}));
 
   const sortProducts = ["최신 등록순","공구 마감일순","인기순"]
 
@@ -51,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
    useEffect(
      () => {
        axios({
-         url: '/gb/gblist',
+         url: '/post/postList',
          method: 'GET'
        }).then((res) => {
          callback(res.data);
@@ -67,6 +69,7 @@ const useStyles = makeStyles((theme) => ({
 
       return (
         <div key={product.id}>
+        <Grid item key={product.postId} item xs={12} id="grid">
         <Card className={classes.product} id="card">
             <Link to={`/gb/gbdetail/${product.post_id}`}>
             <CardMedia
@@ -96,6 +99,7 @@ const useStyles = makeStyles((theme) => ({
                 </Typography>
               </CardContent>
               </Card>
+              </Grid>
           <hr />
         </div>
       );
@@ -117,11 +121,11 @@ const useStyles = makeStyles((theme) => ({
           </div>
         </div>
         
-        <Grid container spacing={4}>
-            <Grid item key={products.id} xs={12} sm={6} md={4}><hr />
-              {products}
-            </Grid>
-        </Grid>
+        <Grid container spacing={4}
+      container justifyContent="center" 
+      > 
+          {products}
+      </Grid>
         <Paginate id="pagi"/>
       </Container>
     )

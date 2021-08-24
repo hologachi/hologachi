@@ -34,7 +34,7 @@ function callback(str) {
 useEffect(
     () => {
       axios({
-          url: '/mypage/profile',
+          url: '/mypage/mypage/profile',
           method: 'GET'
       }).then((res) => {
           callback(res.data);
