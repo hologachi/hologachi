@@ -62,6 +62,21 @@ public class AdminController {
 	}
 	
 //	회원 권한 수정 
+	@PostMapping("/mUser/update/{id}")
+	public ResponseEntity<User> searchTheUsers(@PathVariable int id, @RequestBody int new_auth) {
+		Optional<User> temp = userRepository.findById(id);
+		
+		if(!temp.isPresent()) { // 없는 사람인 경우 
+			return ResponseEntity.ok(null);
+		} 
+		
+		User user = temp.get();
+		user.setIs_admin(new_auth);
+
+		User updatedUser = userRepository.save(user);
+		
+		return ResponseEntity.ok(updatedUser);
+	}
 //	회원 작성글 조회
 	
 //	2. 공동구매 글 관리 

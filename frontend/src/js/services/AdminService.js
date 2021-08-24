@@ -7,13 +7,18 @@ const MGBCATEGORY_URL = "http://localhost:8080/admin/mGBCategory";
 
 class AdminService {
 
+    // 회원 관련
     getAllUsers() { // 모든 회원 조회
         return axios.get(MUSER_URL);
     }
-
+    updateAuth(id, new_auth) { // 회원 권한 수정
+        console.log(id + ': ' + new_auth);
+        return axios.post(MUSER_URL + '/update/' + id, new_auth);
+    }
     searchTheUsers() { // 회원 검색 
         return axios.post(MUSER_URL);
     }
+
 
     getAllGBPosts() { // 모든 공동구매 글 조회
         return axios.get(MGBPOST_URL);

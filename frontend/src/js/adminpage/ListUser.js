@@ -3,10 +3,11 @@ import { Table, Button, Modal } from 'react-bootstrap';
 
 const ListUser = (props) => {
     const [form, setForm] = useState({
-        user: '', //권한 변경할 유저 닉네임
+        id: '', //권한 변경할 유저 아이디
+        nickname: '', //권한 변경할 유저 닉네임
         new_auth: '',
     })
-    const { user, new_auth } = form;
+    const { id, nickname, new_auth } = form;
     const onChange = e => {
         const nextForm = {
             ...form,
@@ -14,20 +15,21 @@ const ListUser = (props) => {
         };
         setForm(nextForm);
     }
-    const onClick = () => {
-        alert(user + '님의 권한은 ' + new_auth);
-        setForm({
-            user: '',
-            new_auth: ''
-        });
-    };
-    const onKeyPress = e => {
-        if(e.key === 'Enter') {
-            onClick();
-        }
-    };
 
-    const [showModalAdmin, setSetModalAdmin] = useState(false);
+    const [authGroup, setAuthGroup] = useState({
+        '0': false,
+        '1': false,
+        '-1': false
+    })
+
+    const handleRadio = (e) => {
+        setForm({
+            new_auth: [e.target.value]
+        })
+        setAuthGroup({
+            [e.target.value]: [e.target.checked]
+        })
+    };
 
     const translationIsAdmin = (value) => {
         switch(value) {
@@ -42,11 +44,13 @@ const ListUser = (props) => {
         }   
     };
 
-    const handleClose = (event, modal) => {
+    const [showModalAdmin, setSetModalAdmin] = useState(false);
+
+    const handleModalAdminClose = () => {
         setSetModalAdmin(false);
     };
 
-    const handleShow = (event, modal) => {
+    const handleModalAdminShow = () => {
         setSetModalAdmin(true);
     };
 
@@ -76,7 +80,7 @@ const ListUser = (props) => {
                             <td>{user.sgst_rate} 점</td>
                             <td>{user.rqst_rate} 점</td>
                             <td>{translationIsAdmin(user.is_admin)}</td>
-                            <td><Button onClick={e => handleShow(e, 'showModalAdmin')}>회원 권한 수정</Button></td>
+                            <td><Button onClick={() => {handleModalAdminShow(); setForm({id: user.userId, nickname: user.nickname, new_auth: user.is_admin});}}>회원 권한 수정</Button></td>
                             <td><Button>작성글 조회</Button></td>
                         </tr>
                     )
@@ -84,18 +88,37 @@ const ListUser = (props) => {
                 </tbody>
             </Table>
             
-            <Modal show={showModalAdmin} onHide={(event) => handleClose(event, 'showModalAdmin')}>
+            <Modal show={showModalAdmin} onHide={handleModalAdminClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>{user} 님의 새로운 권한을 선택해주세요.</Modal.Title>
+                    <Modal.Title>{nickname} 님의 새로운 권한을 선택해주세요.</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <input type="radio" />
+                <ul>
+                    <ol>
+                        <label>
+                            <input type="radio" name="authGroup" value='0' checked={authGroup[0]} onChange={handleRadio} />
+                            {translationIsAdmin(0)}
+                        </label>
+                    </ol>
+                    <ol>
+                        <label>
+                            <input type="radio" name="authGroup" value='1' checked={authGroup[1]} onChange={handleRadio} />
+                            {translationIsAdmin(1)}
+                        </label>
+                    </ol>
+                    <ol>
+                        <label>
+                            <input type="radio" name="authGroup" value='-1' checked={authGroup[-1]} onChange={handleRadio} />
+                            {translationIsAdmin(-1)}
+                        </label>
+                    </ol>
+                </ul>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={(event) => handleClose(event, 'showModalAdmin')}>
+                    <Button variant="secondary" onClick={handleModalAdminClose}>
                         취소
                     </Button>
-                    <Button variant="primary" onClick={(event) => {handleClose(event, 'showModalAdmin');}}>
+                    <Button variant="primary" onClick={() => props.handleUpdateAuth(id, new_auth)}>
                         수정
                     </Button>
                 </Modal.Footer>

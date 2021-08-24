@@ -28,7 +28,18 @@ class manageUser extends Component {
 
             console.log(this.state.users);
         }) 
-        
+    }
+
+    handleUpdateAuth = (id, new_auth) => {
+        if(id !== undefined && id != '') {
+            // 회원 권한 수정
+            AdminService.updateAuth(id, new_auth).then((res) => {
+                this.loadUsers();
+            }) 
+            alert('사용자 권한을 수정했습니다.');
+        } else {
+            alert('사용자 권한 수정 요청을 실패했습니다.');
+        }
     }
 
     render() {
@@ -39,7 +50,7 @@ class manageUser extends Component {
 
                 <SearchUser />
 
-                <ListUser users={this.state.users}/>
+                <ListUser users={this.state.users} handleUpdateAuth={this.handleUpdateAuth}/>
 
                 <Footer />
             </div>
