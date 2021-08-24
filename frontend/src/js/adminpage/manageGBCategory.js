@@ -36,7 +36,7 @@ class manageGBCategory extends Component {
             this.setState(
                 { categories: res.data }
             );
-            console.log(this.state.categories);
+            // console.log(this.state.categories);
         }) 
         
     }
@@ -44,14 +44,14 @@ class manageGBCategory extends Component {
     handleAddCat = (e) => { // 카테고리 추가
 
         let addCat1 = this.state.addCat1;
-        let addCat2 = "전자레인지";
+        let addCat2 = this.state.addCat2;
 
-        console.log(addCat1);
-        console.log(addCat2);
+        // console.log(addCat1);
+        // console.log(addCat2);
 
         if(addCat1 !== '' && addCat2 !== '') {
-            let category = {cat1: this.state.addCat1, cat2: this.state.addCat2};
-            console.log(category);
+            let category = {cat1: addCat1, cat2: addCat2};
+            // console.log(category);
             
             AdminService.createCategory(category).then((_res) => {
                 alert('카테고리 추가가 요청되었습니다');
@@ -81,11 +81,8 @@ class manageGBCategory extends Component {
         //     alert('삭제할 카테고리를 선택하십시오');
         // }
 
-        console.log(id2);
+        // console.log(id2);
         if(id2 !== null && id2 !== '') {
-
-            console.log(id2);
-            
             AdminService.deleteCategory(id2).then((_res) => {
                 this.loadCategories();
             });
@@ -99,14 +96,12 @@ class manageGBCategory extends Component {
 
     handleUpdate = (e) => { // 카테고리 수정
         let id2 = this.state.updateId2;
-        console.log(id2);
         let category = {cat1: this.state.updateCat1, cat2: this.state.updateCat2};
-        console.log(category);
+
+        // console.log(id2);
+        // console.log(category);
 
         if(id2 !== null && id2 !== '') {
-
-            console.log(id2);
-            
             AdminService.updateCategory(id2, category).then((_res) => {
                 this.loadCategories();
             });
@@ -161,12 +156,12 @@ class manageGBCategory extends Component {
         // 대분류 힌트 데이터 생성
         this.state.categories && this.state.categories.map(
             (category) => 
-                this.state.hintData1.push(category.category1.addCat1)
+                this.state.hintData1.push(category.category1.cat1)
         )
         // 소분류 힌트 데이터 생성
         this.state.categories && this.state.categories.map(
             (category) => 
-                this.state.hintData2.push(category.addCat2)
+                this.state.hintData2.push(category.cat2)
         )
 
         return (
@@ -222,15 +217,15 @@ class manageGBCategory extends Component {
                             <ul>
                                 <li>
                                     대분류 : 
-                                    {/* <Hint options={this.state.hintData1} allowTabFill> */}
-                                        <input name="addCat1" value={this.state.addCat1} onChange={(e) => this.setState({addCat1: e.target.value})} ></input>
-                                    {/* </Hint> */}
+                                    <Hint options={this.state.hintData1} allowTabFill>
+                                        <input id="addCat1"  value={this.state.addCat1} onChange={(e) => this.setState({addCat1: e.target.value})} ></input>
+                                    </Hint>
                                 </li>
                                 <li>
                                     소분류 : 
-                                    {/* <Hint options={this.state.hintData2} allowTabFill> */}
+                                    <Hint options={this.state.hintData2} allowTabFill>
                                         <input name="addCat2" value={this.state.addCat2} onChange={(e) => this.setState({addCat2: e.target.value})} ></input>
-                                    {/* </Hint> */}
+                                    </Hint>
                                 </li>
                             </ul>
                         </Modal.Body>
@@ -249,15 +244,15 @@ class manageGBCategory extends Component {
                             <ul>
                                 <li>
                                     대분류 : 
-                                    {/* <Hint options={this.state.hintData1} allowTabFill> */}
+                                    <Hint options={this.state.hintData1} allowTabFill>
                                         <input name="updateCat1" value={this.state.updateCat1} onChange={(e) => this.setState({updateCat1: e.target.value})} ></input>
-                                    {/* </Hint> */}
+                                    </Hint>
                                 </li>
                                 <li>
                                     소분류 : 
-                                    {/* <Hint options={this.state.hintData2} allowTabFill> */}
+                                    <Hint options={this.state.hintData2} allowTabFill>
                                         <input name="updateCat2" value={this.state.updateCat2} onChange={(e) => this.setState({updateCat2: e.target.value})} ></input>
-                                    {/* </Hint> */}
+                                    </Hint>
                                 </li>
                             </ul>
                         </Modal.Body>

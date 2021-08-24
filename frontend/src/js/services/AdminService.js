@@ -29,12 +29,12 @@ class AdminService {
     }
 
     createCategory(category) { // 카테고리 추가
-        console.log(category);
+        // console.log(category);
         return axios.post(MGBCATEGORY_URL + '/add', category);
     }
 
     deleteCategory(id2) { // 카테고리 하나 삭제
-        console.log(id2);
+        // console.log(id2);
         return axios.get(MGBCATEGORY_URL + '/delete/' + id2);
     }
     deleteCategories(id2s) { // 카테고리 여러개 삭제
@@ -42,7 +42,7 @@ class AdminService {
     }
 
     updateCategory(id2, category) { // 카테고리 수정
-        console.log(category);
+        // console.log(category);
         return axios.post(MGBCATEGORY_URL + '/update/' + id2, category);
     }
     
