@@ -14,9 +14,11 @@ import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Setter
 @Entity
 @Table(name="TBL_CATEGORY2")
 public class Category2 {
@@ -30,7 +32,6 @@ public class Category2 {
 	
 	@ManyToOne
 	@JoinColumn(name = "CATEGORY1_ID")
-//	@Column(name = "CATEGORY1_ID", nullable=false)
 	private Category1 category1;
 	
 	public Category2(Category1 category1, String cat2) { // 대분류 이름, 소분류 이름 

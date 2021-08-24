@@ -12,12 +12,18 @@ import AdminService from '../services/AdminService'; //백엔드 연결
 class manageGBCategory extends Component {
     state = {
         categories: [], // 카테고리 데이터
-        show: false, //모달 상태
-        cat1: '', // 추가할 카테고리 대분류
-        cat2: '', // 추가할 카테고리 소분류
+        showModalA: false, //Add 모달 상태
         hintData1: [], // 대분류 자동완성 데이터
         hintData2: [], // 소분류 자동완성 데이터
+        addCat1: '', // 추가할 카테고리 대분류
+        addCat2: '', // 추가할 카테고리 소분류
+        // delete 관련
         // ids: [], // 삭제할 카테고리2 id 배열
+        // update 관련 
+        showModalU: false, //Update 모달 상태
+        updateId2: '', // 수정할 id2
+        updateCat1: '', // 수정할 카테고리 대분류
+        updateCat2: '', // 수정할 카테고리 소분류
     }
 
     componentDidMount() {
@@ -35,16 +41,16 @@ class manageGBCategory extends Component {
         
     }
 
-    handleAddCat = () => { // 카테고리 추가
+    handleAddCat = (e) => { // 카테고리 추가
 
-        let cat1 = this.state.cat1;
-        let cat2 = "전자레인지";
+        let addCat1 = this.state.addCat1;
+        let addCat2 = "전자레인지";
 
-        console.log(cat1);
-        console.log(cat2);
+        console.log(addCat1);
+        console.log(addCat2);
 
-        if(cat1 !== '' && cat2 !== '') {
-            let category = {cat1: this.state.cat1, cat2: this.state.cat2};
+        if(addCat1 !== '' && addCat2 !== '') {
+            let category = {cat1: this.state.addCat1, cat2: this.state.addCat2};
             console.log(category);
             
             AdminService.createCategory(category).then((_res) => {
@@ -56,7 +62,7 @@ class manageGBCategory extends Component {
         }
         
         this.clear();
-        this.handleClose();
+        this.handleClose(e, 'showModalA');
     }
     
     handleDelete(event, id2) { // 카테고리 삭제 
@@ -88,22 +94,45 @@ class manageGBCategory extends Component {
         } else {
             alert('카테고리 관련 삭제 요청이 실패하였습니다.');
         }
-
         
     }
 
-    handleClose = () => { // 모달 닫기
+    handleUpdate = (e) => { // 카테고리 수정
+        let id2 = this.state.updateId2;
+        console.log(id2);
+        let category = {cat1: this.state.updateCat1, cat2: this.state.updateCat2};
+        console.log(category);
+
+        if(id2 !== null && id2 !== '') {
+
+            console.log(id2);
+            
+            AdminService.updateCategory(id2, category).then((_res) => {
+                this.loadCategories();
+            });
+            alert('카테고리 관련 수정이 요청되었습니다.');
+            
+        } else {
+            alert('카테고리 관련 수정 요청이 실패하였습니다.');
+        } 
+
+        this.clear();
+        this.handleClose(e, 'showModalU');
+    }
+
+
+    handleClose(event, modal) { // 모달 닫기
         this.setState(
-            {show: false}
+            {[modal]: false}
         );
     }
 
-    handleShow = () => { // 모달 보이기
+    handleShow(event, modal) { // 모달 보이기
         this.setState(
-            {show: true}
+            {[modal]: true}
         );
     }
-
+    
     // handleCheck = (e) => { // 삭제할 항목 선택 및 취소 
     //     let choose = e.target.value; 
     //     console.log(choose)
@@ -117,11 +146,13 @@ class manageGBCategory extends Component {
     //     clearIds()
     //     console.log(this.state.ids)
     // }
-
+    
     clear = () => {
         this.setState({
-            cat1: '',
-            cat2: '',
+            addCat1: '',
+            addCat2: '',
+            updateCat1: '',
+            updateCat2: '',
         });
     }
 
@@ -130,12 +161,12 @@ class manageGBCategory extends Component {
         // 대분류 힌트 데이터 생성
         this.state.categories && this.state.categories.map(
             (category) => 
-                this.state.hintData1.push(category.category1.cat1)
+                this.state.hintData1.push(category.category1.addCat1)
         )
         // 소분류 힌트 데이터 생성
         this.state.categories && this.state.categories.map(
             (category) => 
-                this.state.hintData2.push(category.cat2)
+                this.state.hintData2.push(category.addCat2)
         )
 
         return (
@@ -164,7 +195,7 @@ class manageGBCategory extends Component {
                                 <tr key = {category.id2}>
                                     <td>{category.category1.cat1}</td>
                                     <td>{category.cat2}</td>
-                                    <td><Button onClick={this.handleDelete}>수정</Button></td>
+                                    <td><Button onClick={(event) => {this.handleShow(event, 'showModalU'); this.setState({updateId2: category.id2, updateCat1: category.category1.cat1, updateCat2: category.cat2})}}>수정</Button></td>
                                     <td><Button onClick={(event) => this.handleDelete(event, category.id2)}>삭제</Button></td>    
                                     {/* <td><input type="checkbox" onChange={this.handleCheck} value={category.id2}></input></td> */}
                                 </tr>
@@ -172,7 +203,7 @@ class manageGBCategory extends Component {
                         }
                         <tr>
                             <td colSpan="3">
-                                <Button onClick={this.handleShow}>카테고리 추가</Button>
+                                <Button onClick={(event) => this.handleShow(event, 'showModalA')}>카테고리 추가</Button>
                             </td>
                             <td>
                                 {/* <Button onClick={() => this.state.handleDelete(this.state.ids)}>선택 항목 삭제</Button> */}
@@ -182,7 +213,8 @@ class manageGBCategory extends Component {
                     </Table>
                     {/* </form> */}
 
-                    <Modal show={this.state.show} onHide={this.handleClose}>
+                    {/* 추가용 모달 */}
+                    <Modal show={this.state.showModalA} onHide={(event) => this.handleClose(event, 'showModalA')}>
                         <Modal.Header closeButton>
                             <Modal.Title>카테고리를 추가하세요</Modal.Title>
                         </Modal.Header>
@@ -191,20 +223,47 @@ class manageGBCategory extends Component {
                                 <li>
                                     대분류 : 
                                     {/* <Hint options={this.state.hintData1} allowTabFill> */}
-                                        <input name="cat1" value={this.state.cat1} onChange={(e) => this.setState({cat1: e.target.value})} ></input>
+                                        <input name="addCat1" value={this.state.addCat1} onChange={(e) => this.setState({addCat1: e.target.value})} ></input>
                                     {/* </Hint> */}
                                 </li>
                                 <li>
                                     소분류 : 
                                     {/* <Hint options={this.state.hintData2} allowTabFill> */}
-                                        <input name="cat2" value={this.state.cat2} onChange={(e) => this.setState({cat2: e.target.value})} ></input>
+                                        <input name="addCat2" value={this.state.addCat2} onChange={(e) => this.setState({addCat2: e.target.value})} ></input>
                                     {/* </Hint> */}
                                 </li>
                             </ul>
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button variant="secondary" onClick={this.handleClose}>닫기</Button>
+                            <Button variant="secondary" onClick={(event) => this.handleClose(event, 'showModalA')}>닫기</Button>
                             <Button onClick={this.handleAddCat}>추가</Button>
+                        </Modal.Footer>
+                    </Modal>
+
+                    {/* 수정용 모달 */}
+                    <Modal show={this.state.showModalU} onHide={(event) => this.handleClose(event, 'showModalU')}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>카테고리를 수정하세요</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <ul>
+                                <li>
+                                    대분류 : 
+                                    {/* <Hint options={this.state.hintData1} allowTabFill> */}
+                                        <input name="updateCat1" value={this.state.updateCat1} onChange={(e) => this.setState({updateCat1: e.target.value})} ></input>
+                                    {/* </Hint> */}
+                                </li>
+                                <li>
+                                    소분류 : 
+                                    {/* <Hint options={this.state.hintData2} allowTabFill> */}
+                                        <input name="updateCat2" value={this.state.updateCat2} onChange={(e) => this.setState({updateCat2: e.target.value})} ></input>
+                                    {/* </Hint> */}
+                                </li>
+                            </ul>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={(event) => this.handleClose(event, 'showModalU')}>닫기</Button>
+                            <Button onClick={this.handleUpdate}>수정</Button>
                         </Modal.Footer>
                     </Modal>
                 </div>

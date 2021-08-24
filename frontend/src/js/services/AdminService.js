@@ -23,6 +23,7 @@ class AdminService {
         return axios.get(MGB_URL);
     }
 
+    // 카테고리 관련 
     getAllCategories() { // 모든 카테고리 조회
         return axios.get(MGBCATEGORY_URL);
     }
@@ -38,6 +39,11 @@ class AdminService {
     }
     deleteCategories(id2s) { // 카테고리 여러개 삭제
         return axios.post(MGBCATEGORY_URL + '/delete', id2s);
+    }
+
+    updateCategory(id2, category) { // 카테고리 수정
+        console.log(category);
+        return axios.post(MGBCATEGORY_URL + '/update/' + id2, category);
     }
     
 }

@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.Locale.Category;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -87,7 +88,7 @@ public class AdminController {
 	public List<Category2> getAllGBCategory() {
 		return category2Repository.findAll();
 	}
-//	카테고리 추가
+//	카테고리 추가(일대다 구조로 구현하지 않음)
 	@PostMapping("/mGBCategory/add")
 	public Category2 createGBCategory(@RequestBody CategoryVO data) {
 		System.out.println(data.getCat1() + "와 " + data.getCat2());
@@ -113,6 +114,22 @@ public class AdminController {
 //		return categoryRepository.deleteById2In(id2s);
 //	}
 //	카테고리 수정
+	@PostMapping("/mGBCategory/update/{id2}")
+	public ResponseEntity<Category2> updateGBCategories(@PathVariable("id2") int id2, @RequestBody CategoryVO data) {
+		Optional<Category2> temp = category2Repository.findById2(id2);
+		
+		if(!temp.isPresent()) { // 없는 카테고리인 경우 
+			return ResponseEntity.ok(null);
+		} 
+		 
+		Category2 category = temp.get();
+		category.setCat2(data.getCat2());
+		category.getCategory1().setCat1(data.getCat1());
+
+		Category2 updatedCategory = category2Repository.save(category);
+		
+		return ResponseEntity.ok(updatedCategory);
+	}
 	
 
 }
