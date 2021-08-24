@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Button, Modal } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 
 class ListGBPost extends Component {
 
@@ -7,13 +7,10 @@ class ListGBPost extends Component {
         switch(value) {
             case 0:
                 return "작성자";
-                break;
             case 1:
                 return "관리자";
-                break;
             case -1:
                 return "미삭제";
-                break;
             default:
                 return "알 수 없음";
         }   

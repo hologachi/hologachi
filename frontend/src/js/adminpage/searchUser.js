@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table } from 'react-bootstrap';
-import AdminService from '../services/AdminService'; //백엔드 연결
+// import AdminService from '../services/AdminService'; //백엔드 연결
 
 class SearchUser extends Component {
     

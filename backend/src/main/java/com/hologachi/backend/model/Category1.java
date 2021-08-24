@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -23,11 +24,13 @@ import lombok.Setter;
 @Table(name="TBL_CATEGORY1")
 public class Category1 {
 
-	@Id @GeneratedValue
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "CATEGORY1_ID")
 	private int id1;
-	@Column(name = "NAME")
+	
+	@Column(name = "NAME", nullable=false)
 	private String cat1;
+	
 	
 	public Category1(String cat1) {
 		this.cat1 = cat1;

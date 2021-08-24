@@ -7,7 +7,7 @@ import '../../css/chat.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 //chat
 import ChatRoomService from '../services/ChatRoomService';
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 const socket = null;
 // const socket = io("http://localhost:3001/chat/list");
 // // 소켓 연결 확인
@@ -52,12 +52,12 @@ class ChatList extends Component {
     componentDidUpdate() {
         if(socket != null) {
             socket.on("receive-message", (chatroom_id, message, sendAt) => {
-                const chatList = document.querySelector("chatMessageTop")
+                // const chatList = document.querySelector("chatMessageTop")
                 console.log("receive", chatroom_id, message)
-                const param = {
-                    m: message, 
-                    s: sendAt
-                }
+                // const param = {
+                //     m: message, 
+                //     s: sendAt
+                // }
                 // this.child.receiveMessage(param);
             })
         }

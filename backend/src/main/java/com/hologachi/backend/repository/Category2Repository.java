@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.hologachi.backend.model.*;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<Category2, Integer> {
+public interface Category2Repository extends JpaRepository<Category2, Integer> {
 
 	@Transactional
 	Category2 findByCat2(String cat2);

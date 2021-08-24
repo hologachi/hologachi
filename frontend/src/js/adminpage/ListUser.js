@@ -11,13 +11,10 @@ class ListUser extends Component {
         switch(value) {
             case 0:
                 return "일반 사용자";
-                break;
             case 1:
                 return "관리자";
-                break;
             case -1:
                 return "정지된 회원";
-                break;
             default:
                 return "알 수 없음";
         }   
@@ -58,7 +55,7 @@ class ListUser extends Component {
                                 this.props.users && this.props.users.map(
                                     (user) => 
                                     <tr key = {user.userId}>
-                                        <td><img className="smallUserProfile" src={user.profile}/></td>
+                                        {/* <td><img className="smallUserProfile" src={''}/></td> */}
                                         <td>{user.userId}</td>
                                         <td>{user.nickname}</td>
                                         <td>{user.email}</td>

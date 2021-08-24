@@ -3,6 +3,7 @@ package com.hologachi.backend.controller;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.Locale.Category;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,11 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hologachi.backend.model.Category1;
 import com.hologachi.backend.model.Category2;
 import com.hologachi.backend.model.Post;
 import com.hologachi.backend.model.Ptcpt;
 import com.hologachi.backend.model.User;
-import com.hologachi.backend.repository.CategoryRepository;
+import com.hologachi.backend.repository.Category1Repository;
+import com.hologachi.backend.repository.Category2Repository;
 import com.hologachi.backend.repository.PostRepository;
 import com.hologachi.backend.repository.PtcptRepository;
 import com.hologachi.backend.repository.UserRepository;
@@ -34,7 +37,9 @@ public class AdminController {
 	@Autowired
 	private PtcptRepository ptcptRepository;
 	@Autowired
-	private CategoryRepository categoryRepository;
+	private Category1Repository category1Repository;
+	@Autowired
+	private Category2Repository category2Repository;
 
 
 //	관리자페이지 조회(로그인 요구)
@@ -80,13 +85,23 @@ public class AdminController {
 //	카테고리 조회(모든 항목) 
 	@GetMapping("/mGBCategory")
 	public List<Category2> getAllGBCategory() {
-		return categoryRepository.findAll();
+		return category2Repository.findAll();
+	}
+//	카테고리 추가
+	@PostMapping("/mGBCategory/add")
+	public Category2 createGBCategory(@RequestBody CategoryVO data) {
+		System.out.println(data.getCat1() + "와 " + data.getCat2());
+		Category1 category1 = category1Repository.save(new Category1(data.getCat1()));
+		Category2 category2 = new Category2(category1, data.getCat2());
+		return category2Repository.save(category2);
 	}
 //	카테고리 하나 삭제
 	@GetMapping("/mGBCategory/delete/{id2}")
 	public void deleteGBCategory(@PathVariable("id2") int id2) {
-		Optional<Category2> category = categoryRepository.findById2(id2);
-		categoryRepository.delete(category.get());
+		Optional<Category2> category = category2Repository.findById2(id2);
+		if(category.isPresent()) {
+			category2Repository.delete(category.get());
+		}
 	}
 //	카테고리 여러 개 삭제 
 //	@PostMapping("/mGBCategory/delete")
@@ -95,10 +110,6 @@ public class AdminController {
 //		return categoryRepository.deleteById2In(id2s);
 //	}
 //	카테고리 수정
-//	카테고리 추가
-	@PostMapping("/mGBCategory/add")
-	public Category2 createGBCategory(@RequestBody Category2 category) {
-		return categoryRepository.save(category);
-	}
+	
 
 }

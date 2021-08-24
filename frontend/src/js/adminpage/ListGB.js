@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Button, Modal } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 
 class ListGB extends Component {
 
@@ -7,16 +7,12 @@ class ListGB extends Component {
         switch(value) {
             case "agree":
                 return "수락";
-                break;
             case "cancel":
                 return "취소";
-                break;
             case "reject":
                 return "거절";
-                break;
             case "finish":
                 return "완료";
-                break;
             default:
                 return "알 수 없음";
         }   

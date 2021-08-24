@@ -28,12 +28,13 @@ class AdminService {
     }
 
     createCategory(category) { // 카테고리 추가
+        console.log(category);
         return axios.post(MGBCATEGORY_URL + '/add', category);
     }
 
     deleteCategory(id2) { // 카테고리 하나 삭제
         console.log(id2);
-        return axios.delete(MGBCATEGORY_URL + '/' + id2);
+        return axios.get(MGBCATEGORY_URL + '/delete/' + id2);
     }
     deleteCategories(id2s) { // 카테고리 여러개 삭제
         return axios.post(MGBCATEGORY_URL + '/delete', id2s);
