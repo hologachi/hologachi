@@ -2,6 +2,7 @@ package com.hologachi.backend.controller;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hologachi.backend.model.Category;
+import com.hologachi.backend.model.Category2;
 import com.hologachi.backend.model.Post;
 import com.hologachi.backend.model.Ptcpt;
 import com.hologachi.backend.model.User;
@@ -78,28 +79,25 @@ public class AdminController {
 //	4. 카테고리 관리 
 //	카테고리 조회(모든 항목) 
 	@GetMapping("/mGBCategory")
-	public List<Category> getAllGBCategory() {
+	public List<Category2> getAllGBCategory() {
 		return categoryRepository.findAll();
 	}
 //	카테고리 하나 삭제
 	@GetMapping("/mGBCategory/delete/{id2}")
 	public void deleteGBCategory(@PathVariable("id2") int id2) {
-		categoryRepository.deleteById2(id2);
+		Optional<Category2> category = categoryRepository.findById2(id2);
+		categoryRepository.delete(category.get());
 	}
 //	카테고리 여러 개 삭제 
-	@PostMapping("/mGBCategory/delete")
-	public Category deleteGBCategories(@RequestBody int[] id2s) {
-		System.out.println("ids : "+id2s.toString());
-//		for(int i = 0 ;i < id2s.length(); i++) {
-//			System.out.println(id2s[i] + "\t");
-//		}
-//		Integer[] temp = Arrays.stream(id2s).boxed().toArray(Integer[]::new);
-		return categoryRepository.deleteById2In(id2s);
-	}
+//	@PostMapping("/mGBCategory/delete")
+//	public Category2 deleteGBCategories(@RequestBody int[] id2s) {
+//		Integer[] temp = Arrays.stream(id2s).boxed().toArray(Integer[]::new); // Integer 배열로 바꾸기 
+//		return categoryRepository.deleteById2In(id2s);
+//	}
 //	카테고리 수정
 //	카테고리 추가
 	@PostMapping("/mGBCategory/add")
-	public Category createGBCategory(@RequestBody Category category) {
+	public Category2 createGBCategory(@RequestBody Category2 category) {
 		return categoryRepository.save(category);
 	}
 

@@ -50,7 +50,7 @@ class ListGBCategory extends Component {
         // 대분류 힌트 데이터 생성
         this.props.categories && this.props.categories.map(
             (category) => 
-                this.state.hintData1.push(category.cat1)
+                this.state.hintData1.push(category.category1.cat1)
         )
         // 소분류 힌트 데이터 생성
         this.props.categories && this.props.categories.map(
@@ -79,7 +79,7 @@ class ListGBCategory extends Component {
                             this.props.categories && this.props.categories.map(
                                 (category) => 
                                 <tr key = {category.id2}>
-                                    <td>{category.cat1}</td>
+                                    <td>{category.category1.cat1}</td>
                                     <td>{category.cat2}</td>
                                     <td><Button onClick={() => alert('click')}>수정</Button></td>
                                     <td><Button onClick={() => this.props.handleDelete(category.id2)}>삭제</Button></td>    
