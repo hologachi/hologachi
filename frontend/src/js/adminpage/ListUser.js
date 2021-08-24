@@ -1,13 +1,35 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Table, Button, Modal } from 'react-bootstrap';
 
-class ListUser extends Component {
-    
-    state = {
-        show: false,
+const ListUser = (props) => {
+    const [form, setForm] = useState({
+        user: '', //권한 변경할 유저 닉네임
+        new_auth: '',
+    })
+    const { user, new_auth } = form;
+    const onChange = e => {
+        const nextForm = {
+            ...form,
+            [e.target.name]: e.target.value
+        };
+        setForm(nextForm);
     }
+    const onClick = () => {
+        alert(user + '님의 권한은 ' + new_auth);
+        setForm({
+            user: '',
+            new_auth: ''
+        });
+    };
+    const onKeyPress = e => {
+        if(e.key === 'Enter') {
+            onClick();
+        }
+    };
 
-    translationIsAdmin(value) {
+    const [showModalAdmin, setSetModalAdmin] = useState(false);
+
+    const translationIsAdmin = (value) => {
         switch(value) {
             case 0:
                 return "일반 사용자";
@@ -18,76 +40,68 @@ class ListUser extends Component {
             default:
                 return "알 수 없음";
         }   
-    }
+    };
 
-    handleClose = () => {
-        this.setState(
-            {show: false}
-        );
-    }
+    const handleClose = (event, modal) => {
+        setSetModalAdmin(false);
+    };
 
-    handleShow = () => {
-        this.setState(
-            {show: true}
-        );
-    }
+    const handleShow = (event, modal) => {
+        setSetModalAdmin(true);
+    };
 
-    render() {
-        
-        return (
-            <div className="managerUser_body">
-                <div className="userList">
-                    <Table striped bordered hover>
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>아이디</th>
-                                <th>닉네임</th>
-                                <th>이메일</th>
-                                <th>제시자로써 평점</th>
-                                <th>요청자로써 평점</th>
-                                <th>권한</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            {
-                                this.props.users && this.props.users.map(
-                                    (user) => 
-                                    <tr key = {user.userId}>
-                                        {/* <td><img className="smallUserProfile" src={''}/></td> */}
-                                        <td>{user.userId}</td>
-                                        <td>{user.nickname}</td>
-                                        <td>{user.email}</td>
-                                        <td>{user.sgst_rate} 점</td>
-                                        <td>{user.rqst_rate} 점</td>
-                                        <td>{this.translationIsAdmin(user.is_admin)}</td>
-                                        <td><Button onClick={this.handleShow}>회원 권한 수정</Button></td>
-                                        <td><Button>작성글 조회</Button></td>
-                                    </tr>
-                                )
-                            }
-                        </tbody>
-                    </Table>
-
-                    <Modal show={this.state.show} onHide={this.handleClose}>
-                        <Modal.Header closeButton>
-                        <Modal.Title>Modal heading</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-                        <Modal.Footer>
-                        <Button variant="secondary" onClick={this.handleClose}>
-                            Close
-                        </Button>
-                        <Button variant="primary" onClick={this.handleClose}>
-                            Save Changes
-                        </Button>
-                        </Modal.Footer>
-                    </Modal>
-                </div>
-           </div>
-        )
-    }
-}
+    return (
+        <div className="userList">
+            <Table striped bordered hover>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>아이디</th>
+                        <th>닉네임</th>
+                        <th>이메일</th>
+                        <th>제시자로써 평점</th>
+                        <th>요청자로써 평점</th>
+                        <th>권한</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {
+                    props.users && props.users.map(
+                        (user) => 
+                        <tr key = {user.userId}>
+                            <td><img className="smallUserProfile" src={''}/></td>
+                            <td>{user.userId}</td>
+                            <td>{user.nickname}</td>
+                            <td>{user.email}</td>
+                            <td>{user.sgst_rate} 점</td>
+                            <td>{user.rqst_rate} 점</td>
+                            <td>{translationIsAdmin(user.is_admin)}</td>
+                            <td><Button onClick={e => handleShow(e, 'showModalAdmin')}>회원 권한 수정</Button></td>
+                            <td><Button>작성글 조회</Button></td>
+                        </tr>
+                    )
+                }
+                </tbody>
+            </Table>
+            
+            <Modal show={showModalAdmin} onHide={(event) => handleClose(event, 'showModalAdmin')}>
+                <Modal.Header closeButton>
+                    <Modal.Title>{user} 님의 새로운 권한을 선택해주세요.</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <input type="radio" />
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={(event) => handleClose(event, 'showModalAdmin')}>
+                        취소
+                    </Button>
+                    <Button variant="primary" onClick={(event) => {handleClose(event, 'showModalAdmin');}}>
+                        수정
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </div>
+    )
+};
 
 export default ListUser;
