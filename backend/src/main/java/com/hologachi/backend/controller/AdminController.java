@@ -91,14 +91,17 @@ public class AdminController {
 	@PostMapping("/mGBCategory/add")
 	public Category2 createGBCategory(@RequestBody CategoryVO data) {
 		System.out.println(data.getCat1() + "와 " + data.getCat2());
-		Category1 category1 = category1Repository.save(new Category1(data.getCat1()));
-		Category2 category2 = new Category2(category1, data.getCat2());
-		return category2Repository.save(category2);
+		
+		Category1 category1 = category1Repository.save(new Category1(data.getCat1())); // 카테고리1 추가 
+		
+		Category2 category2 = new Category2(category1, data.getCat2());  
+		return category2Repository.save(category2); // 카테고리 2 추가
 	}
 //	카테고리 하나 삭제
 	@GetMapping("/mGBCategory/delete/{id2}")
 	public void deleteGBCategory(@PathVariable("id2") int id2) {
-		Optional<Category2> category = category2Repository.findById2(id2);
+		Optional<Category2> category = category2Repository.findById2(id2); // 해당 카테고리 존재하는지 확인 
+		
 		if(category.isPresent()) {
 			category2Repository.delete(category.get());
 		}

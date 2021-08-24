@@ -49,6 +49,7 @@ class manageGBCategory extends Component {
             
             AdminService.createCategory(category).then((_res) => {
                 alert('카테고리 추가가 요청되었습니다');
+                this.loadCategories();
             });
         } else {
             alert('카테고리 추가 요청이 실패하였습니다');
@@ -80,7 +81,7 @@ class manageGBCategory extends Component {
             console.log(id2);
             
             AdminService.deleteCategory(id2).then((_res) => {
-                this.clear()
+                this.loadCategories();
             });
             alert('카테고리 관련 삭제가 요청되었습니다.');
             
