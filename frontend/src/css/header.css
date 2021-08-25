@@ -1,0 +1,29 @@
+.loginbtn{
+    margin-left: 15px;
+    background-color: #f8f9fa;
+    color: #198754;
+    border-color: #4ea87e;
+    margin-right: 15px;
+    border: none;
+    text-decoration: underline;
+}
+.loginbtn:hover{
+    background-color: transparent;
+    color: #06331e;
+    text-decoration: underline;
+}
+.gbwritebtn{
+    background-color: #198754;
+    margin-left: 15px;
+    border-color: #4ea87e;
+}
+.gbwritebtn:hover{
+    background-color: #38a170;
+    border-color: #4ea87e;
+}
+.searchbtn{
+    margin-left: 0;
+}
+.searchbtn:hover{
+    background-color: #d3d3d4;
+}
