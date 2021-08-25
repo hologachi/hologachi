@@ -49,11 +49,13 @@ table tr th{
 .table{
     table-layout: fixed;
 }
-#titleText{
-   overflow:hidden;
-   white-space:nowrap;
-   text-overflow:ellipsis;
-}
+/* #titleText{
+    height: 50px;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; 
+} */
 #delete{
     width: 80px;
     font-size: 10px;

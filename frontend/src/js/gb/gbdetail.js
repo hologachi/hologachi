@@ -28,6 +28,7 @@ class Comment extends React.Component {
     }
     this.addComment = this.addComment.bind(this);
   }
+
   addComment() {
     let value = document.querySelector('#new-comment-content').value;
     if (value !== '') {
@@ -44,6 +45,7 @@ class Comment extends React.Component {
     }
     document.querySelector('#new-comment-content').value = '';
   }
+
   render() {
     return (
       <div id="root">
@@ -65,16 +67,15 @@ class Comment extends React.Component {
     )
   }
 }
-
 function Singcomment({ comment }) {
   return (
     <div className="comment">
       <table>
-        <tr>
+        <tr id={comment.id}>
           <th id="writerName">{comment.writer}</th>
           <td id="content">{comment.content}</td>
           <td id="date">{comment.date}</td>
-          <td><button id="replybtn">답글달기</button></td>
+          <td><button id="removebtn">삭제</button></td>
         </tr>
       </table>
     </div>
@@ -87,9 +88,11 @@ function apply(e) {
   answer = window.confirm(`신청하시겠습니까?`);
 
   if (answer == true) {
-    var apply = document.getElementById('apply');
-    const html = `<button id="applycancel" className="disabled">신청 완료</button>`;
+    var apply = document.getElementById('applybtn');
+    const html = '신청완료';
     apply.innerHTML = html;
+    apply.disabled = true;
+    apply.style.backgroundColor = "black";
   }
 }
 
@@ -118,15 +121,13 @@ function callback(str) {
 useEffect(
   () => {
     axios({
-      url: `/post/postDetail/${productId}`,
+      url: `/post/${productId}`,
       method: 'GET'
     }).then((res) => {
       callback(res.data);
     })
   }, []
 );
-
-  const thisProduct = Object.values(testStr).find(prod => prod.post_id == productId)
 
   return (
     <div className="gbdetail">
@@ -142,17 +143,18 @@ useEffect(
               </div>
             </div>
             <div className="col-lg-6 col-md-6" id="productDetail">
+            {Object.values(testStr).map(product => (
               <div className="product__details__text">
-                <h3>{thisProduct.title}</h3>
+                <h3>{product.title}</h3><br />
                 <div classNa="product__details__rating">
                 </div>
                 <ul>
-                  <li><strong className="left">가격  </strong>{thisProduct.price}</li><hr />
-                  <li><strong className="left">공동구매 시작  </strong>{thisProduct.startdate}</li><hr />
-                  <li><strong className="left">공동구매 마감  </strong>{thisProduct.finishdate}</li><hr />
-                  <li><strong className="left">카테고리  </strong>{thisProduct.category}</li><hr />
-                  <li><strong className="left">목표 인원 </strong>{thisProduct.goalnum}</li><hr />
-                  <li><a href={thisProduct.site}>구매 사이트 </a></li><hr />
+                  <li><strong className="left">가격  </strong>{product.price}</li><hr />
+                  <li><strong className="left">공동구매 시작  </strong>{moment(product.rgst_at).format('YYYY-MM-DD')}</li><hr />
+                  <li><strong className="left">공동구매 마감  </strong>{moment(product.deadline).format('YYYY-MM-DD')}</li><hr />
+                  <li><strong className="left">카테고리  </strong>{product.category2.name}</li><hr />
+                  <li><strong className="left">목표 인원 </strong>{product.matching}명</li><hr />
+                  <li><a href={product.url}>구매 사이트 클릭!</a></li><hr />
                 </ul>
                 <div className="quantity">
                   <div className="pro-qty">
@@ -164,6 +166,7 @@ useEffect(
                   </div>
                 </div>
               </div>
+              ))}
             </div>
             <div className="col-lg-12" id="commentContainer">
               <div className="product__details__tab">

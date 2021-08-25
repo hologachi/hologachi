@@ -15,3 +15,8 @@
 #grid{
     margin: 5px;
   }
+  #gbTitle{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }

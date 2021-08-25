@@ -4,7 +4,7 @@
     border-radius: 5px;
 }
 #applybtn:hover{
-    width: 88px;
+    width: 80px;
     box-shadow: none;
     background-color: #0b58cc;
 }
@@ -70,13 +70,13 @@
 .product__details__text{
     margin-top: 60px;
 }
-#replybtn{
+#removebtn{
     width: 90px;
     color: #fff;
     background-color: #0d6efd;
     border-radius: 5px;
 }
-#replybtn:hover{
+#removebtn:hover{
     box-shadow: none;
     background-color: #163c72;
 }

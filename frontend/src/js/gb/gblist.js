@@ -43,7 +43,6 @@ const useStyles = makeStyles((theme) => ({
    const [testStr, setTestStr] = useState('');
    console.log(testStr);
 
-
    // 변수 초기화
    function callback(str) {
      setTestStr(str);
@@ -53,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
    useEffect(
      () => {
        axios({
-         url: '/post/postList',
+         url: `/post`,
          method: 'GET'
        }).then((res) => {
          callback(res.data);
@@ -71,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
         <div key={product.id}>
         <Grid item key={product.postId} item xs={12} id="grid">
         <Card className={classes.product} id="card">
-            <Link to={`/gb/gbdetail/${product.post_id}`}>
+            <Link to={`/gb/gbdetail/${product.postId}`}>
             <CardMedia
                   className={classes.cardMedia}
                   image={product.image}
@@ -82,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
                 <Typography id="status">
                   {product.step}
                 </Typography>
-                <Typography gutterBottom variant="h5" component="h2">
+                <Typography id="gbTitle" gutterBottom variant="h5" component="h2">
                   {product.title}
                 </Typography>
                 <Typography>
@@ -126,24 +125,7 @@ const useStyles = makeStyles((theme) => ({
       > 
           {products}
       </Grid>
-        <Paginate id="pagi"/>
       </Container>
-    )
-  }
-
-  function Paginate(){
-    return(
-      <div id="pagination">
-        <Container>
-          <Pagination>
-            <Pagination.First />
-            <Pagination.Prev />
-            <Pagination.Item active >{1}</Pagination.Item>
-            <Pagination.Next />
-            <Pagination.Last />
-          </Pagination>
-        </Container>
-      </div>
     )
   }
 

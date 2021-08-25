@@ -202,12 +202,12 @@ function Mypost() {
         <Table className={classes.table} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
-              <StyledTableCell sortDirection align="center" width="25%">기간</StyledTableCell>
+              <StyledTableCell sortDirection align="center" width="20%">기간</StyledTableCell>
               <StyledTableCell align="center" width="8%">카테고리</StyledTableCell>
-              <StyledTableCell align="center">제목</StyledTableCell>
-              <StyledTableCell align="center" width="5%">목표</StyledTableCell>
+              <StyledTableCell align="center" width="30%">제목</StyledTableCell>
+              <StyledTableCell align="center" width="15%">목표</StyledTableCell>
               <StyledTableCell align="center">신청자 목록</StyledTableCell>
-              <StyledTableCell align="center" width="10%">진행상황</StyledTableCell>
+              <StyledTableCell align="center" width="8%">진행상황</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -216,7 +216,7 @@ function Mypost() {
                 <StyledTableCell align="center">{moment(product.rgst_at).format('YYYY-MM-DD')} ~ {moment(product.deadline).format('MM-DD')}</StyledTableCell>
                 <StyledTableCell align="center">{product.category2.name}</StyledTableCell>
                 <Link to={`/gb/gbdetail/${product.postId}`}>
-                  <StyledTableCell align="center">{product.title}</StyledTableCell>
+                  <StyledTableCell align="center" id="titleText">{product.title}</StyledTableCell>
                 </Link>
                 <StyledTableCell align="center">{product.matching}명</StyledTableCell>
 
