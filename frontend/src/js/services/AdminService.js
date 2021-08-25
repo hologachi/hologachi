@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 const MUSER_URL = "http://localhost:8080/admin/mUser";
 const MGB_URL = "http://localhost:8080/admin/mGB";
 const MGBPOST_URL = "http://localhost:8080/admin/mGBPost";
@@ -13,7 +14,7 @@ class AdminService {
     }
     updateAuth(id, new_auth) { // 회원 권한 수정
         console.log(id + ': ' + new_auth);
-        return axios.post(MUSER_URL + '/update/' + id, new_auth);
+        return axios.post(MUSER_URL + '/update/' + id + '/' + new_auth);
     }
     searchTheUsers() { // 회원 검색 
         return axios.post(MUSER_URL);

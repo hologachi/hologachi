@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hologachi.backend.model.Category1;
@@ -62,8 +63,9 @@ public class AdminController {
 	}
 	
 //	회원 권한 수정 
-	@PostMapping("/mUser/update/{id}")
-	public ResponseEntity<User> searchTheUsers(@PathVariable int id, @RequestBody int new_auth) {
+	@PostMapping("/mUser/update/{id}/{new_auth}")
+	public ResponseEntity<User> searchTheUsers(@PathVariable int id, @PathVariable String new_auth) {
+		System.out.println(id + ": " + new_auth);
 		Optional<User> temp = userRepository.findById(id);
 		
 		if(!temp.isPresent()) { // 없는 사람인 경우 
@@ -71,7 +73,7 @@ public class AdminController {
 		} 
 		
 		User user = temp.get();
-		user.setIs_admin(new_auth);
+		user.setIs_admin(Integer.parseInt(new_auth));
 
 		User updatedUser = userRepository.save(user);
 		

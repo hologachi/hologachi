@@ -8,12 +8,13 @@ const ListUser = (props) => {
         new_auth: '',
     })
     const { id, nickname, new_auth } = form;
-    const onChange = e => {
+    const new_authChange = (e) => {
         const nextForm = {
             ...form,
-            [e.target.name]: e.target.value
+            new_auth: e.target.value
         };
         setForm(nextForm);
+        console.log(new_auth);
     }
 
     const [authGroup, setAuthGroup] = useState({
@@ -21,11 +22,17 @@ const ListUser = (props) => {
         '1': false,
         '-1': false
     })
+    const reset_authGroupChange = () => {
+        const nextAuthGroup = {
+            '0': false,
+            '1': false,
+            '-1': false
+        };
+        setForm(nextAuthGroup);
+        console.log(nextAuthGroup);
+    }
 
     const handleRadio = (e) => {
-        setForm({
-            new_auth: [e.target.value]
-        })
         setAuthGroup({
             [e.target.value]: [e.target.checked]
         })
@@ -80,7 +87,11 @@ const ListUser = (props) => {
                             <td>{user.sgst_rate} 점</td>
                             <td>{user.rqst_rate} 점</td>
                             <td>{translationIsAdmin(user.is_admin)}</td>
-                            <td><Button onClick={() => {handleModalAdminShow(); setForm({id: user.userId, nickname: user.nickname, new_auth: user.is_admin});}}>회원 권한 수정</Button></td>
+                            <td><Button onClick={() => {
+                                    handleModalAdminShow(); 
+                                    setForm({id: user.userId, nickname: user.nickname, new_auth: user.is_admin}); 
+                                    setAuthGroup({[user.is_admin]: true});
+                                }}>회원 권한 수정</Button></td>
                             <td><Button>작성글 조회</Button></td>
                         </tr>
                     )
@@ -96,19 +107,19 @@ const ListUser = (props) => {
                 <ul>
                     <ol>
                         <label>
-                            <input type="radio" name="authGroup" value='0' checked={authGroup[0]} onChange={handleRadio} />
+                            <input type="radio" name="authGroup" value='0' checked={authGroup[0]} onChange={(e) => {handleRadio(e); new_authChange(e);}} />
                             {translationIsAdmin(0)}
                         </label>
                     </ol>
                     <ol>
                         <label>
-                            <input type="radio" name="authGroup" value='1' checked={authGroup[1]} onChange={handleRadio} />
+                            <input type="radio" name="authGroup" value='1' checked={authGroup[1]} onChange={(e) => {handleRadio(e); new_authChange(e);}} />
                             {translationIsAdmin(1)}
                         </label>
                     </ol>
                     <ol>
                         <label>
-                            <input type="radio" name="authGroup" value='-1' checked={authGroup[-1]} onChange={handleRadio} />
+                            <input type="radio" name="authGroup" value='-1' checked={authGroup[-1]} onChange={(e) => {handleRadio(e); new_authChange(e);}} />
                             {translationIsAdmin(-1)}
                         </label>
                     </ol>
@@ -118,7 +129,7 @@ const ListUser = (props) => {
                     <Button variant="secondary" onClick={handleModalAdminClose}>
                         취소
                     </Button>
-                    <Button variant="primary" onClick={() => props.handleUpdateAuth(id, new_auth)}>
+                    <Button variant="primary" onClick={() => {props.handleUpdateAuth(id, new_auth); reset_authGroupChange(); handleModalAdminClose();}}>
                         수정
                     </Button>
                 </Modal.Footer>

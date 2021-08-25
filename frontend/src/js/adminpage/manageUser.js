@@ -31,7 +31,7 @@ class manageUser extends Component {
     }
 
     handleUpdateAuth = (id, new_auth) => {
-        if(id !== undefined && id != '') {
+        if(id !== undefined && id !== '') {
             // 회원 권한 수정
             AdminService.updateAuth(id, new_auth).then((res) => {
                 this.loadUsers();
