@@ -43,6 +43,10 @@ class AdminService {
     getAllGBs() { // 모든 공동구매 조회
         return axios.get(MGB_URL);
     }
+    stopTheGB(ptcptId) { // 공동구매 삭제
+        let data = {ptcptId: ptcptId}
+        return axios.post(MGB_URL + '/stop', data);
+    }
 
     // 카테고리 관련 
     getAllCategories() { // 모든 카테고리 조회

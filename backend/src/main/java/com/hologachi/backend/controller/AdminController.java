@@ -48,6 +48,7 @@ public class AdminController {
 	@Autowired
 	private CommentRepository commentRepository;
 
+	
 //	관리자페이지 조회(로그인 요구)
 	
 	
@@ -112,11 +113,13 @@ public class AdminController {
 //	댓글 삭제
 	@PostMapping("/mGBPost/comment/delete")
 	public void deleteTheComment(@RequestBody Map<String, String> data) {
-		System.out.println(data.get("commentId"));
+//		System.out.println(data.get("commentId"));
 		Optional<Comment> foundComment = commentRepository.findByCommentId(Integer.parseInt(data.get("commentId")));
+		
 		if(foundComment.isPresent()) {
 			Comment deletedComment = foundComment.get();
 			deletedComment.setStatus(0);
+			
 			commentRepository.save(deletedComment);
 		}
 	}
@@ -127,7 +130,19 @@ public class AdminController {
 	public List<Ptcpt> getAllGB() {
 		return ptcptRepository.findAll();
 	}
-//	공동구매 삭제
+//	공동구매 중지
+	@PostMapping("/mGB/stop")
+	public void stopTheGB(@RequestBody Map<String, String> data) {
+		System.out.println(data.get("ptcptId"));
+		Optional<Ptcpt> foundGB = ptcptRepository.findByPtcptId(Integer.parseInt(data.get("ptcptId")));
+		
+		if(foundGB.isPresent()) {
+			Ptcpt stopComment = foundGB.get();
+			stopComment.setStep("stop");
+			
+			ptcptRepository.save(stopComment);
+		}
+	}
 	
 //	4. 카테고리 관리 
 //	카테고리 조회(모든 항목) 

@@ -13,6 +13,8 @@ class ListGB extends Component {
                 return "거절";
             case "finish":
                 return "완료";
+            case "stop":
+                return "중지";
             default:
                 return "알 수 없음";
         }   
@@ -27,8 +29,9 @@ class ListGB extends Component {
                         <thead>
                         <tr>
                             <th>공동구매 ID</th>
-                            <th>공동구매 글</th>
-                            <th>제안자 아이디</th>
+                            <th>공동구매 글 제목</th>
+                            <th>제안자</th>
+                            <th>요청자</th>
                             <th>진행 단계</th>
                             <th>요청자가 매긴 제시자 평점</th>
                             <th>제시자가 매긴 요청자 평점</th>
@@ -42,11 +45,12 @@ class ListGB extends Component {
                                     <tr key = {i}>
                                         <td>{gb.ptcptId}</td>
                                         <td>{gb.post.title}</td>
+                                        <td>{gb.post.user.nickname}</td>
                                         <td>{gb.user.nickname}</td>
                                         <td>{this.translationStep(gb.step)}</td>
-                                        <td>{gb.rateSuggester}</td>
-                                        <td>{gb.rateRequester}</td>
-                                        <td><Button>공동구매 삭제</Button></td>
+                                        <td>{gb.rateSgster || '미등록'}</td>
+                                        <td>{gb.rateRqster || '미등록'}</td>
+                                        <td><Button onClick={() => this.props.handleStopPtcpt(gb.ptcptId)}>공동구매 중지</Button></td>
                                     </tr>
                                 )
                             }
