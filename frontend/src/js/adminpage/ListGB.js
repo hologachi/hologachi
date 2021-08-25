@@ -32,9 +32,9 @@ class ListGB extends Component {
                             <th>공동구매 글 제목</th>
                             <th>제안자</th>
                             <th>요청자</th>
-                            <th>진행 단계</th>
                             <th>요청자가 매긴 제시자 평점</th>
                             <th>제시자가 매긴 요청자 평점</th>
+                            <th>진행 단계</th>
                         </tr>
                         </thead>
 
@@ -47,9 +47,9 @@ class ListGB extends Component {
                                         <td>{gb.post.title}</td>
                                         <td>{gb.post.user.nickname}</td>
                                         <td>{gb.user.nickname}</td>
-                                        <td>{this.translationStep(gb.step)}</td>
                                         <td>{gb.rateSgster || '미등록'}</td>
                                         <td>{gb.rateRqster || '미등록'}</td>
+                                        <td>{this.translationStep(gb.step)}</td>
                                         <td><Button onClick={() => this.props.handleStopPtcpt(gb.ptcptId)}>공동구매 중지</Button></td>
                                     </tr>
                                 )
