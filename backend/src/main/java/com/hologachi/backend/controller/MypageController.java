@@ -68,7 +68,6 @@ public class MypageController {
 	public void updateRqstAgree(@PathVariable("postId") int postId, @PathVariable("ptcptId") int ptcptId) {
 		Ptcpt p = myRequestRepository.findByPtcptId(ptcptId);
 		p.setStep("agree");
-		
 		myRequestRepository.save(p);
 	}
 	
@@ -77,7 +76,6 @@ public class MypageController {
 	public void updateRqstReject(@PathVariable("postId") int postId, @PathVariable("ptcptId") int ptcptId) {
 		Ptcpt p = myRequestRepository.findByPtcptId(ptcptId);
 		p.setStep("reject");
-			
 		myRequestRepository.save(p);
 	}
 	

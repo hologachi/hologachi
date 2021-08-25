@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import SideMenu from "./mypageside";
 import '../../css/mywriting.css'
-// import '../../css/applygb.css'
-// import 'bootstrap/dist/css/bootstrap.min.css'
-// import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import '../../css/applygb.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 // import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
 // import filterFactory from "react-bootstrap-table2-filter";
-// import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
+import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 // import BootstrapTable from 'react-bootstrap-table-next';
-// import paginationFactory from "react-bootstrap-table2-paginator";
+import paginationFactory from "react-bootstrap-table2-paginator";
 // import productsData from "../ProductData";
-// import { Link } from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
+import { Link } from "react-router-dom";
+import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -118,10 +118,10 @@ import moment from 'moment';
     //     >
     //       {props => (
     //         <div>
-    //         <SearchBar 
-    //             {...props.searchProps}
-    //             style={{ width: "300px", height: "40px" }}
-    //           />
+            // <SearchBar 
+            //     {...props.searchProps}
+            //     style={{ width: "300px", height: "40px" }}
+            //   />
     //           <BootstrapTable
     //             {...props.baseProps}
     //             filter={filterFactory()}
@@ -155,6 +155,15 @@ import moment from 'moment';
 //  }
 //  export default mywriting
 
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
 
 const useStyles = makeStyles({
   table: {
@@ -186,37 +195,43 @@ function Mypost() {
         })
       }, []
   );
-  // const products = Object.values(testStr).map(product => {
-  //   let rgst = product.rgst_at;
-  //   let rgst_result = moment(rgst).format('YYYY-MM-DD');
-  //   let deadLine = product.deadline;
-  //   let deadLinet_result = moment(deadLine).format('YYYY-MM-DD');
 
   return (
-          <TableContainer component={Paper}>
+    <div>
+      <TableContainer component={Paper}>
         <Table className={classes.table} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
-              <TableCell align="center">기간</TableCell>
-              <TableCell align="center">카테고리</TableCell>
-              <TableCell align="center">제목</TableCell>
-              <TableCell align="center">인원</TableCell>
-              <TableCell align="center">진행상황</TableCell>
+              <StyledTableCell sortDirection align="center" width="25%">기간</StyledTableCell>
+              <StyledTableCell align="center" width="8%">카테고리</StyledTableCell>
+              <StyledTableCell align="center">제목</StyledTableCell>
+              <StyledTableCell align="center" width="5%">목표</StyledTableCell>
+              <StyledTableCell align="center">신청자 목록</StyledTableCell>
+              <StyledTableCell align="center" width="10%">진행상황</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-          {Object.values(testStr).map(product => (
-              <TableRow key={product.postId}>
-                <TableCell align="center">{moment(product.rgst_at).format('YYYY-MM-DD')} ~ {moment(product.deadline).format('MM-DD')}</TableCell>
-                <TableCell align="center">{product.category2.name}</TableCell>
-                <TableCell align="center">{product.title}</TableCell>
-                <TableCell align="center">{product.matching}명</TableCell>
-                <TableCell align="center">{product.step}</TableCell>
+            {Object.values(testStr).map(product => (
+              <TableRow key={product.postId} hover>
+                <StyledTableCell align="center">{moment(product.rgst_at).format('YYYY-MM-DD')} ~ {moment(product.deadline).format('MM-DD')}</StyledTableCell>
+                <StyledTableCell align="center">{product.category2.name}</StyledTableCell>
+                <Link to={`/gb/gbdetail/${product.postId}`}>
+                  <StyledTableCell align="center">{product.title}</StyledTableCell>
+                </Link>
+                <StyledTableCell align="center">{product.matching}명</StyledTableCell>
+
+                <Link to={`/mypage/reqList/${product.postId}`}>
+                <StyledTableCell align="center"><button>확인하기</button></StyledTableCell>
+                </Link>
+
+                <StyledTableCell align="center">{product.step}</StyledTableCell>
               </TableRow>
-              ))}
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
+    </div>
+
    );
 }
 
@@ -239,7 +254,7 @@ export default function mywriting(){
       </div>
       <div className="col-lg-10 py-2">
         <div className=" h-100 p-5 bg-light border shadow rounded" id="boottable">
-        <Mypost></Mypost>
+        <Mypost/>
         </div>
       </div>
     </div>

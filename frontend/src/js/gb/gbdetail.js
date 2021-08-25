@@ -187,5 +187,4 @@ function gbdetail() {
   )
 }
 
-
 export default gbdetail

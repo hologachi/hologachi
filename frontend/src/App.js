@@ -9,15 +9,18 @@ import  Home  from "./js/main/home";
 
 import  Profile  from "./js/mypage/myprofile";
 import  Mywriting  from "./js/mypage/mywriting";
+import  ReqList  from "./js/mypage/reqList";
 import  Applygb  from "./js/mypage/applygb";
 import  Sidemenu  from "./js/mypage/mypageside";
 import  Bookmark  from "./js/mypage/bookmark";
 import  Comment  from "./js/mypage/commentwrite";
 import  Privacy  from "./js/mypage/privacy";
+// import  ReqUserProfile from "./js/mypage/reqUserProfile";
 
 import  Gbwrite  from "./js/gb/gbwrite";
 import  Gblist from "./js/gb/gblist";
 import Gbdetail from "./js/gb/gbdetail";
+
 // import  MUser  from "./js/adminpage/manageUser";
 // import  MGB  from "./js/adminpage/manageGB";
 // import  MGBPost  from "./js/adminpage/manageGBPost";
@@ -92,12 +95,13 @@ function App() {
           {/* Mypage */}
           <Route path="/mypage/myprofile" component={Profile} />
           <Route path="/mypage/mywriting" component={Mywriting} />
+          <Route path="/mypage/reqList/:productId" component={ReqList} />
           <Route path="/mypage/applygb" component={Applygb} />
           <Route path="/mypage/bookmark" component={Bookmark} />
           <Route path="/mypage/mypageside" component={Sidemenu} />
           <Route path="/mypage/commentwrite" component={Comment} />
           <Route path="/mypage/privacy" component={Privacy} />
-
+           {/* <Route path="/mypage/requserprofile/:postId/:ptcptId" component={ReqUserProfile} /> */}
         </Switch>
       </BrowserRouter>
       <Footer />
