@@ -8,12 +8,12 @@ import Footer from "./js/main/footer";
 import  Home  from "./js/main/home";
 
 import  Profile  from "./js/mypage/myprofile";
-// import  Mywriting  from "./js/mypage/mywriting";
-// import  Applygb  from "./js/mypage/applygb";
-// import  Sidemenu  from "./js/mypage/mypageside";
-// import  Bookmark  from "./js/mypage/bookmark";
-// import  Comment  from "./js/mypage/commentwrite";
-// import  Privacy  from "./js/mypage/privacy";
+import  Mywriting  from "./js/mypage/mywriting";
+import  Applygb  from "./js/mypage/applygb";
+import  Sidemenu  from "./js/mypage/mypageside";
+import  Bookmark  from "./js/mypage/bookmark";
+import  Comment  from "./js/mypage/commentwrite";
+import  Privacy  from "./js/mypage/privacy";
 
 import  Gbwrite  from "./js/gb/gbwrite";
 import  Gblist from "./js/gb/gblist";
@@ -39,14 +39,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //           {/* Home */}
 //           <Route exact path="/" component={Home} />
 
-//           {/* Mypage */}
-//           <Route path="/mypage/myprofile" component={Profile} />
-//           <Route path="/mypage/mywriting" component={Mywriting} />
-//           <Route path="/mypage/applygb" component={Applygb} />
-//           <Route path="/mypage/bookmark" component={Bookmark} />
-//           <Route path="/mypage/mypageside" component={Sidemenu} />
-//           <Route path="/mypage/commentwrite" component={Comment} />
-//           <Route path="/mypage/privacy" component={Privacy} />
+          // {/* Mypage */}
+          // <Route path="/mypage/myprofile" component={Profile} />
+          // <Route path="/mypage/mywriting" component={Mywriting} />
+          // <Route path="/mypage/applygb" component={Applygb} />
+          // <Route path="/mypage/bookmark" component={Bookmark} />
+          // <Route path="/mypage/mypageside" component={Sidemenu} />
+          // <Route path="/mypage/commentwrite" component={Comment} />
+          // <Route path="/mypage/privacy" component={Privacy} />
 
 //           {/* GB */}
 //           <Route path="/gb/gbwrite" component={Gbwrite} />
@@ -88,6 +88,15 @@ function App() {
            <Route path="/gb/gbwrite" component={Gbwrite} />
            <Route path="/gb/gblist" component={Gblist} />
            <Route path="/gb/gbdetail/:productId" component={Gbdetail} />
+
+          {/* Mypage */}
+          <Route path="/mypage/myprofile" component={Profile} />
+          <Route path="/mypage/mywriting" component={Mywriting} />
+          <Route path="/mypage/applygb" component={Applygb} />
+          <Route path="/mypage/bookmark" component={Bookmark} />
+          <Route path="/mypage/mypageside" component={Sidemenu} />
+          <Route path="/mypage/commentwrite" component={Comment} />
+          <Route path="/mypage/privacy" component={Privacy} />
 
         </Switch>
       </BrowserRouter>

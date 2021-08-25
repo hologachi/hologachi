@@ -67,14 +67,14 @@ public class PostController {
 	
 	
 
-	@RequestMapping("/gb/gblist")
-	public List<Post> postFindAll() {
-		System.out.println(postRepository.findAll());
-		return postRepository.findAll();
-	}
-
-	@RequestMapping("/gb/gbdetail/{postId}")
-	public List<Post> postFindByUserId(@PathVariable int postId) {
-		return postRepository.findAll();
-	}
+//	@RequestMapping("/gb/gblist")
+//	public List<Post> postFindAll() {
+//		System.out.println(postRepository.findAll());
+//		return postRepository.findAll();
+//	}
+//
+//	@RequestMapping("/gb/gbdetail/{postId}")
+//	public List<Post> postFindByUserId(@PathVariable int postId) {
+//		return postRepository.findAll();
+//	}
 }

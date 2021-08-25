@@ -24,7 +24,4 @@ public class HomeController {
 		System.out.println(homeRepository.findAll());
 		return homeRepository.findAll();
 	}
-
-
-
 }
