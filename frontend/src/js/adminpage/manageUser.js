@@ -60,7 +60,7 @@ class manageUser extends Component {
                 <Header />
                 <AdminNav />
 
-                <SearchUser />
+                {/* <SearchUser /> */}
 
                 <ListUser 
                     users={this.state.users} 
