@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -38,7 +39,10 @@ public class Post {
 	private int matching;
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date deadline;
-	private int deleted_by;
+	
+	@Setter
+	@Column(name="DELETED_BY")
+	private int deletedBy;
 	
 	@ManyToOne
 	@JoinColumn(name="CATEGORY2_ID")

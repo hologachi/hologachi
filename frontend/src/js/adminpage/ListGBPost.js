@@ -24,8 +24,6 @@ class ListGBPost extends Component {
         switch(value) {
             case 'request':
                 return "요청중";
-            case 'delete':
-                return "삭제";
             case 'proceed':
                 return "공동구매진행중";
             case 'finish':
@@ -81,13 +79,13 @@ class ListGBPost extends Component {
                                 <th>제안자</th>
                                 <th>등록일</th>
                                 <th>수정일</th>
+                                <th>카테고리<br/>(대분류-소분류)</th>
                                 <th>제목</th>
                                 <th>내용</th>
                                 <th>신청인원수 / 모집인원수</th>
                                 <th>신청기한</th>
                                 <th>진행상태</th>
                                 <th>삭제한 사람</th>
-                                <th>카테고리<br/>(대분류-소분류)</th>
                             </tr>
                         </thead>
 
@@ -100,13 +98,13 @@ class ListGBPost extends Component {
                                         <td>{gbPost.user.nickname}</td>
                                         <td>{gbPost.rgst_at}</td>
                                         <td>{gbPost.update_at}</td>
+                                        <td>{gbPost.category2.category1.cat1} {'>'} {gbPost.category2.cat2}</td>
                                         <td>{gbPost.title}</td>
                                         <td>{gbPost.content}</td>
                                         <td>/{gbPost.matching}</td>
                                         <td>{gbPost.deadline}</td>
                                         <td>{this.translationStep(gbPost.step)}</td>
-                                        <td>{this.translationDeletedBy(gbPost.deleted_by)}</td>
-                                        <td>{gbPost.category2.category1.cat1} {'>'} {gbPost.category2.cat2}</td>
+                                        <td>{this.translationDeletedBy(gbPost.deletedBy)}</td>
                                         <td><Button onClick={() => this.props.handleDeletePost(gbPost.postId)}>글 삭제</Button></td>
                                         <td><Button onClick={() => {
                                                 this.props.loadComments(gbPost.postId); 

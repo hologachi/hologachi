@@ -102,7 +102,9 @@ public class AdminController {
 //		System.out.println(data.get("postId"));
 		Optional<Post> foundPost = postRepository.findByPostId(data.get("postId"));
 		if(foundPost.isPresent()) {
-			postRepository.delete(foundPost.get());
+			Post updatePost = foundPost.get();
+			updatePost.setDeletedBy(1);
+			postRepository.save(updatePost);
 		}
 	}
 //	댓글 조회
