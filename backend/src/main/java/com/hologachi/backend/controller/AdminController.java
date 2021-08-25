@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Locale.Category;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -92,6 +93,15 @@ public class AdminController {
 		return postRepository.findAll();
 	}
 //	공동구매 글 삭제
+	@PostMapping("/mGBPost/delete")
+	public void deleteTheGBPosts(@RequestBody Map<String, Integer> data) {
+		System.out.println(data.get("postId"));
+		
+		Optional<Post> foundPost = postRepository.findByPostId(data.get("postId"));
+		if(foundPost.isPresent()) {
+			postRepository.delete(foundPost.get());
+		}
+	}
 //	댓글 조회
 //	댓글 삭제
 	

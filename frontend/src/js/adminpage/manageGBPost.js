@@ -24,9 +24,17 @@ class manageGBPost extends Component {
                 { gbPosts: res.data }
             );
 
-            console.log(this.state.gbPosts);
+            // console.log(this.state.gbPosts);
         }) 
         
+    }
+
+    handleDeletePost = (postId) => {
+        // 공동구매 글 삭제 
+        AdminService.deleteTheGBPosts(postId).then((res) => {
+            this.loadGBPosts();
+            console.log(this.state.gbPosts);
+        }) 
     }
 
     render() {
@@ -35,7 +43,7 @@ class manageGBPost extends Component {
                 <Header />
                 <AdminNav />
 
-                <ListGBPost gbPosts={this.state.gbPosts}/>
+                <ListGBPost gbPosts={this.state.gbPosts} handleDeletePost={this.handleDeletePost} />
 
                 <Footer />
             </div>

@@ -27,6 +27,10 @@ class AdminService {
     getAllGBPosts() { // 모든 공동구매 글 조회
         return axios.get(MGBPOST_URL);
     }
+    deleteTheGBPosts(postId) {
+        let data = {postId: postId};
+        return axios.post(MGBPOST_URL + '/delete', data);
+    }
 
     getAllGBs() { // 모든 공동구매 조회
         return axios.get(MGB_URL);
