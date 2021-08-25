@@ -2,6 +2,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/java,react,macos,eclipse,windows
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,react,macos,eclipse,windows
 
+### Project Properties ###
+/backend/src/main/resources/config
+
 ### Eclipse ###
 .metadata
 bin/
