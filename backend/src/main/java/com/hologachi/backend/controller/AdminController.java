@@ -80,6 +80,10 @@ public class AdminController {
 		return ResponseEntity.ok(updatedUser);
 	}
 //	회원 작성글 조회
+	@GetMapping("/mUser/{userId}/posts")
+	public List<Post> getTheUsersPost(@PathVariable int userId) {
+		return postRepository.findByUserUserId(userId);
+	}
 	
 //	2. 공동구매 글 관리 
 //	공동구매 글 조회(모든 항목)

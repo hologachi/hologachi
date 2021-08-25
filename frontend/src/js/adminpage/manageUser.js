@@ -13,6 +13,7 @@ class manageUser extends Component {
     state = {
         users: null,
         userList : null,
+        userPost: null,
     }
 
     componentDidMount() {
@@ -28,6 +29,17 @@ class manageUser extends Component {
 
             console.log(this.state.users);
         }) 
+    }
+
+    loadUserPost = (userId) => {
+        // 회원 작성글 조회 
+        AdminService.getTheUsersPost(userId).then((res) => {
+            this.setState(
+                { userPost: res.data }
+            );
+
+            console.log(this.state.userPost);
+        })  
     }
 
     handleUpdateAuth = (id, new_auth) => {
@@ -50,7 +62,12 @@ class manageUser extends Component {
 
                 <SearchUser />
 
-                <ListUser users={this.state.users} handleUpdateAuth={this.handleUpdateAuth}/>
+                <ListUser 
+                    users={this.state.users} 
+                    handleUpdateAuth={this.handleUpdateAuth} 
+                    userPost={this.state.userPost} 
+                    loadUserPost={this.loadUserPost}
+                />
 
                 <Footer />
             </div>
