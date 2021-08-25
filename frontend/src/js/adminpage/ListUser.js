@@ -84,15 +84,19 @@ const ListUser = (props) => {
                             <td>{user.userId}</td>
                             <td>{user.nickname}</td>
                             <td>{user.email}</td>
-                            <td>{user.sgst_rate} 점</td>
+                            <td>
+                                {user.sgst_rate} 점 <br />
+                                <Button>작성글 조회</Button>
+                            </td>
                             <td>{user.rqst_rate} 점</td>
-                            <td>{translationIsAdmin(user.is_admin)}</td>
-                            <td><Button onClick={() => {
+                            <td>
+                                {translationIsAdmin(user.is_admin)} <br />
+                                <Button onClick={() => {
                                     handleModalAdminShow(); 
                                     setForm({id: user.userId, nickname: user.nickname, new_auth: user.is_admin}); 
                                     setAuthGroup({[user.is_admin]: true});
-                                }}>회원 권한 수정</Button></td>
-                            <td><Button>작성글 조회</Button></td>
+                                }}>회원 권한 수정</Button>
+                            </td>
                         </tr>
                     )
                 }
