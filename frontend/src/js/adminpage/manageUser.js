@@ -27,7 +27,7 @@ class manageUser extends Component {
                 { users: res.data }
             );
 
-            console.log(this.state.users);
+            // console.log(this.state.users);
         }) 
     }
 
@@ -38,7 +38,7 @@ class manageUser extends Component {
                 { userPost: res.data }
             );
 
-            console.log(this.state.userPost);
+            // console.log(this.state.userPost);
         })  
     }
 

@@ -14,7 +14,7 @@ const ListUser = (props) => {
             new_auth: e.target.value
         };
         setForm(nextForm);
-        console.log(new_auth);
+        // console.log(new_auth);
     }
 
     const [authGroup, setAuthGroup] = useState({
@@ -29,7 +29,7 @@ const ListUser = (props) => {
             '-1': false
         };
         setForm(nextAuthGroup);
-        console.log(nextAuthGroup);
+        // console.log(nextAuthGroup);
     }
 
     const handleRadio = (e) => {
