@@ -23,15 +23,23 @@ class AdminService {
         return axios.post(MUSER_URL);
     }
 
-
+    // 공동구매 글 관련 
     getAllGBPosts() { // 모든 공동구매 글 조회
         return axios.get(MGBPOST_URL);
     }
-    deleteTheGBPosts(postId) {
+    deleteTheGBPost(postId) { // 공동구매 글 삭제 
         let data = {postId: postId};
         return axios.post(MGBPOST_URL + '/delete', data);
     }
-
+    getTheComments(postId) { // 해당 공동구매 글에 달린 모든 댓글 조회
+        return axios.get(MGBPOST_URL + '/comment/' + postId);
+    }
+    deleteTheComment(commentId) { // 댓글 삭제
+        let data = {commentId: commentId};
+        return axios.post(MGBPOST_URL + '/comment/delete', data);
+    }
+    
+    // 공동구매 관련
     getAllGBs() { // 모든 공동구매 조회
         return axios.get(MGB_URL);
     }

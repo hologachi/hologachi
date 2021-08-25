@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button, Modal } from 'react-bootstrap';
 
 class ListGBPost extends Component {
+    
+    state = {
+        showModalC: false, // 댓글 모달 상태
+        postTitle: '', // 댓글 조회한 글 제목 정보
+    }
 
     translationDeletedBy(value) {
         switch(value) {
@@ -28,6 +33,39 @@ class ListGBPost extends Component {
             default:
                 return "알 수 없음";
         }   
+    }
+    translationCommentStatus(value) {
+        switch(value) {
+            case 0:
+                return "삭제";
+            case 1:
+                return "미삭제";
+            default:
+                return "알 수 없음";
+        }   
+    }
+
+    translationCommentOnlySgst(value) {
+        switch(value) {
+            case 0:
+                return "전체공개";
+            case 1:
+                return "작성자에게만 공개";
+            default:
+                return "알 수 없음";
+        }   
+    }
+
+    handleClose(modal) { // 모달 닫기
+        this.setState(
+            {[modal]: false}
+        );
+    }
+
+    handleShow(modal) { // 모달 보이기
+        this.setState(
+            {[modal]: true}
+        );
     }
 
     render() {
@@ -70,12 +108,62 @@ class ListGBPost extends Component {
                                         <td>{this.translationDeletedBy(gbPost.deleted_by)}</td>
                                         <td>{gbPost.category2.category1.cat1} {'>'} {gbPost.category2.cat2}</td>
                                         <td><Button onClick={() => this.props.handleDeletePost(gbPost.postId)}>글 삭제</Button></td>
-                                        <td><Button>댓글 조회</Button></td>
+                                        <td><Button onClick={() => {
+                                                this.props.loadComments(gbPost.postId); 
+                                                this.setState({postTitle: gbPost.title}); 
+                                                this.handleShow('showModalC');
+                                            }}>댓글 조회</Button></td>
                                     </tr>
                                 ))
                             }
                         </tbody>
                     </Table>
+
+                    {/* 댓글 조회용 모달 */}
+                    <Modal show={this.state.showModalC} onHide={() => {this.handleClose('showModalC');}}>
+                        <Modal.Header closeButton>
+                            <Modal.Title> {'<'}{this.state.postTitle}{'>'} 에 작성된 댓글입니다.</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                        <Table striped bordered hover>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>작성자</th>
+                                <th>등록일</th>
+                                <th>수정일</th>
+                                <th>내용</th>
+                                <th>공개여부</th>
+                                <th>삭제여부</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {
+                                this.props.comments && Object.values(this.props.comments).map(
+                                    (comment, i) => (
+                                    <tr key = {i}>
+                                        <td>{i+1}</td>
+                                        <td>{comment.user.nickname}</td>
+                                        <td>{comment.rgst_at}</td>
+                                        <td>{comment.update_at}</td>
+                                        <td>{comment.content}</td>
+                                        <td>{this.translationCommentOnlySgst(comment.only_sgster)}</td>
+                                        <td>{this.translationCommentStatus(comment.status)}</td>
+                                        <td><Button onClick={() => this.props.handleDeleteComment(comment.post.postId, comment.commentId)}>댓글 삭제</Button></td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                        </Table>
+                        {this.props.comments && <p>댓글 총 {this.props.comments.length} 개</p>}
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={() => {this.handleClose('showModalC');}}>
+                                취소
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
                 </div>
            </div>
         )

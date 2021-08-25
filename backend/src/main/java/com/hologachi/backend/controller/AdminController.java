@@ -19,11 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hologachi.backend.model.Category1;
 import com.hologachi.backend.model.Category2;
+import com.hologachi.backend.model.Comment;
 import com.hologachi.backend.model.Post;
 import com.hologachi.backend.model.Ptcpt;
 import com.hologachi.backend.model.User;
 import com.hologachi.backend.repository.Category1Repository;
 import com.hologachi.backend.repository.Category2Repository;
+import com.hologachi.backend.repository.CommentRepository;
 import com.hologachi.backend.repository.PostRepository;
 import com.hologachi.backend.repository.PtcptRepository;
 import com.hologachi.backend.repository.UserRepository;
@@ -43,7 +45,8 @@ public class AdminController {
 	private Category1Repository category1Repository;
 	@Autowired
 	private Category2Repository category2Repository;
-
+	@Autowired
+	private CommentRepository commentRepository;
 
 //	관리자페이지 조회(로그인 요구)
 	
@@ -95,15 +98,28 @@ public class AdminController {
 //	공동구매 글 삭제
 	@PostMapping("/mGBPost/delete")
 	public void deleteTheGBPosts(@RequestBody Map<String, Integer> data) {
-		System.out.println(data.get("postId"));
-		
+//		System.out.println(data.get("postId"));
 		Optional<Post> foundPost = postRepository.findByPostId(data.get("postId"));
 		if(foundPost.isPresent()) {
 			postRepository.delete(foundPost.get());
 		}
 	}
 //	댓글 조회
+	@GetMapping("/mGBPost/comment/{postId}")
+	public List<Comment> getAllComment(@PathVariable int postId) {
+		return commentRepository.findByPostPostId(postId);
+	}
 //	댓글 삭제
+	@PostMapping("/mGBPost/comment/delete")
+	public void deleteTheComment(@RequestBody Map<String, String> data) {
+		System.out.println(data.get("commentId"));
+		Optional<Comment> foundComment = commentRepository.findByCommentId(Integer.parseInt(data.get("commentId")));
+		if(foundComment.isPresent()) {
+			Comment deletedComment = foundComment.get();
+			deletedComment.setStatus(0);
+			commentRepository.save(deletedComment);
+		}
+	}
 	
 //	3. 공동구매 관리 
 //	공동구매 조회(모든 항목)

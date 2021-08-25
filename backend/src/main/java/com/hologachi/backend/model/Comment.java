@@ -10,9 +10,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -33,8 +36,11 @@ public class Comment {
 	private Post post;
 	
 	private String content;
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date rgst_at;
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date update_at;
+	@Setter
 	private int status;
 	private int only_sgster;
 	

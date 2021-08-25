@@ -11,6 +11,7 @@ class manageGBPost extends Component {
 
     state = {
         gbPosts: [],
+        comments: [],
     }
 
     componentDidMount() {
@@ -31,11 +32,30 @@ class manageGBPost extends Component {
 
     handleDeletePost = (postId) => {
         // 공동구매 글 삭제 
-        AdminService.deleteTheGBPosts(postId).then((res) => {
+        AdminService.deleteTheGBPost(postId).then((res) => {
             this.loadGBPosts();
-            console.log(this.state.gbPosts);
+            // console.log(this.state.gbPosts);
         }) 
     }
+
+    loadComments = (postId) => {
+        // 공동구매 댓글 조회
+        AdminService.getTheComments(postId).then((res) => {
+            this.setState(
+                { comments: res.data }
+            );
+            // console.log(this.state.comments);
+        }) 
+    }
+
+    handleDeleteComment = (postId, commentId) => {
+        // 공동구매 글 삭제 
+        AdminService.deleteTheComment(commentId).then((res) => {
+            this.loadComments(postId);
+            // console.log(this.state.comments);
+        }) 
+    }
+     
 
     render() {
         return (
@@ -43,7 +63,13 @@ class manageGBPost extends Component {
                 <Header />
                 <AdminNav />
 
-                <ListGBPost gbPosts={this.state.gbPosts} handleDeletePost={this.handleDeletePost} />
+                <ListGBPost 
+                    gbPosts={this.state.gbPosts} 
+                    handleDeletePost={this.handleDeletePost} 
+                    comments={this.state.comments}
+                    loadComments={this.loadComments}
+                    handleDeleteComment={this.handleDeleteComment}
+                />
 
                 <Footer />
             </div>
