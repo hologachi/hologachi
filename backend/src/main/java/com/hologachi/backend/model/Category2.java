@@ -1,24 +1,21 @@
 package com.hologachi.backend.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Data;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
+@Data
 @Entity
 @Table(name="TBL_CATEGORY2")
 public class Category2 {
 	
 	@Id @GeneratedValue
-	private int category2_id;
+	@Column(name="category2_id")
+	private int category2Id;
 	private String name;
 	
 //	@ManyToOne
