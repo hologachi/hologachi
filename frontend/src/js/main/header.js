@@ -6,23 +6,23 @@ export default function Header() {
     return (
         <div>
             <Navbar className="navbar" bg="light" expand="lg">
-                <Navbar.Brand href="/">홀로가치</Navbar.Brand>
+                <Navbar.Brand href="/home">홀로가치</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
-                        <Nav.Link href="#gb" className="menu">공동구매</Nav.Link>
-                        <NavDropdown title="카테고리" id="basic-nav-dropdown">
+                        <Nav.Link href="/gb/gblist" className="menu">공동구매</Nav.Link>
+                        {/* <NavDropdown title="카테고리" id="basic-nav-dropdown">
                             <NavDropdown.Item href="#action/3.1">식품</NavDropdown.Item>
                             <NavDropdown.Item href="#action/3.2">가전제품</NavDropdown.Item>
                             <NavDropdown.Item href="#action/3.3">의류</NavDropdown.Item>
-                        </NavDropdown>
+                        </NavDropdown> */}
                         <NavDropdown title="마이페이지" id="basic-nav-dropdown" className="menu">
-                            <NavDropdown.Item href="../mypage/myprofile">나의 프로필</NavDropdown.Item>
-                            <NavDropdown.Item href="../mypage/bookmark">북마크</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.3">내가 작성한 글</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.4">내가 신청한 글</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.5">내가 댓글 남긴 글</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.6">개인정보 확인 및 수정</NavDropdown.Item>
+                            <NavDropdown.Item href="/mypage/profile">나의 프로필</NavDropdown.Item>
+                            <NavDropdown.Item href="/mypage/bookmark">북마크</NavDropdown.Item>
+                            <NavDropdown.Item href="/mypage/mywriting">내가 작성한 글</NavDropdown.Item>
+                            <NavDropdown.Item href="/mypage/applygb">내가 신청한 글</NavDropdown.Item>
+                            <NavDropdown.Item href="/mypage/commentwrite">내가 댓글 남긴 글</NavDropdown.Item>
+                            <NavDropdown.Item href="/mypage/privacy">개인정보 확인 및 수정</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="#action/3.7">평점 등록</NavDropdown.Item>
                         </NavDropdown>
@@ -35,7 +35,6 @@ export default function Header() {
                         <SearchIcon type="submit" ></SearchIcon>
                         {/* onClick={signIn} */}
                     </Form>
-
                 </Navbar.Collapse>
             </Navbar>
         </div>

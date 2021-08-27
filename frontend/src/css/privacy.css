@@ -1,0 +1,17 @@
+#modifybtn{
+    background-color: #007bff;
+    color: white;
+    margin-bottom: 20px;
+}
+.privacy{
+    margin-top: 50px;
+    height: 700px;
+}
+#modifybtn:hover{
+    width: 88px;
+    box-shadow: none;
+}
+.react-datepicker__navigation:hover{
+    width: 30px;
+    display: flex;
+}

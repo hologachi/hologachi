@@ -7,14 +7,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
-@Setter
+@Data
+// =======
+// import lombok.AccessLevel;
+// import lombok.Getter;
+// import lombok.NoArgsConstructor;
+// import lombok.Setter;
+
+// @NoArgsConstructor(access = AccessLevel.PROTECTED)
+// @Getter
+// @Setter
+// >>>>>>> main
 @Entity
 @Table(name="TBL_USER")
 public class User {
