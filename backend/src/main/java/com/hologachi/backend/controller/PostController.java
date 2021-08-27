@@ -69,7 +69,7 @@ public class PostController {
 	public void updatePostDelete(@PathVariable int postId) {
 		List<Post> post = postRepository.findByPostId(postId);
 		post.get(0).setStep("delete");
-		post.get(0).setDeleted_by(0);
+		post.get(0).setDeletedBy(0);
 		
 		postRepository.save(post.get(0));
 	}

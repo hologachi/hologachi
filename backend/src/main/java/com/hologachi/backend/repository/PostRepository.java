@@ -16,10 +16,8 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 	
 	@Query("select p from Post p where p.title LIKE %:keyword%")
 	public List<Post> searchByTitle(String keyword);
-// =======
 
-// 	List<Post> findByUserUserId(int userId);
+ 	List<Post> findByUserUserId(int userId);
 
 // 	Optional<Post> findByPostId(int postId);
-// >>>>>>> main
 }
