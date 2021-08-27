@@ -3,16 +3,13 @@ package com.hologachi.backend.controller;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.hologachi.backend.model.Category2;
 import com.hologachi.backend.model.Post;
@@ -23,6 +20,7 @@ import com.hologachi.backend.repository.PtcptRepository;
 
 @RequestMapping("/post")
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class PostController {
 	
 	@Autowired
@@ -78,6 +76,7 @@ public class PostController {
 	
 	// 공동구매 등록
 	@RequestMapping("/register")
+	@JsonProperty("post")
 	public void addPost(@RequestBody Post post) {
 		Date now = new Date(System.currentTimeMillis());
 		post.setRgst_at(now);
@@ -93,7 +92,7 @@ public class PostController {
 	}
 	
 	// 공동구매 정렬(최신, 댓글, 참가인원, 신청인원)
-	@GetMapping("/timesort")
+	@RequestMapping("/timesort")
 	public List<Post> timeSort() {
 		return postRepository.findAll(Sort.by(Sort.Direction.DESC, "postId"));
 	}

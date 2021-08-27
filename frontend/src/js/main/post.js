@@ -53,22 +53,7 @@ export default function Post() {
         })
       }, []
   );
-  const list = [
-    {
-      id:1,
-      image: "https://i.postimg.cc/9FhJcFSm/images.jpg"
-    },{
-      id:2,
-      image: "https://i.postimg.cc/3rPs3558/image.jpg"
-    },{
-      id:3,
-      image: "https://i.postimg.cc/cHtFzCJQ/17465-15308-5010.jpg"
-    },{
-      id:4,
-      image: "https://i.postimg.cc/wBy5qPdz/215024402692.jpg"
-    }
-  ]
-
+  
   const products = Object.values(testStr).map(product => {
     let rgst = product.rgst_at;
     let rgst_result = moment(rgst).format('YYYY-MM-DD');
@@ -82,7 +67,7 @@ export default function Post() {
           <Link to={`/gb/gbdetail/${product.postId}`}>
           <CardMedia
                 className={classes.cardMedia}
-                image={list[product.postId-1].image}
+                image=""
                 title={product.title}
               />
           </Link>

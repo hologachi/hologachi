@@ -184,8 +184,8 @@ function Mypost() {
         <Table className={classes.table} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow className="table_box">
-            <StyledTableCell sortDirection align="center" width="5%">제안자</StyledTableCell>
-              <StyledTableCell sortDirection align="center" width="26%">기간</StyledTableCell>
+            <StyledTableCell align="center" width="5%">제안자</StyledTableCell>
+              <StyledTableCell align="center" width="26%">기간</StyledTableCell>
               <StyledTableCell align="center">제목</StyledTableCell>
               <StyledTableCell align="center" width="15%">가격</StyledTableCell>
               <StyledTableCell align="center" width="5%">인원</StyledTableCell>
@@ -195,7 +195,9 @@ function Mypost() {
           <TableBody>
           {Object.values(testStr).map(product => (
               <TableRow key={product.postId} hover>
+              <Link to={`/mypage/myrequest/sgstProfile/${product.post.user.userId}`}>
               <StyledTableCell align="center">{product.post.user.nickname}</StyledTableCell>
+              </Link>
                 <StyledTableCell align="center">{moment(product.rgst_at).format('YYYY-MM-DD')} ~ {moment(product.deadline).format('MM-DD')}</StyledTableCell>
                 <Link to={`/gb/gbdetail/${product.post.postId}`}>
                 <StyledTableCell align="center">{product.post.title}</StyledTableCell>

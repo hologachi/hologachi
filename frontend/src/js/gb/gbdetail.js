@@ -67,6 +67,16 @@ class Comment extends React.Component {
     )
   }
 }
+
+function removeBtn(e){
+  e.preventDefault();
+  var answer;
+  answer = window.confirm(`댓글을 삭제하시겠습니까?`);
+  if (answer == true) {
+    
+  }
+}
+
 function Singcomment({ comment }) {
   return (
     <div className="comment">
@@ -75,7 +85,7 @@ function Singcomment({ comment }) {
           <th id="writerName">{comment.writer}</th>
           <td id="content">{comment.content}</td>
           <td id="date">{comment.date}</td>
-          <td><button id="removebtn">삭제</button></td>
+          <td><button id="removebtn" onClick={removeBtn}>삭제</button></td>
         </tr>
       </table>
     </div>
@@ -117,6 +127,18 @@ function callback(str) {
   setTestStr(str);
 }
 
+function contentDelete(e){
+  e.preventDefault();
+  var answer;
+  answer = window.confirm(`글을 삭제 하시겠습니까?`);
+
+  if (answer == true) {
+    axios.post(`/post/${productId}/delete`);
+    alert('삭제가 완료되었습니다.');
+    window.location.href="/home";
+  }
+}
+
 // 첫 번째 렌더링을 마친 후 실행
 useEffect(
   () => {
@@ -128,7 +150,6 @@ useEffect(
     })
   }, []
 );
-
   return (
     <div className="gbdetail">
       <section className="product-details spad">
@@ -146,15 +167,17 @@ useEffect(
             {Object.values(testStr).map(product => (
               <div className="product__details__text">
                 <h3>{product.title}</h3><br />
-                <div classNa="product__details__rating">
+                <div className="product__details__rating">
                 </div>
                 <ul>
-                  <li><strong className="left">가격  </strong>{product.price}</li><hr />
-                  <li><strong className="left">공동구매 시작  </strong>{moment(product.rgst_at).format('YYYY-MM-DD')}</li><hr />
-                  <li><strong className="left">공동구매 마감  </strong>{moment(product.deadline).format('YYYY-MM-DD')}</li><hr />
-                  <li><strong className="left">카테고리  </strong>{product.category2.name}</li><hr />
-                  <li><strong className="left">목표 인원 </strong>{product.matching}명</li><hr />
-                  <li><a href={product.url}>구매 사이트 클릭!</a></li><hr />
+                <li><strong className="left">공동구매 상태 {'>>'} </strong>{product.step}</li><hr />
+                  <li><strong className="left">제안자  : </strong>{product.user.nickname}<button id="contentDeletebtn" onClick={contentDelete}>글 삭제</button></li><hr />
+                  <li><strong className="left">가격  : </strong>{product.price}</li><hr />
+                  <li><strong className="left">공동구매 시작  : </strong>{moment(product.rgst_at).format('YYYY-MM-DD')}</li><hr />
+                  <li><strong className="left">공동구매 마감  : </strong>{moment(product.deadline).format('YYYY-MM-DD')}</li><hr />
+                  <li><strong className="left">카테고리  : </strong>{product.category2.name}</li><hr />
+                  <li><strong className="left">목표 인원 : </strong>{product.matching}명</li><hr />
+                  <li><button onClick={() => window.open(`https://${product.url}`, '_blank')}>구매 사이트</button></li><hr />
                 </ul>
                 <div className="quantity">
                   <div className="pro-qty">

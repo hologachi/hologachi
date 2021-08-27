@@ -80,3 +80,9 @@
     box-shadow: none;
     background-color: #163c72;
 }
+#contentDeletebtn{
+    float: right;
+    color: #fff;
+    background-color: #0d6efd;
+    border-radius: 5px;
+}

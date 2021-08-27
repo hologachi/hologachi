@@ -202,7 +202,7 @@ function Mypost() {
         <Table className={classes.table} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
-              <StyledTableCell sortDirection align="center" width="20%">기간</StyledTableCell>
+              <StyledTableCell align="center" width="15%">기간</StyledTableCell>
               <StyledTableCell align="center" width="8%">카테고리</StyledTableCell>
               <StyledTableCell align="center" width="30%">제목</StyledTableCell>
               <StyledTableCell align="center" width="15%">목표</StyledTableCell>
@@ -219,11 +219,9 @@ function Mypost() {
                   <StyledTableCell align="center" id="titleText">{product.title}</StyledTableCell>
                 </Link>
                 <StyledTableCell align="center">{product.matching}명</StyledTableCell>
-
                 <Link to={`/mypage/reqList/${product.postId}`}>
                 <StyledTableCell align="center"><button>확인하기</button></StyledTableCell>
                 </Link>
-
                 <StyledTableCell align="center">{product.step}</StyledTableCell>
               </TableRow>
             ))}

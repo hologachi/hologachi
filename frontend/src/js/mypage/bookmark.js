@@ -154,6 +154,7 @@ const useStyles = makeStyles({
 });
 
 function Mypost() {
+  
   const classes = useStyles();
 
   // 요청받은 정보를 담아줄 변수 선언
@@ -178,18 +179,31 @@ function Mypost() {
       }, []
   );
 
+  function bookmarkDelete(id){
+    console.log(id);
+    var answer;
+    answer = window.confirm(`북마크를 삭제 하시겠습니까?`);
+  
+    if (answer == true) {
+      axios.post(`/mypage/bookmark/${id}/delete`);
+      alert('삭제가 완료되었습니다.');
+      window.location.href="/mypage/bookmark";
+    }
+  }
+
   return (
     <div>
           <TableContainer component={Paper}>
         <Table className={classes.table} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow className="table_box">
-            <StyledTableCell sortDirection align="center" width="5%">제안자</StyledTableCell>
-              <StyledTableCell sortDirection align="center" width="26%">기간</StyledTableCell>
+            <StyledTableCell align="center" width="5%">제안자</StyledTableCell>
+              <StyledTableCell align="center" width="22%">공구 기간</StyledTableCell>
               <StyledTableCell align="center">제목</StyledTableCell>
               <StyledTableCell align="center" width="15%">가격</StyledTableCell>
-              <StyledTableCell align="center" width="15%">인원</StyledTableCell>
+              <StyledTableCell align="center" width="15%">목표 인원</StyledTableCell>
               <StyledTableCell align="center" width="8%">진행상황</StyledTableCell>
+              <StyledTableCell align="center" width="10%" >삭제</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -203,6 +217,7 @@ function Mypost() {
                 <StyledTableCell align="center">{product.post.price}원</StyledTableCell>
                 <StyledTableCell align="center">{product.post.matching}명</StyledTableCell>
                 <StyledTableCell align="center">{product.post.step}</StyledTableCell>
+                <StyledTableCell align="center"><button onClick={()=> bookmarkDelete(product.bookmarkId)}>삭제</button></StyledTableCell>
               </TableRow>
               ))}
           </TableBody>

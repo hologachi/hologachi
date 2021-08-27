@@ -1,7 +1,6 @@
 import React from 'react';
 import '../src/css/App.css';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from "./js/main/header";
 import Footer from "./js/main/footer";
 
@@ -15,7 +14,8 @@ import  Sidemenu  from "./js/mypage/mypageside";
 import  Bookmark  from "./js/mypage/bookmark";
 import  Comment  from "./js/mypage/commentwrite";
 import  Privacy  from "./js/mypage/privacy";
-// import  ReqUserProfile from "./js/mypage/reqUserProfile";
+import  ReqUserProfile from "./js/mypage/reqUserProfile";
+import  SgstProfile from "./js/mypage/sgstProfile";
 
 import  Gbwrite  from "./js/gb/gbwrite";
 import  Gblist from "./js/gb/gblist";
@@ -101,7 +101,8 @@ function App() {
           <Route path="/mypage/mypageside" component={Sidemenu} />
           <Route path="/mypage/commentwrite" component={Comment} />
           <Route path="/mypage/privacy" component={Privacy} />
-           {/* <Route path="/mypage/requserprofile/:postId/:ptcptId" component={ReqUserProfile} /> */}
+           <Route path="/mypage/mypost/:postId/:ptcptId" component={ReqUserProfile} />
+           <Route path="/mypage/myrequest/sgstProfile/:ptcptId" component={SgstProfile} />
         </Switch>
       </BrowserRouter>
       <Footer />

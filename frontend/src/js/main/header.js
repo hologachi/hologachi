@@ -11,11 +11,11 @@ export default function Header() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
                         <Nav.Link href="/gb/gblist" className="menu">공동구매</Nav.Link>
-                        <NavDropdown title="카테고리" id="basic-nav-dropdown">
+                        {/* <NavDropdown title="카테고리" id="basic-nav-dropdown">
                             <NavDropdown.Item href="#action/3.1">식품</NavDropdown.Item>
                             <NavDropdown.Item href="#action/3.2">가전제품</NavDropdown.Item>
                             <NavDropdown.Item href="#action/3.3">의류</NavDropdown.Item>
-                        </NavDropdown>
+                        </NavDropdown> */}
                         <NavDropdown title="마이페이지" id="basic-nav-dropdown" className="menu">
                             <NavDropdown.Item href="/mypage/profile">나의 프로필</NavDropdown.Item>
                             <NavDropdown.Item href="/mypage/bookmark">북마크</NavDropdown.Item>

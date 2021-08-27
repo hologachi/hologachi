@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import '../../css/post.css'
 import '../../css/gblist.css'
 import { Container, Grid, Card, CardMedia, CardContent, Typography, makeStyles, } from '@material-ui/core';
-import { Form, Pagination } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import productsData from "../ProductData";
 import { Link } from "react-router-dom";
@@ -32,33 +31,65 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-  const sortProducts = ["최신 등록순","공구 마감일순","인기순"]
-
-  const sortProduct = sortProducts.map((label, index) => (<option key={index}>{label}</option>));
 
  function Board() {
    const classes = useStyles();
 
-   // 요청받은 정보를 담아줄 변수 선언
    const [testStr, setTestStr] = useState('');
-   console.log(testStr);
 
-   // 변수 초기화
    function callback(str) {
      setTestStr(str);
    }
 
-   // 첫 번째 렌더링을 마친 후 실행
    useEffect(
      () => {
        axios({
-         url: `/post`,
+         url: `/post/timesort`,
          method: 'GET'
        }).then((res) => {
          callback(res.data);
        })
      }, []
    );
+
+  //  const [testStrSort1, setTestStrSort1] = useState('');
+
+  //  function callback(str) {
+  //   setTestStrSort1(str);
+  //  }
+
+  //  useEffect(
+  //    () => {
+  //      axios({
+  //        url: `/post/timesort`,
+  //        method: 'GET'
+  //      }).then((res) => {
+  //        callback(res.data);
+  //      })
+  //    }, []
+  //  );
+
+  function Sorting(){
+    useEffect(
+      () => {
+        axios({
+          url: `/post/matchingsort`,
+          method: 'GET'
+        }).then((res) => {
+          callback(res.data);
+        })
+      }, []
+    );
+  }
+
+   function ChangeFunc() {
+    var selectBox = document.getElementById("selectBox");
+    var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+    
+    if(selectedValue == 2){
+      Sorting()
+    }
+   }
 
    const products = Object.values(testStr).map(product => {
       let rgst = product.rgst_at;
@@ -104,30 +135,25 @@ const useStyles = makeStyles((theme) => ({
       );
     });
   
-    return (
-      <Container className={classes.cardGrid} maxWidth="md">
-        <div>
-          <h2>공동구매</h2>
-          <hr />
-          <div id="category">
-            <Form id="select">
-              <Form.Group className="mb-0" controlId="exampleForm.ControlTextarea1">
-                <Form.Control as="select" name="sort">
-                  {sortProduct}
-                </Form.Control>
-              </Form.Group>
-            </Form>
-          </div>
-        </div>
-        
-        <Grid container spacing={4}
-      container justifyContent="center" 
-      > 
-          {products}
-      </Grid>
-      </Container>
-    )
-  }
+   return (
+     <Container className={classes.cardGrid} maxWidth="md">
+       <div>
+         <h2>공동구매</h2>
+         <select id="selectBox" onChange={ChangeFunc}>
+           <option value="1" selected>최신등록순</option>
+           <option value="2">참가인원 적은순</option>
+         </select>
+         <hr />
+       </div>
+
+       <Grid container spacing={4}
+         container justifyContent="center"
+       >
+         {products}
+       </Grid>
+     </Container>
+   )
+ }
 
 function gblist() {
     return (

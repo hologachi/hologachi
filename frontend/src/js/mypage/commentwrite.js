@@ -184,7 +184,7 @@ function Mypost() {
         <Table className={classes.table} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow className="table_box">
-              <StyledTableCell sortDirection align="center" width="26%">날짜</StyledTableCell>
+              <StyledTableCell align="center" width="26%">날짜</StyledTableCell>
               <StyledTableCell align="center">글 제목</StyledTableCell>
               <StyledTableCell align="center">댓글</StyledTableCell>
             </TableRow>

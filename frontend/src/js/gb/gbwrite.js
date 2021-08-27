@@ -1,102 +1,16 @@
 // import React, { useState } from 'react';
 import React, {
-  ChangeEvent,
-  useCallback,
-  useRef,
   useState,
-  useEffect
 } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import '../../css/gbwrite.css'
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Row, Col } from 'react-bootstrap';
 import moment from 'moment';
 import ImageUploading from 'react-images-uploading';
 import { PictureOutlined } from '@ant-design/icons'
-
-
-//   state = {
-//     title: '',
-//     content: '',
-//     link: '',
-//     joinnum: '',
-//     input5: '',
-//     show: true,
-//     list: [],
-//     labels: ["의류", "잡화", "도서", "디지털/가전", "굿즈"
-//       , "생활", "식품", "스포츠/레저", "뷰티/미용", "유아", "출산", "차량/오토바이", "기타"],
-//     label: ''
-//   };
-
-//   const handleChange = e => {
-//     const { name, value } = e.target;
-//     this.setState({
-//       [name]: value
-//     });
-//   };
-
-//   const handleCreate = () => {
-//     const { title, content, link, joinnum, date, gbimg, list } = this.state;
-//     this.setState({
-//       list: list.concat({
-//         title: title,
-//         content: content,
-//         link: link,
-//         joinnum: joinnum,
-//         date: date,
-//         gbimg:gbimg
-//       }),
-//       // input1: '', content: '', link: '', joinnum: '', date: 0
-//     });
-//   };
-
-//     const { title, content, link, joinnum, date, list } = this.state;
-//     const category = this.state.labels.map((label, index) => (<option key={index}>{label}</option>));
-//     const [startDate, setStartDate] = useState(new Date());
-
-//     return (
-//       <div className="row card">
-//         <div>
-//           <h1 >공동구매 등록</h1>
-
-//           {/* <Form className="gbFrom">
-//             <Form.Group controlId="formGroupTitle">
-//               <Form.Label>글 제목</Form.Label>
-//               <Form.Control required="required" type="text" name="title" onChange={handleChange} value={title} placeholder="Title" />
-//             </Form.Group>
-//             <Form.Group controlId="formGroupContent">
-//               <Form.Label>글 내용</Form.Label>
-//               <Form.Control className="textArea" type="text" as="textarea" name="content" onChange={handleChange} value={content} placeholder="Content" required />
-//             </Form.Group>
-//             <Form.Group controlId="exampleForm.ControlSelect1">
-//               <Form.Label>카테고리</Form.Label>
-//               <Form.Control as="select" name="link" value={link} onChange={this.handleChange} required>
-//                 {category}
-//               </Form.Control>
-//             </Form.Group>
-//             <Form.Group controlId="formGroupLink">
-//               <Form.Label>구매링크</Form.Label>
-//               <Form.Control type="text" name="input4" onChange={handleChange} value={input4} placeholder="Link" required />
-//             </Form.Group>
-//             <button className="submitbtn" onClick={handleCreate}>추가</button>
-//           </Form> */}
-//         </div>
-//         {/* <div>
-//           <ul>
-//             {list.map((item, index) => {
-//               return (
-
-//               );
-//             })}
-//           </ul>
-//         </div> */}
-//       </div>
-//     );
-//   }
-
-
-
+import axios from "axios";
 
 function UploadImage() {
 
@@ -143,12 +57,10 @@ function UploadImage() {
               <PictureOutlined /> 사진추가
             </button>
             &nbsp;
-            {/* <button onClick={onImageRemoveAll}>Remove all images</button> */}
             {imageList.map((image, index) => (
               <div key={index} className="image-item">
                 <img src={image['data_url']} alt="" width="100" style={{ width: "100px" }} />
                 <div className="image-item__btn-wrapper">
-                  {/* <button onClick={() => onImageUpdate(index)}>수정</button> */}
                   <button onClick={() => onImageRemove(index)}>삭제</button>
                 </div>
               </div>
@@ -160,47 +72,18 @@ function UploadImage() {
   )
 }
 
-
 function Board() {
 
   const [state, setstate] = useState({
     title: '',
     content: '',
     link: '',
-    date: '',
-    gbimg: '',
-    category: '',
-    show: true,
-    list: [],
-    labels: ["의류", "잡화", "도서", "디지털/가전", "굿즈"
-      , "생활", "식품", "스포츠/레저", "뷰티/미용", "유아", "출산", "차량/오토바이", "기타"],
+    labels: ["식품", "가전제품", "생활용품", "도서", "의류"
+      , "전자기기"],
     label: ''
   })
+  const category = state.labels.map((label, index) => (<option key={index}>{label}</option>));
 
-  const handleChange = e => {
-    const { name, value } = e.target;
-    setstate({
-      [name]: value
-    });
-  };
-
-
-  // const handleCreate = () => {
-  //   const { title, content, link, category, joinnums, date, gbimg, list } = state;
-  //   setstate({
-  //     list: list.concat({
-  //       title: title,
-  //       content: content,
-  //       category: category,
-  //       link: link,
-  //       joinnums: joinnums,
-  //       date: date,
-  //       gbimg: gbimg
-  //     }),
-  //     // input1: '', content: '', link: '', joinnum: '', date: 0
-  //   });
-  //   console.log(setstate);
-  // };
   const [joinnums, setNums] = useState(2);
 
   const plusNum = e => {
@@ -217,15 +100,32 @@ function Board() {
   }
 
   const [startDate, setStartDate] = useState(new Date());
+  const [title, setTitle] = useState('')
+  const [price, setPrice] = useState('')
+  const [url, setUrl] = useState('')
+  const [content, setContent] = useState('')
 
   const [postfiles, setPostfiles] = useState({
     file: [],
     previewURL: "",
   });
 
+  function handelChangeTitle(e){
+    setTitle(e.target.value)
+  }
+  function handelChangePrice(e){
+    setPrice(e.target.value)
+  }
+  function handelChangeUrl(e){
+    setUrl(e.target.value)
+  }
+  function handelChangeContent(e){
+    setContent(e.target.value)
+  }
+
   let profile_preview = null;
   if (postfiles.file !== null) {
-    profile_preview = <img src={postfiles.previewURL} alt="profileImg" />
+    profile_preview = <img src={postfiles.previewURL} alt="이미지를 등록하세요" style={{width:"50px"}}/>
   }
 
   const uploadFile = (e) => {
@@ -246,92 +146,108 @@ function Board() {
     }
   };
 
-  const addContent = e => {
-    alert('글 등록 성공!')
-    window.location.href = "/";
-  }
+  function addContent() {
+    axios({
+      url: '/register',
+      method: 'post',
+      data: {
+        title: title,
+        content: content,
+        matching: joinnums,
+        deadline: startDate,
+        deleted_by: -1,
+        price: price,
+        url: url,
+        step:"proceed"
+      },
+      baseURL: 'http://localhost:8080/post',
+      headers: { "Access-Control-Allow-Origin": "*" },
+    }).then(function () {
+      alert("공동구매가 등록되었습니다.")
+      window.location.href="/home"
+    }).catch(error => {
+      console.log(error.response)
+  });
+  };
 
-  const { id, title, content, link, date, list } = state;
-  const category = state.labels.map((label, index) => (<option key={index}>{label}</option>));
+return(
+<div id="container" className="container">
+    <div id="inputform">
+    <div><br />
+      <h1 >공동구매 등록</h1><br />
+      <Form.Group as={Row} className="mb-3" controlId="exampleForm.ControlTextarea1">
+        <Form.Label column sm="2">
+          글 제목
+        </Form.Label>
+        <Col sm="10">
+          <Form.Control type="text" placeholder="title" value={title} onChange={handelChangeTitle}/>
+        </Col>
+      </Form.Group>
 
-  return (
-    <div id="container" className="container">
-      <div id="inputform">
-        <h1 id="titlteh1">공동구매 등록</h1>
-        <div id="title">
-          <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-              <Form.Label id="left" className="content">글 제목</Form.Label>
-              <Form.Control required="required" type="text" name="title" onChange={handleChange} value={title} placeholder="Title" />
-            </Form.Group>
-          </Form>
-        </div><br />
-        <div id="categoryList">
-          <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-              <Form.Label id="left" >카테고리</Form.Label>
-              <Form.Control as="select" name="category" >
-                {category}
-              </Form.Control>
-            </Form.Group>
-          </Form>
-        </div><br />
-        <div id="link">
-          <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-              <Form.Label id="left" className="link">구매 링크</Form.Label>
-              <Form.Control type="text" name="link" onChange={handleChange} value={link} placeholder="Link" required="required" />
-            </Form.Group>
-          </Form>
-        </div><br />
-        <div id="joinnum">
-          <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-              <Form.Label id="left" className="joinnum">목표 인원</Form.Label>&nbsp;
-              <Button id="numbtn" onClick={minusNum}>-</Button>&nbsp;
-              <span>{joinnums}</span>&nbsp;
-              <Button id="numbtn" onClick={plusNum}>+</Button>
-            </Form.Group>
-          </Form>
-        </div><br />
-        <div id="gbwriteDate">
-          <Form>
-            <Form.Group className="mb-3">
-              <Form.Label className="date">공동구매 마감일</Form.Label>
-              <DatePicker selected={startDate} minDate={moment().toDate()} onChange={(date) => setStartDate(date)} />
-            </Form.Group>
-          </Form>
-        </div><br />
-        <div id="gbimg">
-          <Form>
-            {/* <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-            <label htmlFor="upload-file" id="uploadlabel">이미지 파일선택</label>
-              <input
-                id="upload-file"
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={uploadFile}
-              ></input>
-              {profile_preview}
-            </Form.Group> */}
-            <UploadImage />
-          </Form>
-        </div><br />
-        <div id="gbwriteContent">
-          <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-              <Form.Label id="left" >상품 소개 및 설명</Form.Label>
-              <Form.Control as="textarea" className="content" cols={70} rows={5} onChange={handleChange} value={content} placeholder="Content" style={{ resize: "none" }} />
-            </Form.Group>
-            <Button id="submitbtn" onClick={addContent}>추가</Button>
-          </Form>
-        </div>
-      </div>
+      <Form.Group as={Row} className="mb-3" controlId="exampleForm.ControlTextarea1">
+        <Form.Label column sm="2">
+           가격
+        </Form.Label>
+        <Col sm="10">
+          <Form.Control type="number" placeholder="price" value={price} onChange={handelChangePrice}/>
+        </Col>
+      </Form.Group>
+
+      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+        <Form.Label id="left" >
+        카테고리
+        </Form.Label>
+        <Form.Control as="select" name="category" >
+          {category}
+        </Form.Control>
+      </Form.Group>
+
+      <Form.Group as={Row} className="mb-3" controlId="exampleForm.ControlTextarea1">
+        <Form.Label column sm="2">
+          구매 링크
+        </Form.Label>
+        <Col sm="10">
+          <Form.Control type="text" placeholder="URL" value={url} onChange={handelChangeUrl}/>
+        </Col>
+      </Form.Group>
+
+      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+        <Form.Label>
+        목표 인원
+        </Form.Label>&nbsp;
+        <Button id="numbtn" onClick={minusNum}>-</Button>&nbsp;
+        <span>{joinnums}</span>&nbsp;
+        <Button id="numbtn" onClick={plusNum}>+</Button>
+      </Form.Group>
+
+      <Form.Group className="mb-3">
+        <Form.Label className="date">공동구매 마감일</Form.Label>
+        <DatePicker selected={startDate} minDate={moment().toDate()} onChange={(date) => setStartDate(date)} />
+      </Form.Group>
+
+      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+        <input
+          id="upload-file"
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={uploadFile}
+        ></input>
+        {profile_preview}
+        <UploadImage />
+      </Form.Group>
+
+      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+        <Form.Label id="left" >상품 소개 및 설명</Form.Label>
+        <Form.Control as="textarea" cols={70} rows={5} placeholder="Content" style={{ resize: "none" }} value={content} onChange={handelChangeContent} />
+      </Form.Group>
+
+      <Button id="submitbtn" onClick={addContent}>추가</Button>
     </div>
-  )
+  </div>
+  </div>
+)
 }
-
 
 function gbwrite() {
   return (
@@ -343,23 +259,3 @@ function gbwrite() {
   )
 }
 export default gbwrite
-
-
-
-// postfiles?.file.map((eachfile) => {
-//   formData.append("path", eachfile);
-//   axios.post(formData);
-// });
-// const formData = new FormData();
-// formData.append("json", JSON.stringify({ content: postContent }));
-// fetch(UPLOAD_POSTS, {
-//   method: "POST",
-//   headers: {
-//     Authorization: localStorage.getItem("token"),
-//   },
-//   body: formData,
-// })
-//   .then((res) => res.json())
-//   .then((res) => {
-//     if (res.message === "SUCCESS") return history.push("/");
-//   });

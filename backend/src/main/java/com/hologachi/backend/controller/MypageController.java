@@ -96,7 +96,7 @@ public class MypageController {
 	}
 	
 	// 신청한 글의 제시자 프로필
-	@PostMapping("/myrequest/{ptcptId}")
+	@GetMapping("/myrequest/{ptcptId}")
 	public Ptcpt sgsterFindByPtcptId(@PathVariable int ptcptId) {
 		return myRequestRepository.findByPtcptId(ptcptId);
 	}
