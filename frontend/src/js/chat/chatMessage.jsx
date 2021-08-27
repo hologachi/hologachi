@@ -37,7 +37,7 @@ class ChatMessage extends Component {
     }
     
     saveToDos = (data) => {
-        localStorage.setItem(this.chatroom.chatroom_id, JSON.stringify(data))
+        localStorage.setItem(this.chatroom.chatroomId, JSON.stringify(data))
     }
 
     render() {
@@ -45,7 +45,7 @@ class ChatMessage extends Component {
 
         // let message = <div className="no-content-message">대화를 시작해보세요</div>;
         // if (this.props.chatrooms) {
-        //     message = this.props.chatrooms.map(chatroom => <Room chatroom_id={chatroom.chatroom_id} room_name={chatroom.room_name} lastchat={chatroom.lastchat} onClick={this.handleClick}/>);
+        //     message = this.props.chatrooms.map(chatroom => <Room chatroomId={chatroom.chatroomId} roomName={chatroom.roomName} lastchat={chatroom.lastchat} onClick={this.handleClick}/>);
         // }
         const {messages} = this.state;
 

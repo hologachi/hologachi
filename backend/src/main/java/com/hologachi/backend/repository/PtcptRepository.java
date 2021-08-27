@@ -1,12 +1,10 @@
 package com.hologachi.backend.repository;
 
-import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.hologachi.backend.model.Post;
 import com.hologachi.backend.model.Ptcpt;
 
 @Repository
@@ -29,6 +27,6 @@ public interface PtcptRepository extends JpaRepository<Ptcpt, Integer> {
 // @Repository
 // public interface PtcptRepository extends JpaRepository<Ptcpt, Integer> {
 
-// 	Optional<Ptcpt> findByPtcptId(int parseInt);
-// >>>>>>> main
+ 	Optional<Ptcpt> findByPtcptId(int parseInt);
+
 }

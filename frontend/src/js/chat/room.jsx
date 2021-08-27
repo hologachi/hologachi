@@ -5,16 +5,16 @@ import React, { Component } from 'react';
 class Room extends Component {
 
     click = () => {
-        this.props.onClick(this.props.chatroom_id);
+        this.props.onClick(this.props.chatroomId);
 
-        console.log("채팅방 " + this.props.chatroom_id + "을 눌렀습니다.");
+        console.log("채팅방 " + this.props.chatroomId + "을 눌렀습니다.");
     }
 
     render() {
         return (
-            <div className="room" key={this.props.chatroom_id} onClick={this.click}>
+            <div className="room" key={this.props.chatroomId} onClick={this.click}>
                 <img className="roomImg" src="https://placeimg.com/50/50/any" alt="" />
-                <span className="roomName">{this.props.room_name}</span>
+                <span className="roomName">{this.props.roomName}</span>
                 <span className="roomLastChat">{this.props.lastchat}</span>
             </div>
         )

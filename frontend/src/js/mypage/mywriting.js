@@ -213,7 +213,7 @@ function Mypost() {
           <TableBody>
             {Object.values(testStr).map(product => (
               <TableRow key={product.postId} hover>
-                <StyledTableCell align="center">{moment(product.rgst_at).format('YYYY-MM-DD')} ~ {moment(product.deadline).format('MM-DD')}</StyledTableCell>
+                <StyledTableCell align="center">{moment(product.rgstAt).format('YYYY-MM-DD')} ~ {moment(product.deadline).format('MM-DD')}</StyledTableCell>
                 <StyledTableCell align="center">{product.category2.name}</StyledTableCell>
                 <Link to={`/gb/gbdetail/${product.postId}`}>
                   <StyledTableCell align="center" id="titleText">{product.title}</StyledTableCell>

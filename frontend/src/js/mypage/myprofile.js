@@ -50,8 +50,8 @@ useEffect(
         <div className="img-wrap" >
           <img className="pr" src="https://i.postimg.cc/7LT6kXtR/user.png" alt="" />
         </div><br />
-        <div className="grade"><span>제시자로서 평점 : </span>{profile.sgst_rate}</div>
-        <div className="name"><span>신청자로서 평점 : </span>{profile.rqst_rate}</div>
+        <div className="grade"><span>제시자로서 평점 : </span>{profile.sgstRate}</div>
+        <div className="name"><span>신청자로서 평점 : </span>{profile.rqstRate}</div>
         <div className="menu">
           <button className="menuItems" onClick={() => {location('privacy')}}>개인정보 확인 및 수정</button>
           <button className="menuItems" onClick={() => {location('mywriting')}}>내가 작성한 글</button>

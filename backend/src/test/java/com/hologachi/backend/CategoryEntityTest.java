@@ -32,9 +32,9 @@ public class CategoryEntityTest {
 	@Test
 	public void 엔티티_저장_테스트() 
 	{
-		Category2 category = category2Repository.findByCat2("test");
+		Category2 category = category2Repository.findByName("test");
 
-		assertEquals(category.getCategory1().getCat1(), "test");
+		assertEquals(category.getCategory1().getName(), "test");
 	}
 	
 //	@Test

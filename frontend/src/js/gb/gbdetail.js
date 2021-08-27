@@ -173,7 +173,7 @@ useEffect(
                 <li><strong className="left">공동구매 상태 {'>>'} </strong>{product.step}</li><hr />
                   <li><strong className="left">제안자  : </strong>{product.user.nickname}<button id="contentDeletebtn" onClick={contentDelete}>글 삭제</button></li><hr />
                   <li><strong className="left">가격  : </strong>{product.price}</li><hr />
-                  <li><strong className="left">공동구매 시작  : </strong>{moment(product.rgst_at).format('YYYY-MM-DD')}</li><hr />
+                  <li><strong className="left">공동구매 시작  : </strong>{moment(product.rgstAt).format('YYYY-MM-DD')}</li><hr />
                   <li><strong className="left">공동구매 마감  : </strong>{moment(product.deadline).format('YYYY-MM-DD')}</li><hr />
                   <li><strong className="left">카테고리  : </strong>{product.category2.name}</li><hr />
                   <li><strong className="left">목표 인원 : </strong>{product.matching}명</li><hr />

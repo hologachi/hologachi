@@ -1,7 +1,4 @@
-// import React, { useState } from 'react';
-import React, {
-  useState,
-} from "react";
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -9,7 +6,7 @@ import '../../css/gbwrite.css'
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import moment from 'moment';
 import ImageUploading from 'react-images-uploading';
-import { PictureOutlined } from '@ant-design/icons'
+import { PictureOutlined } from '@ant-design/icons';
 import axios from "axios";
 
 function UploadImage() {
@@ -155,7 +152,7 @@ function Board() {
         content: content,
         matching: joinnums,
         deadline: startDate,
-        deleted_by: -1,
+        deletedBy: -1,
         price: price,
         url: url,
         step:"proceed"

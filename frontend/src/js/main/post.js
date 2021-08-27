@@ -55,7 +55,7 @@ export default function Post() {
   );
   
   const products = Object.values(testStr).map(product => {
-    let rgst = product.rgst_at;
+    let rgst = product.rgstAt;
     let rgst_result = moment(rgst).format('YYYY-MM-DD');
     let deadLine = product.deadline;
     let deadLinet_result = moment(deadLine).format('YYYY-MM-DD');

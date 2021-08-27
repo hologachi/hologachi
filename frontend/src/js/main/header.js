@@ -26,7 +26,7 @@ export default function Header() {
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="#action/3.7">평점 등록</NavDropdown.Item>
                         </NavDropdown>
-                        <Nav.Link href="#chat" className="menu">채팅</Nav.Link>
+                        <Nav.Link href="/chat/list" className="menu">채팅</Nav.Link>
                     </Nav>
                     <Button href="../gb/gbwrite" className="gbwritebtn">공동구매 글쓰기</Button>
                     <Button href="#home" className="loginbtn">Login</Button>

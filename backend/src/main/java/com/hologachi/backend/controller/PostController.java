@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
@@ -69,7 +68,7 @@ public class PostController {
 	public void updatePostDelete(@PathVariable int postId) {
 		List<Post> post = postRepository.findByPostId(postId);
 		post.get(0).setStep("delete");
-		post.get(0).setDeleted_by(0);
+		post.get(0).setDeletedBy(0);
 		
 		postRepository.save(post.get(0));
 	}
@@ -79,8 +78,8 @@ public class PostController {
 	@JsonProperty("post")
 	public void addPost(@RequestBody Post post) {
 		Date now = new Date(System.currentTimeMillis());
-		post.setRgst_at(now);
-		post.setUpdate_at(now);
+		post.setRgstAt(now);
+		post.setUpdateAt(now);
 		
 		User user = new User();
 		Category2 ctg = new Category2();
@@ -126,7 +125,7 @@ public class PostController {
 		post.get(0).setUrl(newPost.getUrl());
 		
 		Date now = new Date(System.currentTimeMillis());
-		post.get(0).setUpdate_at(now);
+		post.get(0).setUpdateAt(now);
 		
 		Category2 ctg = new Category2();
 		ctg.setCategory2Id(131);

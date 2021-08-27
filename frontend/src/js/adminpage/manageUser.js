@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import Header from "../main/header";
-import Footer from "../main/footer";
 import AdminNav from "./adminNav"
 import SearchUser from "./searchUser"
 import '../../css/adminpage.css'
@@ -57,7 +55,6 @@ class manageUser extends Component {
     render() {
         return (
             <div className="AdminPage">
-                <Header />
                 <AdminNav />
 
                 {/* <SearchUser /> */}
@@ -68,8 +65,6 @@ class manageUser extends Component {
                     userPost={this.state.userPost} 
                     loadUserPost={this.loadUserPost}
                 />
-
-                <Footer />
             </div>
         )
     }
