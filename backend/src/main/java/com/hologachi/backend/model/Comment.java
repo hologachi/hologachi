@@ -24,24 +24,31 @@ import lombok.Setter;
 public class Comment {
 
 	@Id @GeneratedValue
-	@Column(name="comment_id")
+	@Column(name="COMMENT_ID")
 	private int commentId;
 	
 	@ManyToOne
-	@JoinColumn(name="writer_id")
+	@JoinColumn(name="WRITER_ID")
 	private User user;
 	
 	@ManyToOne
-	@JoinColumn(name="post_id")
+	@JoinColumn(name="POST_ID")
 	private Post post;
 	
 	private String content;
+	
 	@JsonFormat(pattern="yyyy-MM-dd")
-	private Date rgst_at;
+	@Column(name="RGST_AT")
+	private Date rgstAt;
+	
 	@JsonFormat(pattern="yyyy-MM-dd")
-	private Date update_at;
+	@Column(name="UPDATE_AT")
+	private Date updateAt;
+	
 	@Setter
 	private int status;
-	private int only_sgster;
+	
+	@Column(name="ONLY_SGSTER")
+	private int onlySgster;
 	
 }

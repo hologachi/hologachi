@@ -192,7 +192,7 @@ function Mypost() {
           <TableBody>
           {Object.values(testStr).map(product => (
               <TableRow key={product.postId} hover>
-                <StyledTableCell align="center">{moment(product.rgst_at).format('YYYY-MM-DD')}</StyledTableCell>
+                <StyledTableCell align="center">{moment(product.rgstAt).format('YYYY-MM-DD')}</StyledTableCell>
                 <Link to={`/gb/gbdetail/${product.post.postId}`}>
                 <StyledTableCell align="center">{product.post.title}</StyledTableCell>
                 </Link>

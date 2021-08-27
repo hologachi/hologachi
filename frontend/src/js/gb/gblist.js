@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 // import productsData from "../ProductData";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import moment from 'moment';
+import moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -92,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
    }
 
    const products = Object.values(testStr).map(product => {
-      let rgst = product.rgst_at;
+      let rgst = product.rgstAt;
       let rgst_result = moment(rgst).format('YYYY-MM-DD');
       let deadLine = product.deadline;
       let deadLinet_result = moment(deadLine).format('YYYY-MM-DD');

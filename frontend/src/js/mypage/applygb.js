@@ -198,7 +198,7 @@ function Mypost() {
               <Link to={`/mypage/myrequest/sgstProfile/${product.post.user.userId}`}>
               <StyledTableCell align="center">{product.post.user.nickname}</StyledTableCell>
               </Link>
-                <StyledTableCell align="center">{moment(product.rgst_at).format('YYYY-MM-DD')} ~ {moment(product.deadline).format('MM-DD')}</StyledTableCell>
+                <StyledTableCell align="center">{moment(product.rgstAt).format('YYYY-MM-DD')} ~ {moment(product.deadline).format('MM-DD')}</StyledTableCell>
                 <Link to={`/gb/gbdetail/${product.post.postId}`}>
                 <StyledTableCell align="center">{product.post.title}</StyledTableCell>
                 </Link>

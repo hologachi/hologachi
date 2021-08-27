@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Button, Modal } from 'react-bootstrap';
 import { Hint } from 'react-autocomplete-hint';
-import Header from "../main/header";
-import Footer from "../main/footer";
 import AdminNav from "./adminNav"
 import '../../css/adminpage.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -156,21 +154,22 @@ class manageGBCategory extends Component {
         // 대분류 힌트 데이터 생성
         this.state.categories && this.state.categories.map(
             (category) => 
-                this.state.hintData1.push(category.category1.cat1)
+                this.state.hintData1.push(category.category1.name)
         )
         // 소분류 힌트 데이터 생성
         this.state.categories && this.state.categories.map(
             (category) => 
-                this.state.hintData2.push(category.cat2)
+                this.state.hintData2.push(category.name)
         )
 
         return (
             <div className="MGBCategory">
-                <Header />
                 <AdminNav />
 
                 <div className="categoryList">
-                    <h4>카테고리 목록</h4>
+                    <br/>
+                    <h2>카테고리 목록</h2>
+                    <br/>
                     {/* <form onSubmit={() => {this.state.handleDelete()}}> */}
                     <Table striped bordered hover>
                         <thead>
@@ -187,11 +186,14 @@ class manageGBCategory extends Component {
                         {
                             this.state.categories && this.state.categories.map(
                                 (category) => 
-                                <tr key = {category.id2}>
-                                    <td>{category.category1.cat1}</td>
-                                    <td>{category.cat2}</td>
-                                    <td><Button onClick={(event) => {this.handleShow(event, 'showModalU'); this.setState({updateId2: category.id2, updateCat1: category.category1.cat1, updateCat2: category.cat2})}}>수정</Button></td>
-                                    <td><Button onClick={(event) => this.handleDelete(event, category.id2)}>삭제</Button></td>    
+                                <tr key = {category.category2Id}>
+                                    <td>{category.category1.name}</td>
+                                    <td>{category.name}</td>
+                                    <td><Button onClick={(event) => 
+                                            {this.handleShow(event, 'showModalU'); 
+                                            this.setState({updateId2: category.category2Id, updateCat1: category.category1.name, updateCat2: category.name})}
+                                        }>수정</Button></td>
+                                    <td><Button onClick={(event) => this.handleDelete(event, category.category2Id)}>삭제</Button></td>    
                                     {/* <td><input type="checkbox" onChange={this.handleCheck} value={category.id2}></input></td> */}
                                 </tr>
                             )
@@ -262,8 +264,6 @@ class manageGBCategory extends Component {
                         </Modal.Footer>
                     </Modal>
                 </div>
-                
-                <Footer />
             </div>
         )
     }

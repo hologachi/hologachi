@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import Header from "../main/header";
-import Footer from "../main/footer";
 import AdminNav from "./adminNav"
 import '../../css/adminpage.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -60,7 +58,6 @@ class manageGBPost extends Component {
     render() {
         return (
             <div className="MPost">
-                <Header />
                 <AdminNav />
 
                 <ListGBPost 
@@ -71,7 +68,6 @@ class manageGBPost extends Component {
                     handleDeleteComment={this.handleDeleteComment}
                 />
 
-                <Footer />
             </div>
         )
     }

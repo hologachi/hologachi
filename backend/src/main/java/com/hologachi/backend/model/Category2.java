@@ -10,8 +10,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name="TBL_CATEGORY2")
 public class Category2 {
@@ -31,11 +33,6 @@ public class Category2 {
 	public Category2(Category1 category1, String name) { // 대분류 이름, 소분류 이름 
 		this.category1 = category1;
 		this.name = name;
-	}
-
-
-	public Category2() {
-		// TODO Auto-generated constructor stub
 	}
 	
 }

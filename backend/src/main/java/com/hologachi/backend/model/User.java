@@ -10,16 +10,6 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Data
-// =======
-// import lombok.AccessLevel;
-// import lombok.Getter;
-// import lombok.NoArgsConstructor;
-// import lombok.Setter;
-
-// @NoArgsConstructor(access = AccessLevel.PROTECTED)
-// @Getter
-// @Setter
-// >>>>>>> main
 @Entity
 @Table(name="TBL_USER")
 public class User {
@@ -48,15 +38,15 @@ public class User {
 	private String tokentype;
 	
 	@Column(name="ID_TOKEN")
-	private String id_token;
+	private String idToken;
 	
 	@Column(name="SGST_RATE")
-	private String sgst_rate;
+	private String sgstRate;
 	
 	@Column(name="RQST_RATE")
-	private String rqst_rate;
+	private String rqstRate;
 	
 	@Column(name="IS_ADMIN")
-	private int is_admin;
+	private int isAdmin;
 	
 }

@@ -13,14 +13,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-// =======
-
-// import com.fasterxml.jackson.annotation.JsonFormat;
-
-// >>>>>>> main
-import lombok.AccessLevel;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Data
@@ -33,14 +26,16 @@ public class Post {
 	private int postId;
 	
 	@ManyToOne
-	@JoinColumn(name="sgster_id")
+	@JoinColumn(name="SGSTER_ID")
 	private User user;
 	
 	@JsonFormat(pattern="yyyy-MM-dd")
-	private Date rgst_at;
+	@Column(name="RGST_AT")
+	private Date rgstAt;
 	
 	@JsonFormat(pattern="yyyy-MM-dd")
-	private Date update_at;
+	@Column(name="UPDATE_AT")
+	private Date updateAt;
 	
 	private String title;
 	private String content;

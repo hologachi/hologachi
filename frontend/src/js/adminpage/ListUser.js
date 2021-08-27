@@ -85,6 +85,9 @@ const ListUser = (props) => {
 
     return (
         <div className="userList">
+            <br/>
+            <h2>사용자 목록</h2>
+            <br/>
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -107,19 +110,19 @@ const ListUser = (props) => {
                             <td>{user.nickname}</td>
                             <td>{user.email}</td>
                             <td>
-                                {user.sgst_rate} 점 <br />
+                                {user.sgstRate} 점 <br />
                                 <Button onClick={() => {
-                                    setForm({id: user.userId, nickname: user.nickname, new_auth: user.is_admin}); 
+                                    setForm({id: user.userId, nickname: user.nickname, new_auth: user.isAdmin}); 
                                     props.loadUserPost(user.userId); 
                                     handleModalPostShow();
                                 }}>작성글 조회</Button>
                             </td>
-                            <td>{user.rqst_rate} 점</td>
+                            <td>{user.rqstRate} 점</td>
                             <td>
-                                {translationIsAdmin(user.is_admin)} <br />
+                                {translationIsAdmin(user.isAdmin)} <br />
                                 <Button onClick={() => {
-                                    setForm({id: user.userId, nickname: user.nickname, new_auth: user.is_admin}); 
-                                    setAuthGroup({[user.is_admin]: true});
+                                    setForm({id: user.userId, nickname: user.nickname, new_auth: user.isAdmin}); 
+                                    setAuthGroup({[user.isAdmin]: true});
                                     handleModalAdminShow();
                                 }}>회원 권한 수정</Button>
                             </td>
@@ -128,6 +131,7 @@ const ListUser = (props) => {
                 }
                 </tbody>
             </Table>
+
             {/* 권한 수정 관련 모달 */}
             <Modal show={showModalAdmin} onHide={handleModalAdminClose}>
                 <Modal.Header closeButton>
@@ -166,9 +170,9 @@ const ListUser = (props) => {
             </Modal>
 
             {/* 작성글 조회 모달 */}
-            <Modal show={showModalPost} onHide={handleModalPostClose}>
+            <Modal show={showModalPost} onHide={handleModalPostClose} size="lg" aria-labelledby="example-modal-sizes-title-lg">
                 <Modal.Header closeButton>
-                    <Modal.Title>{nickname} 님이 작성한 글입니다.</Modal.Title>
+                    <Modal.Title id="example-modal-sizes-title-lg">{nickname} 님이 작성한 글입니다.</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                 <Table striped bordered hover>
@@ -194,14 +198,14 @@ const ListUser = (props) => {
                         props.userPost && Object.values(props.userPost).map(
                             (gbPost, i) => (
                             <tr key = {i}>
-                                <td>{gbPost.post_id}</td>
-                                <td>{gbPost.rgst_at}</td>
-                                <td>{gbPost.update_at}</td>
+                                <td>{gbPost.postId}</td>
+                                <td>{gbPost.rgstAt}</td>
+                                <td>{gbPost.updateAt}</td>
                                 <td>{gbPost.title}</td>
                                 <td>{gbPost.matching}</td>
                                 <td>{gbPost.deadline}</td>
-                                <td>{translationDeletedBy(gbPost.deleted_by)}</td>
-                                <td>{gbPost.category}</td>
+                                <td>{translationDeletedBy(gbPost.deletedBy)}</td>
+                                <td>{gbPost.category2.category1.name} {'>'} {gbPost.category2.name}</td>
                             </tr>
                         ))
                     }

@@ -13,6 +13,6 @@ public interface CommentRepository extends JpaRepository<Comment, Integer>{
 
 	List<Comment> findByPostPostId(int postId);
 
-	Optional<Comment> findByCommentId(Integer integer);
+	Optional<Comment> findByCommentId(int integer);
 	
 }
