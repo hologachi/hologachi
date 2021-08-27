@@ -6,7 +6,11 @@ import java.util.List;
 import com.hologachi.backend.model.Post;
 import com.hologachi.backend.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.bind.annotation.GetMapping;
+// =======
+// import org.springframework.web.bind.annotation.CrossOrigin;
+// >>>>>>> main
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

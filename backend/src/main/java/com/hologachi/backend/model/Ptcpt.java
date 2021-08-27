@@ -12,8 +12,15 @@ import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 
 @Data
+// =======
+// @NoArgsConstructor(access = AccessLevel.PROTECTED)
+// @Getter
+// @Setter
+// >>>>>>> main
 @Entity
 @Table(name="TBL_PTCPT")
 public class Ptcpt {
@@ -29,5 +36,12 @@ public class Ptcpt {
 	@ManyToOne
 	@JoinColumn(name="rqster_id")
 	private User user;
+	
+	@Column(name="STEP")
 	private String step;
+	@Column(name="RATE_SGSTER", nullable=true)
+	private Double rateSgster;
+	@Column(name="RATE_RQSTER", nullable=true)
+	private Double rateRqster;
+	
 }

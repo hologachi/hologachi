@@ -1,5 +1,6 @@
 import React from 'react';
 import '../src/css/App.css';
+
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Header from "./js/main/header";
 import Footer from "./js/main/footer";
@@ -30,6 +31,14 @@ import Gbdetail from "./js/gb/gbdetail";
 // // 테스트용
 // import  AddInfo  from "./js/login/addInfo";
 // import  Complete  from "./js/login/completeLogin";
+
+import  MUser  from "./js/adminpage/manageUser";
+import  MGB  from "./js/adminpage/manageGB";
+import  MGBPost  from "./js/adminpage/manageGBPost";
+import  MGBCategory  from "./js/adminpage/manageGBCategory";
+import  Chat  from "./js/chat/chatList";
+import  Login  from "./js/login/login";
+
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -81,6 +90,7 @@ function App() {
     <Header />
       <BrowserRouter>
         <Switch>
+
           {/* Home */}
           <Route exact path="/home" component={Home} />
 
@@ -103,6 +113,14 @@ function App() {
           <Route path="/mypage/privacy" component={Privacy} />
            <Route path="/mypage/mypost/:postId/:ptcptId" component={ReqUserProfile} />
            <Route path="/mypage/myrequest/sgstProfile/:ptcptId" component={SgstProfile} />
+
+          <Route path="/admin/mUser" component={MUser} />
+          <Route path="/admin/mGB" component={MGB} />
+          <Route path="/admin/mGBPost" component={MGBPost} />
+          <Route path="/admin/mGBCategory" component={MGBCategory} />
+          <Route path="/chat/List" component={Chat} />
+          <Route path="/login" component={Login} />
+
         </Switch>
       </BrowserRouter>
       <Footer />
