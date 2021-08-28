@@ -29,7 +29,7 @@ export default function Header() {
                         <Nav.Link href="/chat/list" className="menu">채팅</Nav.Link>
                     </Nav>
                     <Button href="../gb/gbwrite" className="gbwritebtn">공동구매 글쓰기</Button>
-                    <Button href="#home" className="loginbtn">Login</Button>
+                    <Button href="/login" className="loginbtn">Login</Button>
                     <Form inline>
                         <FormControl type="text" placeholder="Search" className="mr-sm-2" />
                         <SearchIcon type="submit" ></SearchIcon>

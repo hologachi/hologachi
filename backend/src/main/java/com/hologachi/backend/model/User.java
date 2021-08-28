@@ -49,4 +49,7 @@ public class User {
 	@Column(name="IS_ADMIN")
 	private int isAdmin;
 	
+	@Column(name="GOOGLE_ID")
+	private String googleId;
+	
 }
