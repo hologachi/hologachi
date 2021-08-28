@@ -1,9 +1,7 @@
 package com.hologachi.backend.controller;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.Locale.Category;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hologachi.backend.model.Category1;
@@ -78,7 +75,7 @@ public class AdminController {
 		} 
 		
 		User user = temp.get();
-		user.setIs_admin(Integer.parseInt(new_auth));
+		user.setIsAdmin(Integer.parseInt(new_auth));
 
 		User updatedUser = userRepository.save(user);
 		
@@ -100,12 +97,14 @@ public class AdminController {
 	@PostMapping("/mGBPost/delete")
 	public void deleteTheGBPosts(@RequestBody Map<String, Integer> data) {
 //		System.out.println(data.get("postId"));
-		Optional<Post> foundPost = postRepository.findByPostId(data.get("postId"));
-		if(foundPost.isPresent()) {
-			Post updatePost = foundPost.get();
-			updatePost.setDeletedBy(1);
-			postRepository.save(updatePost);
-		}
+		List<Post> foundPost = postRepository.findByPostId(data.get("postId"));
+//		if(foundPost.isPresent()) {
+//			Post updatePost = foundPost.get();
+//			updatePost.setDeletedBy(1);
+//			postRepository.save(updatePost);
+//		}
+		foundPost.get(0).setDeletedBy(1);
+		postRepository.save(foundPost.get(0));
 	}
 //	댓글 조회
 	@GetMapping("/mGBPost/comment/{postId}")
@@ -154,18 +153,18 @@ public class AdminController {
 	}
 //	카테고리 추가(일대다 구조로 구현하지 않음)
 	@PostMapping("/mGBCategory/add")
-	public Category2 createGBCategory(@RequestBody CategoryVO data) {
-		System.out.println(data.getCat1() + "와 " + data.getCat2());
+	public Category2 createGBCategory(@RequestBody Map<String, String> data) {
+		System.out.println(data.get("cat1") + "와 " + data.get("cat2"));
 		
-		Category1 category1 = category1Repository.save(new Category1(data.getCat1())); // 카테고리1 추가 
+		Category1 category1 = category1Repository.save(new Category1(data.get("cat1"))); // 카테고리1 추가 
 		
-		Category2 category2 = new Category2(category1, data.getCat2());  
+		Category2 category2 = new Category2(category1, data.get("cat2"));  
 		return category2Repository.save(category2); // 카테고리 2 추가
 	}
 //	카테고리 하나 삭제
 	@GetMapping("/mGBCategory/delete/{id2}")
 	public void deleteGBCategory(@PathVariable("id2") int id2) {
-		Optional<Category2> category = category2Repository.findById2(id2); // 해당 카테고리 존재하는지 확인 
+		Optional<Category2> category = category2Repository.findByCategory2Id(id2); // 해당 카테고리 존재하는지 확인 
 		
 		if(category.isPresent()) {
 			category2Repository.delete(category.get());
@@ -179,16 +178,16 @@ public class AdminController {
 //	}
 //	카테고리 수정
 	@PostMapping("/mGBCategory/update/{id2}")
-	public ResponseEntity<Category2> updateGBCategories(@PathVariable("id2") int id2, @RequestBody CategoryVO data) {
-		Optional<Category2> temp = category2Repository.findById2(id2);
+	public ResponseEntity<Category2> updateGBCategories(@PathVariable("id2") int id2, @RequestBody Map<String, String> data) {
+		Optional<Category2> temp = category2Repository.findByCategory2Id(id2);
 		
 		if(!temp.isPresent()) { // 없는 카테고리인 경우 
 			return ResponseEntity.ok(null);
 		} 
 		 
 		Category2 category = temp.get();
-		category.setCat2(data.getCat2());
-		category.getCategory1().setCat1(data.getCat1());
+		category.setName(data.get("cat2"));
+		category.getCategory1().setName(data.get("cat1"));
 
 		Category2 updatedCategory = category2Repository.save(category);
 		

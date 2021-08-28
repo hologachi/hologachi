@@ -1,87 +1,139 @@
-import React from 'react'
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import CardActions from '@material-ui/core/CardActions';
-import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import { ProgressBar } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Container, Grid, Card, CardMedia, CardContent, Typography, makeStyles } from '@material-ui/core';
+import '../../css/post.css'
+//import productsData from "../ProductData";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
-    icon: {
-      marginRight: theme.spacing(2),
-    },
-    cardGrid: {
-      paddingTop: theme.spacing(8),
-      paddingBottom: theme.spacing(8),
-    },
-    card: {
-      height: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-    },
-    cardMedia: {
-      paddingTop: '56.25%', // 16:9
-    },
-    cardContent: {
-      flexGrow: 1,
-    },
-  }));
+  icon: {
+    marginRight: theme.spacing(2),
+  },
+  cardGrid: {
+    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(8),
+  },
+  card: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  cardMedia: {
+    paddingTop: '56.25%', // 16:9
+  },
+  cardContent: {
+    flexGrow: 1,
+    width: '300px',
+    height: '200px'
+  },
+}));
 
 export default function Post() {
-    const classes = useStyles();
-    const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    const now = 60;
+  const classes = useStyles();
+
+  // 요청받은 정보를 담아줄 변수 선언
+  const [ testStr, setTestStr ] = useState('');
+  // console.log(testStr);
+  
+
+  // 변수 초기화
+  function callback(str) {
+    setTestStr(str);
+  }
+
+  // 첫 번째 렌더링을 마친 후 실행
+  useEffect(
+      () => {
+        axios({
+            url: '/home',
+            method: 'GET'
+        }).then((res) => {
+            callback(res.data);
+        })
+      }, []
+  );
+  
+  const products = Object.values(testStr).map(product => {
+    let rgst = product.rgstAt;
+    let rgst_result = moment(rgst).format('YYYY-MM-DD');
+    let deadLine = product.deadline;
+    let deadLinet_result = moment(deadLine).format('YYYY-MM-DD');
 
     return (
-        <Container className={classes.cardGrid} maxWidth="md">
-          {/* End hero unit */}
-          <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card className={classes.card}>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
-                    title="Image title"
-                  />
-                  <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      공동구매 물품
-                    </Typography>
-                    <Typography>
-                    5000원
-                    </Typography>
-                    <Typography>
-                      인원: 3/5
-                    </Typography>
-                    <Typography>
-                      기간: 21/07/09~21/07/20
-                    </Typography>
-                    <ProgressBar now={now} label={`${now}%`} />
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small" color="primary">
-                      <FavoriteBorderIcon />
-                    </Button>
-                  </CardActions>
-                </Card>
+      <div key={product.postId}>
+      <Grid item key={product.postId} item xs={12} id="grid">
+      <Card className={classes.products} id="card">
+          <Link to={`/gb/gbdetail/${product.postId}`}>
+          <CardMedia
+                className={classes.cardMedia}
+                image=""
+                title={product.title}
+              />
+          </Link>
+          <CardContent className={classes.cardContent}>
+                <Typography id="status">
+                  {product.step}
+                </Typography>
+                <Typography gutterBottom variant="h5" component="h2">
+                  {product.title}
+                </Typography>
+                <Typography>
+                  가격: {product.price}원
+                </Typography>
+                <Typography>
+                  목표: {product.matching} 명
+                </Typography>
+                <Typography>
+                  {rgst_result} ~ {deadLinet_result}
+                </Typography>
+              </CardContent>
+              </Card>
               </Grid>
-            ))}
-          </Grid>
-        </Container>
-    )
+        <hr />
+      </div>
+    );
+  });
+  return (
+    <Container className={classes.cardGrid} maxWidth="md">
+      <Grid container spacing={4}
+      container justifyContent="center" 
+      > 
+          {products}
+      </Grid>
+    </Container>
+  )
 }
 
-// const PRODUCTS = [
-//   {category: 'Sporting Goods', price: '$49.99', stocked: true, name: 'Football'},
-//   {category: 'Sporting Goods', price: '$9.99', stocked: true, name: 'Baseball'},
-//   {category: 'Sporting Goods', price: '$29.99', stocked: false, name: 'Basketball'},
-//   {category: 'Electronics', price: '$99.99', stocked: true, name: 'iPod Touch'},
-//   {category: 'Electronics', price: '$399.99', stocked: false, name: 'iPhone 5'},
-//   {category: 'Electronics', price: '$199.99', stocked: true, name: 'Nexus 7'}
-// ];
+// function App() {
+//   // 요청받은 정보를 담아줄 변수 선언
+//   const [ testStr, setTestStr ] = useState('');
+//   console.log(testStr);
+
+//   // 변수 초기화
+//   function callback(str) {
+//     setTestStr(str);
+//   }
+
+//   // 첫 번째 렌더링을 마친 후 실행
+//   useEffect(
+//       () => {
+//         axios({
+//             url: '/home',
+//             method: 'GET'
+//         }).then((res) => {
+//             callback(res.data[0].postId);
+//         })
+//       }, []
+//   );
+
+//   return (
+//       <div className="App">
+//           <header className="App-header">
+//               {testStr}
+//           </header>
+//       </div>
+//   );
+// }
+
+// export default App;

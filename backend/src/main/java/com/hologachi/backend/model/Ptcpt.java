@@ -3,39 +3,37 @@ package com.hologachi.backend.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name="TBL_PTCPT")
 public class Ptcpt {
 	
-	@Id @GeneratedValue
-	@Column(name="ptcpt_id")
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="PTCPT_ID")
 	private int ptcptId;
 	
 	@ManyToOne
-	@JoinColumn(name="post_id")
+	@JoinColumn(name="POST_ID")
 	private Post post;
 	
 	@ManyToOne
-	@JoinColumn(name="rqster_id")
+	@JoinColumn(name="RQSTER_ID")
 	private User user;
 	
 	@Column(name="STEP")
 	private String step;
+	
 	@Column(name="RATE_SGSTER", nullable=true)
 	private Double rateSgster;
+	
 	@Column(name="RATE_RQSTER", nullable=true)
 	private Double rateRqster;
 	

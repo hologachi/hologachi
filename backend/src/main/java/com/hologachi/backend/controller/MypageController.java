@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,7 +35,7 @@ public class MypageController {
 	MyBookmarkRepository myBookmarkRepository;
 	
 	// 프로필
-	@GetMapping("/profile")
+	@GetMapping("/mypage/profile")
 	public List<User> userFindByUserId() {
 		int userId = 3;
 		return profileRepository.findByUserId(userId);
@@ -47,11 +48,54 @@ public class MypageController {
 		return myPostRepository.findByUser_UserId(userId);
 	}
 	
+	// 작성한 글의 신청자 목록
+	@RequestMapping("/mypost/{postId}")
+	public List<Ptcpt> ptcptFindByPostId(@PathVariable int postId) {
+		return myRequestRepository.findByPost_PostId(postId);
+	}
+	
+	// 작성한 글의 신청자 프로필
+	@RequestMapping("/mypost/{postId}/{ptcptId}")
+	public Ptcpt rqsterFindByPtcptId(@PathVariable("postId") int postId, @PathVariable("ptcptId") int ptcptId) {
+		return myRequestRepository.findByPtcptId(ptcptId);
+	}
+	
+	// 작성한 글 신청 수락 처리
+	@RequestMapping("/mypost/{postId}/{ptcptId}/agree")
+	public void updateRqstAgree(@PathVariable("postId") int postId, @PathVariable("ptcptId") int ptcptId) {
+		Ptcpt p = myRequestRepository.findByPtcptId(ptcptId);
+		p.setStep("agree");
+		myRequestRepository.save(p);
+	}
+	
+	// 작성한 글 신청 거절 처리
+	@RequestMapping("/mypost/{postId}/{ptcptId}/reject")
+	public void updateRqstReject(@PathVariable("postId") int postId, @PathVariable("ptcptId") int ptcptId) {
+		Ptcpt p = myRequestRepository.findByPtcptId(ptcptId);
+		p.setStep("reject");
+		myRequestRepository.save(p);
+	}
+	
+	// 작성한 글 진행 처리
+	@RequestMapping("/mypost/{postId}/proceed")
+	public void updateProceed(@PathVariable("postId") int postId) {
+		Post post = myPostRepository.findByPostId(postId);
+		post.setStep("proceed");
+		
+		myPostRepository.save(post);
+	}
+	
 	// 내가 신청한 글
 	@GetMapping("/myrequest")
 	public List<Ptcpt> requestFindByUserId() {
 		int userId = 3;
 		return myRequestRepository.findByUser_UserId(userId);
+	}
+	
+	// 신청한 글의 제시자 프로필
+	@GetMapping("/myrequest/{ptcptId}")
+	public Ptcpt sgsterFindByPtcptId(@PathVariable int ptcptId) {
+		return myRequestRepository.findByPtcptId(ptcptId);
 	}
 	
 	// 내가 작성한 댓글
@@ -67,5 +111,11 @@ public class MypageController {
 		int userId = 1;
 		return myBookmarkRepository.findByUser_UserId(userId);
 	}
-
+	
+	// 북마크 삭제
+	@RequestMapping("/bookmark/{bookmarkId}/delete")
+	public void deleteBookmark(@PathVariable("bookmarkId") int bookmarkId) {
+		myBookmarkRepository.deleteById(bookmarkId);
+	}
+	
 }

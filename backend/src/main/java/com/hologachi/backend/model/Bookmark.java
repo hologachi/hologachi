@@ -1,7 +1,5 @@
 package com.hologachi.backend.model;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,15 +19,15 @@ import lombok.NoArgsConstructor;
 public class Bookmark {
 	
 	@Id @GeneratedValue
-	@Column(name="bookmark_id")
+	@Column(name="BOOKMARK_ID")
 	private int bookmarkId;
 	
 	@ManyToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name="USER_ID")
 	private User user;
 	
 	@ManyToOne
-	@JoinColumn(name="post_id")
+	@JoinColumn(name="POST_ID")
 	private Post post;
 	
 }

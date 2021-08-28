@@ -19,15 +19,16 @@ import lombok.NoArgsConstructor;
 public class HomePost {
 	
 	@Id @GeneratedValue
-	@Column(name="post_id")
+	@Column(name="POST_ID")
 	private int postId;
-	private Date rgst_at;
-	private Date update_at;
+	
+	private Date rgstAt;
+	private Date updateAt;
 	private String title;
 	private String content;
 	private int matching;
 	private Date deadline;
-	private int deleted_by;
+	private int deletedBy;
 	private String step;
 	private int price;
 	private String url;

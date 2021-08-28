@@ -13,7 +13,7 @@ public class Chat {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int chat_id;
+	private int chatId;
 	
 	@Column(name="MESSAGE")
 	private String message;
@@ -23,19 +23,4 @@ public class Chat {
 		
 	}
 	
-	public int getChat_id() {
-		return chat_id;
-	}
-	public void setChat_id(int chat_id) {
-		this.chat_id = chat_id;
-	}
-	public String getMessage() {
-		return message;
-	}
-	public void setMessage(String message) {
-		this.message = message;
-	}
-	
-	
-
 }

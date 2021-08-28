@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import Header from "../main/header";
-import Footer from "../main/footer";
 import AdminNav from "./adminNav"
 import '../../css/adminpage.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -39,15 +37,12 @@ class manageGB extends Component {
     render() {
         return (
             <div className="MGB">
-                <Header />
                 <AdminNav />
 
                 <ListGB 
                     gbs={this.state.gbs}
                     handleStopPtcpt={this.handleStopPtcpt}
                 />
-
-                <Footer />
             </div>
         )
     }

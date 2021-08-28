@@ -1,0 +1,16 @@
+#card{
+  cursor: pointer;
+}
+#card:hover{
+  box-shadow: 5px 7px 25px 0px  #918e8e;
+}
+/* #detailbtn:hover{
+  width: 30px;
+}
+#status{
+  font-weight: 700;
+}
+*/
+#grid{
+  margin: 5px;
+}

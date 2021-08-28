@@ -71,11 +71,13 @@ class ListGBPost extends Component {
         return (
             <div className="managePost_body">
                 <div className="postList">
-                    <h4>공동구매 글</h4>
+                    <br/>
+                    <h2>공동구매 글</h2>
+                    <br/>
                     <Table striped bordered hover>
                         <thead>
                             <tr>
-                                <th>#</th>
+                                <th>글 ID</th>
                                 <th>제안자</th>
                                 <th>등록일</th>
                                 <th>수정일</th>
@@ -96,9 +98,9 @@ class ListGBPost extends Component {
                                     <tr key = {i}>
                                         <td>{gbPost.postId}</td>
                                         <td>{gbPost.user.nickname}</td>
-                                        <td>{gbPost.rgst_at}</td>
-                                        <td>{gbPost.update_at}</td>
-                                        <td>{gbPost.category2.category1.cat1} {'>'} {gbPost.category2.cat2}</td>
+                                        <td>{gbPost.rgstAt}</td>
+                                        <td>{gbPost.updateAt}</td>
+                                        <td>{gbPost.category2.category1.name} {'>'} {gbPost.category2.name}</td>
                                         <td>{gbPost.title}</td>
                                         <td>{gbPost.content}</td>
                                         <td>/{gbPost.matching}</td>
@@ -118,9 +120,9 @@ class ListGBPost extends Component {
                     </Table>
 
                     {/* 댓글 조회용 모달 */}
-                    <Modal show={this.state.showModalC} onHide={() => {this.handleClose('showModalC');}}>
+                    <Modal show={this.state.showModalC} onHide={() => {this.handleClose('showModalC');}} size="lg" aria-labelledby="example-modal-sizes-title-lg">
                         <Modal.Header closeButton>
-                            <Modal.Title> {'<'}{this.state.postTitle}{'>'} 에 작성된 댓글입니다.</Modal.Title>
+                            <Modal.Title id="example-modal-sizes-title-lg"> {'<'}{this.state.postTitle}{'>'} 에 작성된 댓글입니다.</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                         <Table striped bordered hover>
@@ -143,10 +145,10 @@ class ListGBPost extends Component {
                                     <tr key = {i}>
                                         <td>{i+1}</td>
                                         <td>{comment.user.nickname}</td>
-                                        <td>{comment.rgst_at}</td>
-                                        <td>{comment.update_at}</td>
+                                        <td>{comment.rgstAt}</td>
+                                        <td>{comment.updateAt}</td>
                                         <td>{comment.content}</td>
-                                        <td>{this.translationCommentOnlySgst(comment.only_sgster)}</td>
+                                        <td>{this.translationCommentOnlySgst(comment.onlySgster)}</td>
                                         <td>{this.translationCommentStatus(comment.status)}</td>
                                         <td><Button onClick={() => this.props.handleDeleteComment(comment.post.postId, comment.commentId)}>댓글 삭제</Button></td>
                                     </tr>

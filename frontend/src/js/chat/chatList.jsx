@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import Header from "../main/header";
-import Footer from "../main/footer";
 import ChatRoom from "./chatRoom";
 import ChatMessage from "./chatMessage";
 import '../../css/chat.css';
@@ -51,9 +49,9 @@ class ChatList extends Component {
 
     componentDidUpdate() {
         if(socket != null) {
-            socket.on("receive-message", (chatroom_id, message, sendAt) => {
+            socket.on("receive-message", (chatroomId, message, sendAt) => {
                 // const chatList = document.querySelector("chatMessageTop")
-                console.log("receive", chatroom_id, message)
+                console.log("receive", chatroomId, message)
                 // const param = {
                 //     m: message, 
                 //     s: sendAt
@@ -64,11 +62,11 @@ class ChatList extends Component {
     }
 
 
-    handleChatroomSelect = (chatroom_id) => {
-        socket.emit("join-room", chatroom_id);
-        console.log("You connected room:", chatroom_id);
+    handleChatroomSelect = (chatroomId) => {
+        socket.emit("join-room", chatroomId);
+        console.log("You connected room:", chatroomId);
 
-        this.setState({focus_chatroom : chatroom_id});
+        this.setState({focus_chatroom : chatroomId});
         // console.log(this.state.chatMessageList);
         // console.log(this.state.focus_chatroom);
     }
@@ -84,7 +82,6 @@ class ChatList extends Component {
 
         return (
             <div className="chat">
-                <Header />
                 
                 <div className="chatList">
                     <ChatRoom chatrooms={this.state.chatrooms} onSelectChatroom={this.handleChatroomSelect} />
@@ -93,7 +90,6 @@ class ChatList extends Component {
                     {/* <ChatMessage ref={(cd) => this.child = cd} onSendMessage={this.handleSendMessage} chatroom={this.state.focus_chatroom} /> */}
                 </div>
                 
-                <Footer />
             </div>
         )
     }

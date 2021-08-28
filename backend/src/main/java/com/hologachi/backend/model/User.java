@@ -7,14 +7,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name="TBL_USER")
 public class User {
@@ -43,15 +38,15 @@ public class User {
 	private String tokentype;
 	
 	@Column(name="ID_TOKEN")
-	private String id_token;
+	private String idToken;
 	
 	@Column(name="SGST_RATE")
-	private String sgst_rate;
+	private String sgstRate;
 	
 	@Column(name="RQST_RATE")
-	private String rqst_rate;
+	private String rqstRate;
 	
 	@Column(name="IS_ADMIN")
-	private int is_admin;
+	private int isAdmin;
 	
 }

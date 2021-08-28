@@ -1,6 +1,5 @@
 package com.hologachi.backend.repository;
 
-import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -17,10 +16,10 @@ import com.hologachi.backend.model.*;
 public interface Category2Repository extends JpaRepository<Category2, Integer> {
 
 	@Transactional
-	Category2 findByCat2(String cat2);
+	Category2 findByName(String cat2);
 	
 	@Transactional
-	Optional<Category2> findById2(int id2);
+	Optional<Category2> findByCategory2Id(int id2);
 	
 	@Transactional
 	@Modifying
