@@ -41,7 +41,8 @@ export default function Header() {
                     {/* 로그인 한 경우 */}
                     { isLogined && <p>{window.sessionStorage.getItem('nickname')} 님 안녕하세요</p> }
                     { isLogined && <Logout setIsLogined={setIsLogined}/>}
-                    {/* 로그인 안한 경우 */}
+                    
+                    {/* 로그인 안 한 경우 */}
                     { !isLogined && <Button href="/login" className="loginbtn">Login</Button> } 
                     
                     <Form inline>

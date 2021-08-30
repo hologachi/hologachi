@@ -39,21 +39,19 @@ public class LoginContoller {
 		
 	}
 	
-	@PostMapping("/google/setName")
-	public ResponseEntity<User> handleGoogleSetNickname(@RequestBody Map<String, String> data) {
-		System.out.println(data.get("newName"));
-		
-		Optional<User> findUser = userRepository.findByGoogleId(data.get("googleId"));
-		
-		if(findUser.isPresent()) {
-			User existedUser = findUser.get();
-			
-			existedUser.setNickname(data.get("nickName"));
-			
-			return ResponseEntity.ok(userRepository.save(existedUser));
-		} 
-		
-		
-	}
+//	@PostMapping("/google/setName")
+//	public ResponseEntity<User> handleGoogleSetNickname(@RequestBody Map<String, String> data) {
+//		System.out.println(data.get("newName"));
+//		
+//		Optional<User> findUser = userRepository.findByGoogleId(data.get("googleId"));
+//		
+//		if(findUser.isPresent()) {
+//			User existedUser = findUser.get();
+//			
+//			existedUser.setNickname(data.get("nickName"));
+//			
+//			return ResponseEntity.ok(userRepository.save(existedUser));
+//		} 
+//	}
 
 }

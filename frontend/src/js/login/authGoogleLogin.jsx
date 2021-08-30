@@ -41,7 +41,8 @@ class AuthGoogleLogin extends Component {
             window.sessionStorage.setItem('image', image);
             window.sessionStorage.setItem('provider', 'google');
 
-            this.props.history.push('/home'); // 메인으로 이동 
+            this.props.history.push('/home'); // 메인으로 이동
+            window.location.reload(false); // 메인 리로드
             refreshTokenSetup(response); // 토큰 유지  
 
         }).catch((err) => {
