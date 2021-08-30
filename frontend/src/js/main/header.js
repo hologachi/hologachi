@@ -1,8 +1,16 @@
 import SearchIcon from '@material-ui/icons/Search';
+import { useState, useEffect } from 'react';
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 import '../../css/header.css';
+import  Logout  from "../login/authGoogleLogout";
 
 export default function Header() {
+    const [isLogined, setIsLogined] = useState(window.sessionStorage.getItem('nickname'))
+
+    useEffect(() => { // useEffect 적용!
+        console.log(isLogined);
+        }, [isLogined]);
+    
     return (
         <div>
             <Navbar className="navbar" bg="light" expand="lg">
@@ -29,7 +37,14 @@ export default function Header() {
                         <Nav.Link href="/chat/list" className="menu">채팅</Nav.Link>
                     </Nav>
                     <Button href="../gb/gbwrite" className="gbwritebtn">공동구매 글쓰기</Button>
-                    <Button href="#home" className="loginbtn">Login</Button>
+                    
+                    {/* 로그인 한 경우 */}
+                    { isLogined && <p>{window.sessionStorage.getItem('nickname')} 님 안녕하세요</p> }
+                    { isLogined && <Logout setIsLogined={setIsLogined}/>}
+                    
+                    {/* 로그인 안 한 경우 */}
+                    { !isLogined && <Button href="/login" className="loginbtn">Login</Button> } 
+                    
                     <Form inline>
                         <FormControl type="text" placeholder="Search" className="mr-sm-2" />
                         <SearchIcon type="submit" ></SearchIcon>

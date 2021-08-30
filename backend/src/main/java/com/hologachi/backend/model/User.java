@@ -28,18 +28,6 @@ public class User {
 	@Column(name="IMAGE")
 	private String image;
 	
-	@Column(name="ACCESSTOKEN")
-	private int accesstoken;
-	
-	@Column(name="EXPIRE")
-	private String expire;
-	
-	@Column(name="TOKENTYPE")
-	private String tokentype;
-	
-	@Column(name="ID_TOKEN")
-	private String idToken;
-	
 	@Column(name="SGST_RATE")
 	private String sgstRate;
 	
@@ -48,5 +36,11 @@ public class User {
 	
 	@Column(name="IS_ADMIN")
 	private int isAdmin;
+	
+	@Column(name="GOOGLE_ID")
+	private String googleId;
+	
+	@Column(name="TOKEN_ID")
+	private String tokenId;
 	
 }

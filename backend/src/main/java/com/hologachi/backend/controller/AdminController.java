@@ -57,12 +57,12 @@ public class AdminController {
 	}
 	
 //	회원 검색(with 닉네임, 이메일, isAdmin)
-	@PostMapping("/mUser")
-	public List<User> searchTheUsers(@RequestBody SearchUserVO searchUserForm) {
-		System.out.println(searchUserForm.toString());
+//	@PostMapping("/mUser")
+//	public List<User> searchTheUsers(@RequestBody SearchUserVO searchUserForm) {
+//		System.out.println(searchUserForm.toString());
 //		return userRepository.findAllUserSearch();
-		return null;
-	}
+//		return null;
+//	}
 	
 //	회원 권한 수정 
 	@PostMapping("/mUser/update/{id}/{new_auth}")
