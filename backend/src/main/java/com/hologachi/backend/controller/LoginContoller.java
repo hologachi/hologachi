@@ -4,9 +4,11 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,17 +27,18 @@ public class LoginContoller {
 	// 새로 가입 
 	@PostMapping("/google")
 	public ResponseEntity<User> handleLoginGoogle(@RequestBody User newbie) {
-		System.out.println(newbie.getNickname());
 		
 		Optional<User> findUser = userRepository.findByGoogleId(newbie.getGoogleId());
 		
 		if(findUser.isPresent()) {
 			User existedUser = findUser.get();
 			
-			return ResponseEntity.ok(userRepository.save(existedUser));
+			return new ResponseEntity<User>(existedUser, HttpStatus.OK);
 		} 
 		
-		return ResponseEntity.ok(userRepository.save(newbie));
+		User newRgstedUser = userRepository.save(newbie);
+		
+		return new ResponseEntity<User>(newRgstedUser, HttpStatus.OK);
 		
 	}
 	
@@ -52,6 +55,8 @@ public class LoginContoller {
 //			
 //			return ResponseEntity.ok(userRepository.save(existedUser));
 //		} 
+//		
+//		
 //	}
 
 }

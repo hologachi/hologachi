@@ -31,11 +31,12 @@ class AuthGoogleLogin extends Component {
 
         console.log(this.state);
 
-        axios.post(LOGIN_URL, this.state).then((res) => {
+        axios.post(LOGIN_URL, this.state).then(async(res) => {
 
             // 세션 저장
             const { googleId, nickname, email, image } = this.state;
-            window.sessionStorage.setItem('id', googleId);
+            window.sessionStorage.setItem('userId', res.data.userId);
+            window.sessionStorage.setItem('googleId', googleId);
             window.sessionStorage.setItem('nickname', nickname);
             window.sessionStorage.setItem('email', email);
             window.sessionStorage.setItem('image', image);
