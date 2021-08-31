@@ -92,20 +92,6 @@ function Singcomment({ comment }) {
   )
 }
 
-function apply(e) {
-  e.preventDefault();
-  var answer;
-  answer = window.confirm(`신청하시겠습니까?`);
-
-  if (answer == true) {
-    var apply = document.getElementById('applybtn');
-    const html = '신청취소';
-    apply.innerHTML = html;
-    apply.disabled = true;
-    apply.style.backgroundColor = "black";
-  }
-}
-
 function bookmarkremove() {
   document.getElementById("likebtn2").style.display = "none";
   document.getElementById("likebtn").style.display = "block";
@@ -117,15 +103,46 @@ function bookmarkbtn() {
 
 function Board() {
   const { productId } = useParams()
+  const [isLogined, setIsLogined] = useState(window.sessionStorage.getItem('userId'))
+
+  useEffect(() => { // useEffect 적용!
+    }, [isLogined]);
 
 // 요청받은 정보를 담아줄 변수 선언
 const [testStr, setTestStr] = useState('');
-console.log(testStr);
 
 // 변수 초기화
 function callback(str) {
   setTestStr(str);
 }
+
+  function apply(e) {
+    e.preventDefault();
+    var answer;
+    answer = window.confirm(`신청하시겠습니까?`);
+
+    if (answer == true) {
+      console.log(window.sessionStorage.getItem('userId'));
+      axios({
+        url: `/${productId}/request`,
+        method: 'post',
+        params: {
+          userId: window.sessionStorage.getItem('userId')
+        },
+        baseURL: 'http://localhost:8080/post',
+        headers: { "Access-Control-Allow-Origin": "*" },
+      }).then(function () {
+        alert("신청이 완료되었습니다.")
+        var apply = document.getElementById('applybtn');
+        const html = '신청취소';
+        apply.innerHTML = html;
+        apply.disabled = true;
+        apply.style.backgroundColor = "black";
+      }).catch(error => {
+        console.log(error.response)
+      });
+    }
+  }
 
 function contentDelete(e){
   e.preventDefault();
@@ -138,6 +155,7 @@ function contentDelete(e){
     window.location.href="/home";
   }
 }
+
 
 // 첫 번째 렌더링을 마친 후 실행
 useEffect(
@@ -183,9 +201,11 @@ useEffect(
                 <div className="quantity">
                   <div className="pro-qty">
                     <div id="apply">
+                    { product.step=="request" && isLogined && <div>
                       <button id="applybtn" onClick={apply}>신청하기</button>
                       <a href="#" className="heart-icon" onClick={bookmarkbtn} id="likebtn"><FavoriteBorderIcon /></a>
                       <a href="#" className="heart-icon" onClick={bookmarkremove} id="likebtn2" style={{ display: "none" }}><FavoriteIcon /></a>
+                    </div> }
                     </div>
                   </div>
                 </div>

@@ -39,7 +39,6 @@ public class LoginContoller {
 		User newRgstedUser = userRepository.save(newbie);
 		
 		return new ResponseEntity<User>(newRgstedUser, HttpStatus.OK);
-		
 	}
 	
 //	@PostMapping("/google/setName")
