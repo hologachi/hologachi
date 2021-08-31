@@ -2,16 +2,38 @@
     background-color: #007bff;
     color: white;
     margin-bottom: 20px;
+    border-radius: 5px;
 }
 .privacy{
     margin-top: 50px;
     height: 700px;
 }
 #modifybtn:hover{
-    width: 88px;
+    width: 80px;
     box-shadow: none;
+    background-color: rgb(8, 8, 177);
 }
 .react-datepicker__navigation:hover{
     width: 30px;
     display: flex;
+}
+#infoText{
+    font-size: 12px;
+    color: rgb(236, 40, 40);
+}
+#close{
+    width: 40px;
+    margin-right: 10px;
+    border-radius: 5px;
+    background-color: rgb(110, 110, 131);
+}
+#close:hover{
+    background-color: rgb(8, 8, 177);
+}
+#modalModifybtn{
+    width: 80px;
+    border-radius: 5px;
+}
+#modalModifybtn:hover{
+    background-color: rgb(8, 8, 177);
 }

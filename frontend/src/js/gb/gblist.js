@@ -52,23 +52,6 @@ const useStyles = makeStyles((theme) => ({
      }, []
    );
 
-  //  const [testStrSort1, setTestStrSort1] = useState('');
-
-  //  function callback(str) {
-  //   setTestStrSort1(str);
-  //  }
-
-  //  useEffect(
-  //    () => {
-  //      axios({
-  //        url: `/post/timesort`,
-  //        method: 'GET'
-  //      }).then((res) => {
-  //        callback(res.data);
-  //      })
-  //    }, []
-  //  );
-
   function Sorting(){
     useEffect(
       () => {

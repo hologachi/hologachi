@@ -3,14 +3,35 @@ import { useState, useEffect } from 'react';
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 import '../../css/header.css';
 import  Logout  from "../login/authGoogleLogout";
+import axios from "axios";
 
 export default function Header() {
     const [isLogined, setIsLogined] = useState(window.sessionStorage.getItem('nickname'))
+    const [keyword, setKeyword] = useState('')
 
     useEffect(() => { // useEffect 적용!
         console.log(isLogined);
         }, [isLogined]);
     
+        function gosearch(e){
+            setKeyword(e.target.value)
+        }
+        function findKeyword(){
+            axios({
+                url: `/search`,
+                method: 'post',
+                params: {
+                  keyword: keyword
+                },
+                baseURL: 'http://localhost:8080/post',
+                headers: { "Access-Control-Allow-Origin": "*" },
+              }).then(function () {
+                console.log("find")
+              }).catch(error => {
+                console.log(error.response)
+              });
+        }
+
     return (
         <div>
             <Navbar className="navbar" bg="light" expand="lg">
@@ -24,7 +45,7 @@ export default function Header() {
                             <NavDropdown.Item href="#action/3.2">가전제품</NavDropdown.Item>
                             <NavDropdown.Item href="#action/3.3">의류</NavDropdown.Item>
                         </NavDropdown> */}
-                        <NavDropdown title="마이페이지" id="basic-nav-dropdown" className="menu">
+                        { isLogined &&  <NavDropdown title="마이페이지" id="basic-nav-dropdown" className="menu">
                             <NavDropdown.Item href="/mypage/profile">나의 프로필</NavDropdown.Item>
                             <NavDropdown.Item href="/mypage/bookmark">북마크</NavDropdown.Item>
                             <NavDropdown.Item href="/mypage/mywriting">내가 작성한 글</NavDropdown.Item>
@@ -33,7 +54,8 @@ export default function Header() {
                             <NavDropdown.Item href="/mypage/privacy">개인정보 확인 및 수정</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="#action/3.7">평점 등록</NavDropdown.Item>
-                        </NavDropdown>
+                        </NavDropdown> }
+                       
                         <Nav.Link href="/chat/list" className="menu">채팅</Nav.Link>
                     </Nav>
                     <Button href="../gb/gbwrite" className="gbwritebtn">공동구매 글쓰기</Button>
@@ -46,9 +68,8 @@ export default function Header() {
                     { !isLogined && <Button href="/login" className="loginbtn">Login</Button> } 
                     
                     <Form inline>
-                        <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                        <SearchIcon type="submit" ></SearchIcon>
-                        {/* onClick={signIn} */}
+                        <FormControl type="text" placeholder="Search" className="mr-sm-2" value={keyword} onChange={gosearch}/>
+                        <SearchIcon type="submit" onClick={findKeyword}></SearchIcon>
                     </Form>
                 </Navbar.Collapse>
             </Navbar>

@@ -19,7 +19,8 @@ const Modal = (props) => {
                         {props.children}
                     </main>
                     <footer>
-                        <button className="close" onClick={close}> 수정하기 </button>
+                        <button id="close" onClick={close}>취소</button>
+                        <button id="modalModifybtn" onClick={modify}> 수정하기 </button>
                     </footer>
                 </section>
             ) : null}
@@ -27,8 +28,12 @@ const Modal = (props) => {
     )
 }
 
+function modify(){
+    alert("수정이 완료되었습니다.");
+    window.location.reload();
+}
+
 function Privacy() {
-    // useState를 사용하여 open상태를 변경한다. (open일때 true로 만들어 열리는 방식)
     const [modalOpen, setModalOpen] = useState(false);
 
     const openModal = () => {
@@ -39,17 +44,10 @@ function Privacy() {
     }
 
     const [textNick, setNick] = useState('');
-    const [textId, setId] = useState('');
 
     const onChangeNick = (e) => {
         setNick(e.target.value);
     }
-
-    const onChangeId = (e) => {
-        setId(e.target.value);
-    }
-
-    const [startDate, setStartDate] = useState(new Date());
 
     return (
         <div className="privacy">
@@ -57,16 +55,12 @@ function Privacy() {
 
             <table className="tablecss table">
                 <tr>
-                    <th>아이디</th>
-                    <td>hologachi</td>
+                    <th>이메일</th>
+                    <td>{window.sessionStorage.getItem('email')}</td>
                 </tr>
                 <tr>
-                    <th>별명</th>
-                    <td>Holo</td>
-                </tr>
-                <tr>
-                    <th>생일</th>
-                    <td>2000-01-01</td>
+                    <th>닉네임</th>
+                    <td>{window.sessionStorage.getItem('nickname')}</td>
                 </tr>
             </table>
             <button id="modifybtn" onClick={openModal}>수정하기</button>
@@ -74,16 +68,14 @@ function Privacy() {
             <Modal open={modalOpen} close={closeModal} header="수정하기">
             <table className="tablecss table">
                 <tr>
-                    <th>아이디</th>
-                    <td><input type="text" value={textId} onChange={onChangeId} placeholder="id"/></td>
+                    <th>Email <br /><span id="infoText">이메일은 변경할 수 없습니다.</span></th>
+                    
+                    <td><input type="text" value={window.sessionStorage.getItem('email')}  placeholder="email" disabled/></td>
+                    
                 </tr>
                 <tr>
-                    <th>별명</th>
-                    <td><input type="text" value={textNick} onChange={onChangeNick} placeholder="pw" /></td>
-                </tr>
-                <tr>
-                    <th>생일</th>
-                    <td><DatePicker selected={startDate} maxDate={moment().toDate()} onChange={(date) => setStartDate(date)} /></td>
+                    <th>닉네임</th>
+                    <td><input type="text" value={textNick} onChange={onChangeNick} placeholder="닉네임" /></td>
                 </tr>
             </table>
             </Modal>
