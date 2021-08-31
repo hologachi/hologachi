@@ -55,6 +55,7 @@ public class Post {
 	private String step;
 	private int price;
 	private String url;
+	private String image;
 
 	
 }

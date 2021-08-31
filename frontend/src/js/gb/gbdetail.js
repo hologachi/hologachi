@@ -16,13 +16,13 @@ class Comment extends React.Component {
         {
           id: 1,
           writer: "홀로가치1",
-          date: "2021-01-01",
-          content: "안녕"
+          date: "2021-08-27",
+          content: "참여하고 싶은데 각자 12개씩 나누는건가요?"
         }, {
           id: 2,
           writer: "홀로가치2",
-          date: "2021-01-02",
-          content: "안녕2"
+          date: "2021-08-27",
+          content: "배송 지역이 어디인가요?"
         },
       ]
     }
@@ -92,20 +92,6 @@ function Singcomment({ comment }) {
   )
 }
 
-function apply(e) {
-  e.preventDefault();
-  var answer;
-  answer = window.confirm(`신청하시겠습니까?`);
-
-  if (answer == true) {
-    var apply = document.getElementById('applybtn');
-    const html = '신청완료';
-    apply.innerHTML = html;
-    apply.disabled = true;
-    apply.style.backgroundColor = "black";
-  }
-}
-
 function bookmarkremove() {
   document.getElementById("likebtn2").style.display = "none";
   document.getElementById("likebtn").style.display = "block";
@@ -117,15 +103,46 @@ function bookmarkbtn() {
 
 function Board() {
   const { productId } = useParams()
+  const [isLogined, setIsLogined] = useState(window.sessionStorage.getItem('userId'))
+
+  useEffect(() => { // useEffect 적용!
+    }, [isLogined]);
 
 // 요청받은 정보를 담아줄 변수 선언
 const [testStr, setTestStr] = useState('');
-console.log(testStr);
 
 // 변수 초기화
 function callback(str) {
   setTestStr(str);
 }
+
+  function apply(e) {
+    e.preventDefault();
+    var answer;
+    answer = window.confirm(`신청하시겠습니까?`);
+
+    if (answer == true) {
+      console.log(window.sessionStorage.getItem('userId'));
+      axios({
+        url: `/${productId}/request`,
+        method: 'post',
+        params: {
+          userId: window.sessionStorage.getItem('userId')
+        },
+        baseURL: 'http://localhost:8080/post',
+        headers: { "Access-Control-Allow-Origin": "*" },
+      }).then(function () {
+        alert("신청이 완료되었습니다.")
+        var apply = document.getElementById('applybtn');
+        const html = '신청취소';
+        apply.innerHTML = html;
+        apply.disabled = true;
+        apply.style.backgroundColor = "black";
+      }).catch(error => {
+        console.log(error.response)
+      });
+    }
+  }
 
 function contentDelete(e){
   e.preventDefault();
@@ -138,6 +155,7 @@ function contentDelete(e){
     window.location.href="/home";
   }
 }
+
 
 // 첫 번째 렌더링을 마친 후 실행
 useEffect(
@@ -154,42 +172,44 @@ useEffect(
     <div className="gbdetail">
       <section className="product-details spad">
         <div className="container">
+        {Object.values(testStr).map(product => (
           <div className="row" id="product">
             <div className="col-lg-6 col-md-6">
               <div className="product__details__pic">
                 <div className="product__details__pic__item">
                   <img className="product__details__pic__item--large"
-                    src="#" alt="" />
+                    src={product.image} alt="" />
                 </div>
               </div>
             </div>
             <div className="col-lg-6 col-md-6" id="productDetail">
-            {Object.values(testStr).map(product => (
               <div className="product__details__text">
-                <h3>{product.title}</h3><br />
+                <strong><span id="titleText">{product.title}</span></strong><br /><br />
                 <div className="product__details__rating">
                 </div>
-                <ul>
-                <li><strong className="left">공동구매 상태 {'>>'} </strong>{product.step}</li><hr />
-                  <li><strong className="left">제안자  : </strong>{product.user.nickname}<button id="contentDeletebtn" onClick={contentDelete}>글 삭제</button></li><hr />
-                  <li><strong className="left">가격  : </strong>{product.price}</li><hr />
-                  <li><strong className="left">공동구매 시작  : </strong>{moment(product.rgstAt).format('YYYY-MM-DD')}</li><hr />
-                  <li><strong className="left">공동구매 마감  : </strong>{moment(product.deadline).format('YYYY-MM-DD')}</li><hr />
+                <ul id="infoList">
+                <li><strong className="left">공동구매 상태 {'>>'} </strong><span id="stepSta">{product.step}</span></li><hr />
+                  <li><strong className="left"></strong><span id="nicknameText">{product.user.nickname}</span>님이 진행합니다😀
+                  {/* <button id="contentDeletebtn" onClick={contentDelete}>글 삭제</button> */}
+                  </li><br />
+                  <li id="priceText"><strong className="left"></strong>{product.price}원</li><br />
+                  <li><strong className="left">공동구매 기간 🗓 </strong><span id="dateMoment">{moment(product.rgstAt).format('YYYY-MM-DD')} ~ {moment(product.deadline).format('YYYY-MM-DD')}</span></li><br />
+                  <li><strong className="left">목표 인원은 </strong><span id="matchingNum">{product.matching}명</span></li><br />
                   <li><strong className="left">카테고리  : </strong>{product.category2.name}</li><hr />
-                  <li><strong className="left">목표 인원 : </strong>{product.matching}명</li><hr />
-                  <li><button onClick={() => window.open(`https://${product.url}`, '_blank')}>구매 사이트</button></li><hr />
+                  <li><button className="urlBtn" onClick={() => window.open(`https://${product.url}`, '_blank')}>구매 사이트</button></li><hr />
                 </ul>
                 <div className="quantity">
                   <div className="pro-qty">
                     <div id="apply">
+                    { product.step=="request" && isLogined && <div>
                       <button id="applybtn" onClick={apply}>신청하기</button>
                       <a href="#" className="heart-icon" onClick={bookmarkbtn} id="likebtn"><FavoriteBorderIcon /></a>
                       <a href="#" className="heart-icon" onClick={bookmarkremove} id="likebtn2" style={{ display: "none" }}><FavoriteIcon /></a>
+                    </div> }
                     </div>
                   </div>
                 </div>
               </div>
-              ))}
             </div>
             <div className="col-lg-12" id="commentContainer">
               <div className="product__details__tab">
@@ -197,6 +217,7 @@ useEffect(
               </div>
             </div>
           </div>
+          ))}
         </div>
       </section>
     </div>

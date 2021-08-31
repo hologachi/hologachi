@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.hologachi.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
@@ -41,12 +42,12 @@ public class PostController {
 	
 	// 공동구매 신청
 	@RequestMapping("{postId}/request")
-	public void addRqst(@PathVariable int postId) {
+	public void addRqst(@PathVariable int postId, @RequestParam("userId") int userId) {
 		Ptcpt ptcpt = new Ptcpt();
 		Post post = new Post();
 		post.setPostId(postId);
 		User user = new User();
-		user.setUserId(1);
+		user.setUserId(userId);
 		
 		ptcpt.setPost(post);
 		ptcpt.setUser(user);

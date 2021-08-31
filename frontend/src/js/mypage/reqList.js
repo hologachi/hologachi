@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import SideMenu from "./mypageside";
+import { useParams } from "react-router-dom"
 import '../../css/mywriting.css'
 import '../../css/applygb.css'
+import '../../css/reqList.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import { Link } from "react-router-dom";
@@ -14,7 +15,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import axios from "axios";
-import moment from 'moment';
 
 
 const StyledTableCell = withStyles((theme) => ({
@@ -34,23 +34,52 @@ const useStyles = makeStyles({
 });
 
 function Mypost() {
+    const { productId } = useParams();
   const classes = useStyles();
 
-  // 요청받은 정보를 담아줄 변수 선언
   const [ testStr, setTestStr ] = useState('');
   // console.log(testStr);
+
+  function ok(id){
+    var answer;
+    var ok = id+"ok"
+    var reject = id +"reject"
+    var okId = document.getElementById(ok);
+    var rejectId = document.getElementById(reject);
+
+    answer = window.confirm(`수락하시겠습니까?`);
+    if (answer == true) {
+      okId.innerHTML = "수락완료";
+      okId.style.backgroundColor = "orange";
+      okId.disabled = true;
+      rejectId.remove();
+    }
+  }
+
+  function reject(id) {
+    var answer;
+    var ok = id+"ok"
+    var reject = id +"reject"
+    var okId = document.getElementById(ok);
+    var rejectId = document.getElementById(reject);
+
+    answer = window.confirm(`거절하시겠습니까?`);
+    if (answer == true) {
+      rejectId.innerHTML = "거절완료";
+      rejectId.disabled = true;
+      okId.remove();
+    }
+  }
   
 
-  // 변수 초기화
   function callback(str) {
     setTestStr(str);
   }
 
-  // 첫 번째 렌더링을 마친 후 실행
   useEffect(
       () => {
         axios({
-            url: '/mypage/mypost',
+            url: `/mypage/mypost/${productId}`,
             method: 'GET'
         }).then((res) => {
             callback(res.data);
@@ -64,29 +93,22 @@ function Mypost() {
         <Table className={classes.table} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
-              <StyledTableCell align="center" width="15%">기간</StyledTableCell>
-              <StyledTableCell align="center" width="8%">카테고리</StyledTableCell>
-              <StyledTableCell align="center" width="30%">제목</StyledTableCell>
-              <StyledTableCell align="center" width="15%">목표</StyledTableCell>
-              <StyledTableCell align="center">신청자 목록</StyledTableCell>
-              <StyledTableCell align="center" width="8%">진행상황</StyledTableCell>
-              <StyledTableCell align="center" width="8%"></StyledTableCell>
+              <StyledTableCell align="center" >신청자</StyledTableCell>
+              <StyledTableCell align="center" >제안자 평점</StyledTableCell>
+              <StyledTableCell align="center" >신청자 평점</StyledTableCell>
+              <StyledTableCell align="center" >-</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {Object.values(testStr).map(product => (
-              <TableRow key={product.postId} hover>
-                <StyledTableCell align="center">{moment(product.rgstAt).format('YYYY-MM-DD')} ~ {moment(product.deadline).format('MM-DD')}</StyledTableCell>
-                <StyledTableCell align="center">{product.category2.name}</StyledTableCell>
-                <Link to={`/gb/gbdetail/${product.postId}`}>
-                  <StyledTableCell align="center" id="titleTexts">{product.title}</StyledTableCell>
+              <TableRow key={product.ptcptId} hover>
+                <Link to={`/mypage/mypost/${productId}/${product.ptcptId}`}>
+                  <StyledTableCell align="center" id="titleText">{product.user.nickname}</StyledTableCell>
                 </Link>
-                <StyledTableCell align="center">{product.matching}명</StyledTableCell>
-                <Link to={`/mypage/reqList/${product.postId}`}>
-                <StyledTableCell align="center"><button id="reqListCheck">확인하기</button></StyledTableCell>
-                </Link>
-                <StyledTableCell align="center">{product.step}</StyledTableCell>
-                <StyledTableCell align="center">{product.step} <button id="reqListCheck">평점</button></StyledTableCell>
+                <StyledTableCell align="center">{product.user.sgst_rate}</StyledTableCell>
+                <StyledTableCell align="center">{product.user.rqst_rate}</StyledTableCell>
+                <StyledTableCell align="center">
+                <button id={product.user.userId+'ok'} onClick={()=>ok(product.user.userId)} className="okbtn">수락</button><button id={product.user.userId+'reject'} onClick={()=>reject(product.user.userId)} className="rejectbtn">거절</button></StyledTableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -97,28 +119,18 @@ function Mypost() {
    );
 }
 
-export default function mywriting(){
+export default function reqList(){
   return (
     <div className="container py-4">
     <div className="row align-items-md-stretch">
       <div className="col-lg-12 py-2">
         <div className=" h-100 p-5 bg-light border shadow rounded" id="page_title">
-          작성한 글
+          신청자 목록
         </div>
       </div>
     </div>
-
     <div className="row align-items-md-stretch">
-      <div className="col-lg-2 py-2">
-        <div className=" h-100 p-2 bg-light border shadow rounded" id="page_menu">
-          <SideMenu />
-        </div>
-      </div>
-      <div className="col-lg-10 py-2">
-        <div className=" h-100 p-5 bg-light border shadow rounded" id="boottable">
         <Mypost/>
-        </div>
-      </div>
     </div>
   </div>
   )
