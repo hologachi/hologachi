@@ -189,12 +189,12 @@ useEffect(
                 </div>
                 <ul id="infoList">
                 <li><strong className="left">공동구매 상태 {'>>'} </strong><span id="stepSta">{product.step}</span></li><hr />
-                  <li><strong className="left"></strong><span id="nicknameText">{product.user.nickname}</span>님이 진행합니다😀
+                  <li><strong className="left"></strong><span id="nicknameText">{product.user.nickname}</span>님이 진행합니다
                   {/* <button id="contentDeletebtn" onClick={contentDelete}>글 삭제</button> */}
                   </li><br />
                   <li id="priceText"><strong className="left"></strong>{product.price}원</li><br />
                   <li><strong className="left">공동구매 기간 🗓 </strong><span id="dateMoment">{moment(product.rgstAt).format('YYYY-MM-DD')} ~ {moment(product.deadline).format('YYYY-MM-DD')}</span></li><br />
-                  <li><strong className="left">목표 인원은 </strong><span id="matchingNum">{product.matching}명</span></li><br />
+                  <li><strong className="left">목표 인원 </strong><span id="matchingNum">{product.matching}명</span></li><br />
                   <li><strong className="left">카테고리  : </strong>{product.category2.name}</li><hr />
                   <li><button className="urlBtn" onClick={() => window.open(`https://${product.url}`, '_blank')}>구매 사이트</button></li><hr />
                 </ul>
