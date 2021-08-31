@@ -79,7 +79,7 @@ function Board() {
       , "전자기기"],
     label: ''
   })
-  const category = state.labels.map((label, index) => (<option key={index}>{label}</option>));
+  const category = state.labels.map((label, index) => (<option key={index} >{label}</option>));
 
   const [joinnums, setNums] = useState(2);
 
@@ -172,55 +172,73 @@ return(
     <div id="inputform">
     <div><br />
       <h1 >공동구매 등록</h1><br />
-      <Form.Group as={Row} className="mb-3" controlId="exampleForm.ControlTextarea1">
-        <Form.Label column sm="2">
-          글 제목
+      <Form.Group align="center" as={Row} className="mb-3" controlId="exampleForm.ControlTextarea1">
+        <Form.Label  column sm="2">
+        <h5>
+        <strong>
+        글 제목
+        </strong>
+          </h5>
         </Form.Label>
         <Col sm="10">
-          <Form.Control type="text" placeholder="title" value={title} onChange={handelChangeTitle}/>
+          <Form.Control type="text" placeholder="title" value={title} onChange={handelChangeTitle} style={{width:"70%"}}/>
         </Col>
       </Form.Group>
 
-      <Form.Group as={Row} className="mb-3" controlId="exampleForm.ControlTextarea1">
-        <Form.Label column sm="2">
-           가격
+      <Form.Group align="center" as={Row} className="mb-3" controlId="exampleForm.ControlTextarea1">
+        <Form.Label column sm="2"><h5>
+        <strong>
+        가격
+        </strong>
+           </h5>
         </Form.Label>
         <Col sm="10">
-          <Form.Control type="number" placeholder="price" value={price} onChange={handelChangePrice}/>
+          <Form.Control type="number" placeholder="price" value={price} onChange={handelChangePrice} style={{width:"70%"}}/>
         </Col>
-      </Form.Group>
+      </Form.Group><br />
 
-      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-        <Form.Label id="left" >
+      <Form.Group align="center" className="mb-3" controlId="exampleForm.ControlTextarea1">
+        <Form.Label id="left" ><h5>
+        <strong>
         카테고리
+        </strong>
+        </h5>
         </Form.Label>
-        <Form.Control as="select" name="category" >
+        <Form.Control as="select" name="category" style={{width:"100px"}}>
           {category}
         </Form.Control>
-      </Form.Group>
+      </Form.Group><br />
 
-      <Form.Group as={Row} className="mb-3" controlId="exampleForm.ControlTextarea1">
-        <Form.Label column sm="2">
-          구매 링크
+      <Form.Group align="center" as={Row} className="mb-3" controlId="exampleForm.ControlTextarea1" >
+        <Form.Label column sm="2"><h5>
+        <strong>
+        구매 링크
+        </strong>
+          </h5>
         </Form.Label>
         <Col sm="10">
-          <Form.Control type="text" placeholder="URL" value={url} onChange={handelChangeUrl}/>
+          <Form.Control type="text" placeholder="URL" value={url} onChange={handelChangeUrl} style={{width:"70%"}}/>
         </Col>
-      </Form.Group>
+      </Form.Group><br />
 
-      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-        <Form.Label>
-        목표 인원
-        </Form.Label>&nbsp;
+      <Form.Group align="center" className="mb-3" controlId="exampleForm.ControlTextarea1">
+        <Form.Label><h5>
+        <strong>
+        목표 인원 
+        </strong>
+            </h5>
+        </Form.Label>&nbsp;&nbsp;&nbsp;&nbsp;
         <Button id="numbtn" onClick={minusNum}>-</Button>&nbsp;
         <span>{joinnums}</span>&nbsp;
         <Button id="numbtn" onClick={plusNum}>+</Button>
-      </Form.Group>
+      </Form.Group><br />
 
-      <Form.Group className="mb-3">
-        <Form.Label className="date">공동구매 마감일</Form.Label>
-        <DatePicker selected={startDate} minDate={moment().toDate()} onChange={(date) => setStartDate(date)} />
-      </Form.Group>
+      <Form.Group align="center" className="mb-3">
+        <Form.Label className="date"><h5><strong>
+        공동구매 마감일
+        </strong></h5></Form.Label>
+        <DatePicker selected={startDate} minDate={moment().toDate()} onChange={(date) => setStartDate(date)} style={{width:"70%"}}/>
+      </Form.Group><br />
 
       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
         <input
@@ -232,12 +250,14 @@ return(
         ></input>
         {profile_preview}
         <UploadImage />
-      </Form.Group>
+      </Form.Group><br />
 
-      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-        <Form.Label id="left" >상품 소개 및 설명</Form.Label>
+      <Form.Group align="center" className="mb-3" controlId="exampleForm.ControlTextarea1">
+        <Form.Label id="left" ><h5><strong>
+        상품 소개 및 설명
+        </strong></h5></Form.Label>
         <Form.Control as="textarea" cols={70} rows={5} placeholder="Content" style={{ resize: "none" }} value={content} onChange={handelChangeContent} />
-      </Form.Group>
+      </Form.Group><br />
 
       <Button id="submitbtn" onClick={addContent}>추가</Button>
     </div>

@@ -86,3 +86,41 @@
     background-color: #0d6efd;
     border-radius: 5px;
 }
+.urlBtn{
+    color: #fff;
+    background-color: #0d6efd;
+    border-radius: 5px;
+}
+#priceText{
+    font-size: 20px;
+    font-weight: 800;
+    color: rgb(255, 115, 0);
+}
+#nicknameText{
+    font-size: 20px;
+    font-weight: 800;
+    color: rgb(129, 56, 0);
+}
+#infoList{
+    list-style: none;
+}
+#dateMoment{
+    font-size: 20px;
+    font-weight: 800;
+    color: rgb(175, 100, 2);
+}
+#stepSta{
+    font-size: 20px;
+    font-weight: 800;
+    color: rgb(0, 26, 98);
+}
+#matchingNum{
+    font-size: 20px;
+    font-weight: 800;
+    color: rgb(0, 26, 98);
+}
+#titleText{
+    font-size: 30px;
+    font-weight: 800;
+    color: rgb(0, 11, 42);
+}
