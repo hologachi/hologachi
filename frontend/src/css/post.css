@@ -14,3 +14,9 @@
 #grid{
   margin: 5px;
 }
+#itemRecom{
+  float: left;
+  margin-left: 80px;
+  margin-top: 30px;
+  font-size: 17px;
+}
