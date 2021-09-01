@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
+import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -32,58 +33,73 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
- function Board() {
-   const classes = useStyles();
+function Gblist() {
+  const [title, setTitle] = useState('');
+  const [testStr, setTestStr] = useState('');
+  const classes = useStyles();
 
-   const [testStr, setTestStr] = useState('');
-
-   function callback(str) {
-     setTestStr(str);
-   }
-
-   useEffect(
-     () => {
-       axios({
-         url: `/post/timesort`,
-         method: 'GET'
-       }).then((res) => {
-         callback(res.data);
-       })
-     }, []
-   );
-
-  function Sorting(){
-    useEffect(
-      () => {
-        axios({
-          url: `/post/matchingsort`,
-          method: 'GET'
-        }).then((res) => {
-          callback(res.data);
-        })
-      }, []
-    );
+  function callback(str) {
+    setTestStr(str);
+    setFoundUsers(str);
   }
 
-   function ChangeFunc() {
-    var selectBox = document.getElementById("selectBox");
-    var selectedValue = selectBox.options[selectBox.selectedIndex].value;
-    
-    if(selectedValue == 2){
-      Sorting()
+  useEffect(
+    () => {
+      axios({
+        url: `/post/timesort`,
+        method: 'GET'
+      }).then((res) => {
+        callback(res.data);
+      })
+    }, []
+  );
+
+  const [foundUsers, setFoundUsers] = useState(testStr);
+
+  const filter = (e) => {
+    const keyword = e.target.value;
+
+    if (keyword !== '') {
+      const results = testStr.filter((user) => {
+        return user.title.toString().toLowerCase().indexOf(keyword.toLowerCase()) > -1;
+        // Use the toLowerCase() method to make it case-insensitive
+      });
+      setFoundUsers(results);
+    } else {
+      setFoundUsers(testStr);
+      // If the text field is empty, show all users
     }
-   }
+    setTitle(keyword);
+  };
 
-   const products = Object.values(testStr).map(product => {
-      let rgst = product.rgstAt;
-      let rgst_result = moment(rgst).format('YYYY-MM-DD');
-      let deadLine = product.deadline;
-      let deadLinet_result = moment(deadLine).format('YYYY-MM-DD');
+  console.log(foundUsers.length);
+  console.log(testStr);
 
-      return (
-        <div key={product.id}>
-        <Grid item key={product.postId} item xs={12} id="grid">
-        <Card className={classes.product} id="card">
+  return (
+    <Container className={classes.cardGrid} maxWidth="md">
+    <div>
+      <h2>공동구매</h2>
+      <select id="selectBox" >
+        <option value="1" defaultValue="default">최신등록순</option>
+        <option value="2">참가인원 적은순</option>
+      </select><br /><br /><br />
+      <SearchIcon></SearchIcon>
+      <input
+        type="search"
+        value={title}
+        onChange={filter}
+        className="input"
+        placeholder="Search"
+      />
+      <hr />
+    </div>
+    <Grid container spacing={4}
+    container justifyContent="center"
+  >
+        {foundUsers && foundUsers.length > -1 ? (
+          foundUsers.map((product) => (
+            <div className="MuGrid-root" item key={product.postId} item xs={12} id="grid">
+            <Card className={classes.product} id="card">
             <Link to={`/gb/gbdetail/${product.postId}`}>
             <CardMedia
                   className={classes.cardMedia}
@@ -92,7 +108,7 @@ const useStyles = makeStyles((theme) => ({
                 />
             </Link>
             <CardContent className={classes.cardContent}>
-                <Typography id="status">
+            <Typography id="status">
                   {product.step}
                 </Typography>
                 <Typography id="gbTitle" gutterBottom variant="h5" component="h2">
@@ -105,47 +121,21 @@ const useStyles = makeStyles((theme) => ({
                   목표: {product.matching}명
                 </Typography>
                 <Typography>
-                  시작: {rgst_result}
+                  시작: {moment(product.rgstAt).format('YYYY-MM-DD')}
                 </Typography>
                 <Typography>
-                  마감: {deadLinet_result}
+                  마감: {moment(product.deadline).format('YYYY-MM-DD')}
                 </Typography>
-              </CardContent>
-              </Card>
-              </Grid>
-          <hr />
-        </div>
-      );
-    });
-  
-   return (
-     <Container className={classes.cardGrid} maxWidth="md">
-       <div>
-         <h2>공동구매</h2>
-         <select id="selectBox" onChange={ChangeFunc}>
-           <option value="1" selected>최신등록순</option>
-           <option value="2">참가인원 적은순</option>
-         </select>
-         <hr />
-       </div>
-
-       <Grid container spacing={4}
-         container justifyContent="center"
-       >
-         {products}
-       </Grid>
-     </Container>
-   )
- }
-
-function gblist() {
-    return (
-        <div className="gblist">
-            <div className="gblist__body">
-                <Board />
+            </CardContent>
+            </Card>
             </div>
-        </div>
-    )
+          ))
+        ) : (
+          <h1>No results found!</h1>
+        )}
+    </Grid>
+    </Container>
+  );
 }
 
-export default gblist
+export default Gblist;
