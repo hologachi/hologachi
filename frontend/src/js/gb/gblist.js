@@ -3,7 +3,6 @@ import '../../css/post.css'
 import '../../css/gblist.css'
 import { Container, Grid, Card, CardMedia, CardContent, Typography, makeStyles, } from '@material-ui/core';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import productsData from "../ProductData";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
@@ -40,7 +39,9 @@ function Gblist() {
 
   function callback(str) {
     setTestStr(str);
+    console.log(testStr);
     setFoundUsers(str);
+    console.log(foundUsers);
   }
 
   useEffect(
@@ -54,6 +55,16 @@ function Gblist() {
     }, []
   );
 
+  function Matchingsort(){
+    const a = document.getElementById('selectBox');
+    console.log(a.value);
+    if(a.value==2){
+      window.location.href="/gb/gblistMatching";
+    }else{
+      window.location.href="/gb/gblist";
+    }
+  }
+
   const [foundUsers, setFoundUsers] = useState(testStr);
 
   const filter = (e) => {
@@ -62,26 +73,21 @@ function Gblist() {
     if (keyword !== '') {
       const results = testStr.filter((user) => {
         return user.title.toString().toLowerCase().indexOf(keyword.toLowerCase()) > -1;
-        // Use the toLowerCase() method to make it case-insensitive
       });
       setFoundUsers(results);
     } else {
       setFoundUsers(testStr);
-      // If the text field is empty, show all users
     }
     setTitle(keyword);
   };
-
-  console.log(foundUsers.length);
-  console.log(testStr);
 
   return (
     <Container className={classes.cardGrid} maxWidth="md">
     <div>
       <h2>공동구매</h2>
-      <select id="selectBox" >
+      <select id="selectBox" onChange={Matchingsort}>
         <option value="1" defaultValue="default">최신등록순</option>
-        <option value="2">참가인원 적은순</option>
+        <option value="2" >참가인원 적은순</option>
       </select><br /><br /><br />
       <SearchIcon></SearchIcon>
       <input
