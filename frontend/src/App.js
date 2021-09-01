@@ -20,6 +20,7 @@ import  Gbwrite  from "./js/gb/gbwrite";
 import  Gblist from "./js/gb/gblist";
 import  GblistMatching from "./js/gb/gblistMatching";
 import Gbdetail from "./js/gb/gbdetail";
+import SearchList from "./js/gb/searchList";
 
 import  MUser  from "./js/adminpage/manageUser";
 import  MGB  from "./js/adminpage/manageGB";
@@ -90,6 +91,7 @@ function App() {
            <Route path="/gb/gblist" component={Gblist} />
            <Route path="/gb/gblistMatching" component={GblistMatching} />
            <Route path="/gb/gbdetail/:productId" component={Gbdetail} />
+           <Route path="/gb/searchList/:keyword" component={SearchList} />
 
           {/* Mypage */}
           <Route path="/mypage/myprofile" component={Profile} />

@@ -47,7 +47,7 @@ function Gblist() {
   useEffect(
     () => {
       axios({
-        url: `/post/timesort`,
+        url: `/post/matchingsort`,
         method: 'GET'
       }).then((res) => {
         callback(res.data);
@@ -55,12 +55,12 @@ function Gblist() {
     }, []
   );
 
-  function Matchingsort(){
+  function timesort(){
     const selectBox = document.getElementById('selectBox');
-    if(selectBox.value==2){
-      window.location.href="/gb/gblistMatching";
-    }else{
+    if(selectBox.value==1){
       window.location.href="/gb/gblist";
+    }else{
+        window.location.href="/gb/gblistMatching";
     }
   }
 
@@ -75,7 +75,7 @@ function Gblist() {
       });
       setFoundPosts(results);
     } else {
-      setFoundPosts(testStr);
+    setFoundPosts(testStr);
     }
     setTitle(keyword);
   };
@@ -84,9 +84,9 @@ function Gblist() {
     <Container className={classes.cardGrid} maxWidth="md">
     <div>
       <h2>공동구매</h2>
-      <select id="selectBox" onChange={Matchingsort}>
-        <option value="1" defaultValue="default">최신등록순</option>
-        <option value="2" >참가인원 적은순</option>
+      <select id="selectBox" onChange={timesort}>
+        <option value="2" defaultValue="default">참가인원 적은순</option>
+        <option value="1">최신등록순</option>
       </select><br /><br /><br />
       <SearchIcon></SearchIcon>
       <input
@@ -102,7 +102,7 @@ function Gblist() {
     container justifyContent="center"
   >
         {foundPosts && foundPosts.length > -1 ? (
-          foundPosts.map((product) => (
+            foundPosts.map((product) => (
             <div className="MuGrid-root" item key={product.postId} item xs={12} id="grid">
             <Card className={classes.product} id="card">
             <Link to={`/gb/gbdetail/${product.postId}`}>

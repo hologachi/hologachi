@@ -104,8 +104,8 @@ public class PostController {
 	}
 	
 	// 공동구매 검색
-	@GetMapping("/search")
-	public List<Post> searchPost(@RequestParam String keyword) {
+	@GetMapping("/search/{keyword}")
+	public List<Post> searchPost(@PathVariable String keyword) {
 		return postRepository.searchByTitle(keyword);
 	}
 	

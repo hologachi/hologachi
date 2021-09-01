@@ -29,42 +29,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// const list =[
-//   {
-//     id:1,
-//     image:"https://i.postimg.cc/x8mwVmjD/image.jpg"
-//   },{
-//     id:2,
-//     image:"https://i.postimg.cc/KzpG8ty1/image.jpg"
-//   },{
-//     id:3,
-//     image:"https://i.postimg.cc/8zg1c1xm/image.jpg"
-//   },{
-//     id:4,
-//     image:"https://i.postimg.cc/N0fv2LDm/image.jpg"
-//   },{
-//     id:5,
-//     image:"https://i.postimg.cc/FF2fbX27/image.jpg"
-//   },{
-//     id:6,
-//     image:"https://i.postimg.cc/d0H3Lb2Q/image.jpg"
-//   }
-// ]
-
 export default function Post() {
   const classes = useStyles();
 
-  // 요청받은 정보를 담아줄 변수 선언
   const [ testStr, setTestStr ] = useState('');
-  // console.log(testStr);
-  
 
-  // 변수 초기화
   function callback(str) {
     setTestStr(str);
   }
 
-  // 첫 번째 렌더링을 마친 후 실행
   useEffect(
       () => {
         axios({
@@ -120,6 +93,8 @@ export default function Post() {
   } 
   );
   return (
+    <div>
+    <span id="itemRecom">🎁추천하는 공동구매<hr /></span>
     <Container className={classes.cardGrid} maxWidth="md">
       <Grid container spacing={4}
       container justifyContent="center" 
@@ -127,5 +102,6 @@ export default function Post() {
           {products}
       </Grid>
     </Container>
+    </div>
   )
 }

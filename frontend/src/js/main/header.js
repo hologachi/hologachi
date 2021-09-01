@@ -3,33 +3,29 @@ import { useState, useEffect } from 'react';
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 import '../../css/header.css';
 import  Logout  from "../login/authGoogleLogout";
-import axios from "axios";
 
 export default function Header() {
     const [isLogined, setIsLogined] = useState(window.sessionStorage.getItem('nickname'))
     const [keyword, setKeyword] = useState('')
+    
 
     useEffect(() => { // useEffect 적용!
         console.log(isLogined);
         }, [isLogined]);
     
-        function gosearch(e){
+        function handleChange(e){
             setKeyword(e.target.value)
         }
-        function findKeyword(){
-            axios({
-                url: `/search`,
-                method: 'post',
-                params: {
-                  keyword: keyword
-                },
-                baseURL: 'http://localhost:8080/post',
-                headers: { "Access-Control-Allow-Origin": "*" },
-              }).then(function () {
-                console.log("find")
-              }).catch(error => {
-                console.log(error.response)
-              });
+
+        const onKeyPress = (e) =>{
+            e.preventDefault()
+            if(e.key === 'Enter') {
+                onClick()
+            }
+        }
+
+        const onClick = (e) => {
+            window.location.href=`/gb/searchList/${keyword}`
         }
 
     return (
@@ -55,22 +51,33 @@ export default function Header() {
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="#action/3.7">평점 등록</NavDropdown.Item>
                         </NavDropdown> }
-                       
                         <Nav.Link href="/chat/list" className="menu">채팅</Nav.Link>
+                        
                     </Nav>
-                    <Button href="../gb/gbwrite" className="gbwritebtn">공동구매 글쓰기</Button>
-                    
-                    {/* 로그인 한 경우 */}
-                    { isLogined && <p>{window.sessionStorage.getItem('nickname')} 님 안녕하세요</p> }
-                    { isLogined && <Logout setIsLogined={setIsLogined}/>}
-                    
-                    {/* 로그인 안 한 경우 */}
-                    { !isLogined && <Button href="/login" className="loginbtn">Login</Button> } 
-                    
-                    <Form inline>
-                        <FormControl type="text" placeholder="Search" className="mr-sm-2" value={keyword} onChange={gosearch}/>
-                        <SearchIcon type="submit" onClick={findKeyword}></SearchIcon>
-                    </Form>
+                    <div  id="totalSearchForm">
+                    <form className="searchform">
+                        <input
+                            placeholder="Search"
+                            value={keyword}
+                            onChange={handleChange}
+                            id="totalSearch"
+                            onKeyPress={onKeyPress}
+                        /> 
+                    </form>
+                    </div>
+                        <div id="googleOauth">
+                            {/* 로그인 한 경우 */}
+                            {isLogined && <span>{window.sessionStorage.getItem('nickname')} 님 안녕하세요</span>}
+                            {isLogined && <Logout id="logoutbtn" setIsLogined={setIsLogined} />}
+                        </div>
+                        <div className="writeBtn">
+                        { isLogined && <Button href="../gb/gbwrite" className="gbwritebtn">공동구매 글쓰기</Button>}
+                        </div>
+                        
+
+                        {/* 로그인 안 한 경우 */}
+                        {!isLogined && <Button href="/login" className="loginbtn">Login</Button>}
+                
                 </Navbar.Collapse>
             </Navbar>
         </div>
