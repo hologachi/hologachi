@@ -108,42 +108,88 @@ function Board() {
   useEffect(() => { // useEffect 적용!
     }, [isLogined]);
 
-// 요청받은 정보를 담아줄 변수 선언
 const [testStr, setTestStr] = useState('');
+const [requestStr, setRequestStr] = useState('');
 
-// 변수 초기화
 function callback(str) {
   setTestStr(str);
 }
 
-  function apply(e) {
-    e.preventDefault();
+function callbackReq(str) {
+  setRequestStr(str);
+}
+
+useEffect(
+    () => {
+      axios({
+          url: `/post/requestpost`,
+          method: 'GET',
+          params: {
+            userId: window.sessionStorage.getItem('userId')
+          },
+      }).then((res) => {
+        callbackReq(res.data);
+      })
+    }, []
+);
+
+function apply(e) {
+  e.preventDefault();
+  var answer;
+  answer = window.confirm(`신청하시겠습니까?`);
+
+  if (answer == true) {
+    // console.log(window.sessionStorage.getItem('userId'));
+    axios({
+      url: `/${productId}/request`,
+      method: 'post',
+      params: {
+        userId: window.sessionStorage.getItem('userId')
+      },
+      baseURL: 'http://localhost:8080/post',
+      headers: {"Access-Control-Allow-Origin": "*" },
+    }).then(function () {
+      alert("신청이 완료되었습니다.")
+      var applyContainer = document.getElementById('applyContainer');
+      const html = '<button id="applyCancel" value="applycancel">신청취소</button>';
+      applyContainer.innerHTML = html;
+      applyContainer.style.backgroundColor = "black";
+      document.getElementById('applyCancel').onclick=applyCancel;
+    }).catch(error => {
+      console.log(error.response)
+    });
+  }
+}
+
+function applyCancel(e){
+  e.preventDefault();
+
     var answer;
-    answer = window.confirm(`신청하시겠습니까?`);
+    answer = window.confirm(`취소하시겠습니까?`);
 
     if (answer == true) {
-      console.log(window.sessionStorage.getItem('userId'));
       axios({
-        url: `/${productId}/request`,
+        url: `/${productId}/cancel`,
         method: 'post',
+        baseURL: 'http://localhost:8080/post',
+        headers: { "Access-Control-Allow-Origin": "*" },
         params: {
           userId: window.sessionStorage.getItem('userId')
         },
-        baseURL: 'http://localhost:8080/post',
-        headers: { "Access-Control-Allow-Origin": "*" },
       }).then(function () {
-        alert("신청이 완료되었습니다.")
-        var apply = document.getElementById('applybtn');
-        const html = '신청취소';
-        apply.innerHTML = html;
-        apply.disabled = true;
-        apply.style.backgroundColor = "black";
+        alert("신청 취소되었습니다.")
+        var applyContainer = document.getElementById('applyContainer');
+        const html = '<button id="apply" value="apply">신청하기</button>';
+        applyContainer.innerHTML = html;
+        applyContainer.style.backgroundColor = "#0b58cc";
+        document.getElementById('apply').onclick=apply;
       }).catch(error => {
         console.log(error.response)
       });
     }
-  }
+}
 
+  
 function contentDelete(e){
   e.preventDefault();
   var answer;
@@ -156,8 +202,6 @@ function contentDelete(e){
   }
 }
 
-
-// 첫 번째 렌더링을 마친 후 실행
 useEffect(
   () => {
     axios({
@@ -168,7 +212,10 @@ useEffect(
     })
   }, []
 );
-  return (
+
+var arr = Object.values(requestStr).map(product => (product.post.postId));
+
+return (
     <div className="gbdetail">
       <section className="product-details spad">
         <div className="container">
@@ -185,12 +232,10 @@ useEffect(
             <div className="col-lg-6 col-md-6" id="productDetail">
               <div className="product__details__text">
                 <strong><span id="titleText">{product.title}</span></strong><br /><br />
-                <div className="product__details__rating">
-                </div>
                 <ul id="infoList">
                 <li><span id="stepSta">{product.step}</span></li><hr />
                   <li><strong className="left"></strong><span id="nicknameText">{product.user.nickname}</span>님이 진행합니다
-                  {/* <button id="contentDeletebtn" onClick={contentDelete}>글 삭제</button> */}
+                  {window.sessionStorage.getItem('nickname') == product.user.nickname && <button id="contentDeletebtn" onClick={contentDelete}>글 삭제</button>}
                   </li><br />
                   <li id="priceText"><strong className="left"></strong>{product.price}원</li><br />
                   <li><strong className="left">🗓 </strong><span id="dateMoment">{moment(product.rgstAt).format('YYYY-MM-DD')} ~ {moment(product.deadline).format('YYYY-MM-DD')}</span></li><br />
@@ -200,9 +245,15 @@ useEffect(
                 </ul>
                 <div className="quantity">
                   <div className="pro-qty">
-                    <div id="apply">
-                    { product.step=="request" && isLogined && <div>
-                      <button id="applybtn" onClick={apply}>신청하기</button>
+                    <div id="applyContainer">
+                    { product.step=="request" && isLogined && window.sessionStorage.getItem('nickname')  !== product.user.nickname && <div>
+                      <div id="applybtn">
+                      {arr.includes(Object.values(testStr).map(product => product.postId)[0]) && <button id="applyCancel" value="applyCancel" onClick={applyCancel} >신청취소</button>
+                      }
+                      {!arr.includes(Object.values(testStr).map(product => product.postId)[0]) && <button id="apply" value="apply" onClick={apply} >신청하기</button>
+                      }
+
+                    </div>
                       <a href="#" className="heart-icon" onClick={bookmarkbtn} id="likebtn"><FavoriteBorderIcon /></a>
                       <a href="#" className="heart-icon" onClick={bookmarkremove} id="likebtn2" style={{ display: "none" }}><FavoriteIcon /></a>
                     </div> }
@@ -213,6 +264,10 @@ useEffect(
             </div>
             <div className="col-lg-12" id="commentContainer">
               <div className="product__details__tab">
+              <div>
+                <span>상품 설명</span>
+                <p>{product.content}</p>
+              </div><hr />
                 <Comment />
               </div>
             </div>

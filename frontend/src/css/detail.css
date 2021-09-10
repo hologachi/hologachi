@@ -1,4 +1,4 @@
-#applybtn{
+/* #applybtn{
     color: #fff;
     background-color: #0d6efd;
     border-radius: 5px;
@@ -7,7 +7,7 @@
     width: 80px;
     box-shadow: none;
     background-color: #0b58cc;
-}
+} */
 #submit-new-comment{
     color: #fff;
     background-color: #0d6efd;
@@ -26,15 +26,12 @@
     height: 450px;
     margin-top: 60px;
 }
-#applycancel{
+#applyCancel{
     color: #fff;
-    background-color: #0d203b;
+    background-color: black;
+    border: none;
+    width: 100%;
     border-radius: 5px;
-}
-#applycancel:hover{
-    width: 93.5px;
-    box-shadow: none;
-    background-color: #0d203b;
 }
 #writerName{
     width: 25%;
@@ -123,4 +120,11 @@
     font-size: 30px;
     font-weight: 800;
     color: rgb(0, 11, 42);
+}
+#apply{
+    border: none;
+    background-color: #0d6efd;
+    color: white;
+    border-radius: 5px;
+    width: 100%;
 }
