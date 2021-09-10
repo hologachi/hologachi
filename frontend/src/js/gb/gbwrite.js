@@ -157,6 +157,9 @@ function Board() {
         url: url,
         step:"proceed"
       },
+      params: {
+        userId: window.sessionStorage.getItem('userId')
+      },
       baseURL: 'http://localhost:8080/post',
       headers: { "Access-Control-Allow-Origin": "*" },
     }).then(function () {

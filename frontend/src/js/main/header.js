@@ -71,7 +71,7 @@ export default function Header() {
                             {isLogined && <Logout id="logoutbtn" setIsLogined={setIsLogined} />}
                         </div>
                         <div className="writeBtn">
-                        { isLogined && <Button href="../gb/gbwrite" className="gbwritebtn">공동구매 글쓰기</Button>}
+                        { isLogined && <Button href="/gb/gbwrite" className="gbwritebtn">공동구매 글쓰기</Button>}
                         </div>
                         
 

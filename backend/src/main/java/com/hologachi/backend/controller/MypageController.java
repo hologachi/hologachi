@@ -91,6 +91,7 @@ public class MypageController {
 		int userId = 3;
 		return myRequestRepository.findByUser_UserId(userId);
 	}
+
 	
 	// 신청한 글의 제시자 프로필
 	@GetMapping("/myrequest/{ptcptId}")
