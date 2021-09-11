@@ -83,6 +83,12 @@
     background-color: #0d6efd;
     border-radius: 5px;
 }
+#contentModifybtn{
+    float: right;
+    color: #fff;
+    background-color: #0d6efd;
+    border-radius: 5px;
+}
 .urlBtn{
     color: #fff;
     background-color: #0d6efd;
