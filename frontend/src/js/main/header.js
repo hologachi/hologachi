@@ -51,8 +51,8 @@ export default function Header() {
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="#action/3.7">평점 등록</NavDropdown.Item>
                         </NavDropdown> }
-                        <Nav.Link href="/chat/list" className="menu">채팅</Nav.Link>
-                        
+                       
+                        { isLogined && <Nav.Link href="/chat/list" className="menu">채팅</Nav.Link>}
                     </Nav>
                     <div  id="totalSearchForm">
                     <form className="searchform">
