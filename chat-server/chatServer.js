@@ -1,9 +1,61 @@
-const { instrument } = require('@socket.io/admin-ui')
-const io  = require('socket.io')(3001, {
+const httpServer = require("http").createServer(); // Node.js HTTP 서버 생성
+const { Server } = require("socket.io"); // socket.io 서버 생성
+const { instrument } = require('@socket.io/admin-ui') //socket 연결상태 확인 (https://admin.socket.io/ 접속)
+
+const io = new Server(httpServer, { // Node.js에 socket.io 서버 연결
     cors: {
         origin: ["http://localhost:3000", "https://admin.socket.io"],
+        credentials: true
     },
-})
+});
+
+instrument(io, {
+    auth: false
+    // auth: {
+    //   type: "basic",
+    //   username: "admin",
+    //   password: "$2b$10$q.srgwSsIfgaoDz9gYkmeulGAgf1osqoMmY1oUDdZBAM45Dd4Mo.u"
+    // },
+});
+  
+httpServer.listen(3001); // 채팅서버 포트: 3001
+
+io.use((socket, next) => {
+    const username = socket.handshake.auth.username;
+    if (!username) {
+      return next(new Error("invalid username"));
+    }
+    socket.username = username;
+    next();
+});
+
+io.on("connection", (socket) => {
+    const users = [];
+    for (let [id, socket] of io.of("/").sockets) {
+        users.push({
+            userID: id,
+            username: socket.username,
+        });
+    }
+    socket.emit("users", users);
+        // ...
+});
+
+io.use((socket, next) => {
+    const username = socket.handshake.auth.username;
+    if (!username) {
+        return next(new Error("invalid username"));
+    }
+    socket.username = username;
+    next();
+});
+
+socket.on("connect_error", (err) => { // 소켓 커넥션 오류 발생 핸들러
+    if (err.message === "invalid username") {
+        
+    }
+});
+
 
 const chatIo = io.of('/chat/list')
 chatIo.on("connection", socket => {

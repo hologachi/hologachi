@@ -1,6 +1,7 @@
 import '../../css/chat.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component } from 'react';
+import Room from './chatRoom';
 import Message from './message';
 
 class ChatMessage extends Component {
@@ -41,12 +42,12 @@ class ChatMessage extends Component {
     }
 
     render() {
-        // let cover = <div className="chatMessageCover">채팅방을 눌러보세요.</div>;
+        let cover = <div className="chatMessageCover">채팅방을 눌러보세요.</div>;
 
-        // let message = <div className="no-content-message">대화를 시작해보세요</div>;
-        // if (this.props.chatrooms) {
-        //     message = this.props.chatrooms.map(chatroom => <Room chatroomId={chatroom.chatroomId} roomName={chatroom.roomName} lastchat={chatroom.lastchat} onClick={this.handleClick}/>);
-        // }
+        let message = <div className="no-content-message">대화를 시작해보세요</div>;
+        if (this.props.chatrooms) {
+            message = this.props.chatrooms.map(chatroom => <Room chatroomId={chatroom.chatroomId} roomName={chatroom.roomName} lastchat={chatroom.lastchat} onClick={this.handleClick}/>);
+        }
         const {messages} = this.state;
 
         return (
