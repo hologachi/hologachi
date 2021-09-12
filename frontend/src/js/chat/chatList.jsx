@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useRef } from 'react';
 import ChatRoom from "./chatRoom";
 import ChatMessage from "./chatMessage";
 import '../../css/chat.css';
@@ -15,23 +15,51 @@ const socket = io(URL, { autoConnect: false });
 socket.onAny((event, ...args) => {
     console.log(event, args);
 });
+// 새로운 메세지 수신
+socket.on('new-message', (newMessage) => { 
 
-// 소켓 연결 확인
-socket.on('connect', () => {
-    console.log(`You connected with id: ${socket.id}`)
-})
+    console.log("receive", newMessage);
+    
+    if(localStorage.getItem(newMessage.chatroomId) === null) { // 채팅방 첫 메세지인 경우
+
+        let newChat = new Array();
+        newChat.push(newMessage);
+        console.log("이전 기록이 없는 경우: " + newChat);
+
+        localStorage.setItem(newMessage.chatroomId, JSON.stringify(newChat));
+
+    } else { // 첫 메세지가 아닌 경우
+
+        let updateChats = JSON.parse(localStorage.getItem(newMessage.chatroomId));
+        updateChats.push(newMessage);
+        console.log("이전 기록이 있는 경우: " + updateChats);
+
+        localStorage.setItem(newMessage.chatroomId, JSON.stringify(updateChats));
+    }
+    
+});
+
+// socket.on("connect_error", (err) => { // 소켓 커넥션 오류 발생 핸들러
+//     if (err.message === "invalid username") {
+        
+//     }
+// });
 
 class ChatList extends Component {
 
-    state = {
-        userId: window.sessionStorage.getItem('userId'),
-        nickname: window.sessionStorage.getItem('nickname'),
-        chatrooms: null,
-        focus_chatroom: 0,
-        chatMessageList: [],
+    constructor(props) {
+        super(props);
+
+        this. state = {
+            userId: window.sessionStorage.getItem('userId'),
+            nickname: window.sessionStorage.getItem('nickname'),
+            chatrooms: null,
+            focus_chatroom: 0,
+            chatMessageList: []
+        }
+        this.child = React.createRef();
     }
-    
-    
+
     componentDidMount() { 
         this.loadChatrooms();
     }
@@ -42,56 +70,44 @@ class ChatList extends Component {
             this.setState(
                 { chatrooms: res.data }
             );
-
-            console.log(this.state.chatrooms);
+            // console.log(this.state.chatrooms);
             
             if (this.state.chatrooms != null) {
                 this.setState(
                     { chatMessageList: this.state.chatrooms.map(
-                    (chatroom) => <ChatMessage ref={(cd) => this.child = cd} onSendMessage={this.handleSendMessage} /> )}
+                        (chatroom) => <ChatMessage ref={this.child} chatroomId={chatroom.chatroomId} onSendMessage={this.handleSendMessage} /> )}
                 );
                 
             }
         })
-
-        
     }
 
-    componentDidUpdate() {
-        if(socket != null) {
-            socket.on("receive-message", (chatroomId, message, sendAt) => {
-                // const chatList = document.querySelector("chatMessageTop")
-                console.log("receive", chatroomId, message)
-                // const param = {
-                //     m: message, 
-                //     s: sendAt
-                // }
-                // this.child.receiveMessage(param);
-            })
+    handleChatroomSelect = (chatroomId) => {
+        this.setState({focus_chatroom : chatroomId}); // 선택한 채팅방 열기
+
+        if(!socket.active) {
+            this.onUsernameSelection(this.state.nickname); // 소켓 연결
         }
-    }
 
-    
+        socket.emit('join-room', { chatroomId: chatroomId }); // 채팅방 참가
+        console.log("You joined room:", chatroomId);
+
+        // this.child.current.updateChatMessage();
+    }
 
     onUsernameSelection = (username) => { // 사용자 이름 설정 및 소켓 연결
         socket.auth = { username };
         socket.connect();
     }
 
-    handleChatroomSelect = (chatroomId) => {
-        this.onUsernameSelection(this.state.nickname);
-
-        socket.emit("join-room", chatroomId);
-        console.log("You connected room:", chatroomId);
-
-        this.setState({focus_chatroom : chatroomId});
-        // console.log(this.state.chatMessageList);
-        // console.log(this.state.focus_chatroom);
+    handleSendMessage = (param) => { // 메세지 전송
+        console.log("You send message :", param);
+        socket.emit('new-message', 
+            { chatroomId: this.state.focus_chatroom, message: param.message, date: param.date, sender: param.sender });
     }
 
-    handleSendMessage = (param) => {
-        console.log("You got message :", param.m);
-        socket.emit("send-message", this.state.focus_chatroom, param.m, param.s);
+    handleReceiveMessage = (args) => {
+        this.child.current.updateChatMessage();
     }
 
     componentWillUnmount() {

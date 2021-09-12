@@ -7,54 +7,57 @@ import Message from './message';
 class ChatMessage extends Component {
 
     state = {
-        messages : []
+        messages : [],
+        localData : []
     }
 
-    onClickSend = () => {
-        const param = {
-            m: document.getElementById("messageInput").value, 
-            s: Date.now()
+    updateChatMessage = () => {
+
+        let temp = localStorage.getItem(this.props.chatroomId);
+        if(temp !== null) {
+            temp = JSON.parse(temp);
+            this.setState({
+                localData: temp
+            });
+            console.log("가져온 localData", temp);
+            const newMessage = temp.map(data => 
+                <Message own={this.checkMessageOwn(data.sender)} sendAt={data.date} message={data.message} />);
+            this.setState({messages: newMessage});
         }
-        console.log("가져온 메세지", param.m)
-        this.props.onSendMessage(param)
 
-        import('./message').then(({message})=>{
-            const {messages} = this.state;
-            const position = messages.length +1;
-            const newMessage = <Message own={true} key={position} sendAt={param.s} message={param.m} />
-            this.setState({messages:[...messages,newMessage]})
-        })
-
-        document.getElementById("messageInput").value = ''
     }
 
-    receiveMessage = (input) => {
-        import('./message').then(({message})=>{
-            const {messages} = this.state;
-            const position = messages.length +1;
-            const newMessage = <Message key={position} sendAt={input.s} message={input.m} />
-            this.setState({messages:[...messages,newMessage]})
-        })
+    checkMessageOwn = (sender) => {
+        if(sessionStorage.getItem('nickname') === sender) {
+            return true;
+        } else { 
+            return false; 
+        }
     }
+
+    onClickSend = () => { // 메세지 전송
+
+        const param = { // 메세지 데이터
+            message: document.getElementById("messageInput").value, 
+            date: Date.now(),
+            sender: sessionStorage.getItem('nickname')
+        }
+
+        if(param.message !== '') { // 빈 메세지가 아니라면
+            this.props.onSendMessage(param); // 메세지 전송
     
-    saveToDos = (data) => {
-        localStorage.setItem(this.chatroom.chatroomId, JSON.stringify(data))
+            document.getElementById("messageInput").value = ''; // 메세지 창 clear
+        }
+        
     }
 
     render() {
-        let cover = <div className="chatMessageCover">채팅방을 눌러보세요.</div>;
-
-        let message = <div className="no-content-message">대화를 시작해보세요</div>;
-        if (this.props.chatrooms) {
-            message = this.props.chatrooms.map(chatroom => <Room chatroomId={chatroom.chatroomId} roomName={chatroom.roomName} lastchat={chatroom.lastchat} onClick={this.handleClick}/>);
-        }
-        const {messages} = this.state;
 
         return (
             <div className="chatMessage">
                 <div className="chatMessageWrapper">
                     <div className="chatMessageTop">
-                        {messages}
+                        {this.state.messages}
                     </div>
                     <div className="chatMessageBottom">
                         <textarea className="chatMessageInput" id="messageInput" placeholder="메세지 작성..."></textarea>
