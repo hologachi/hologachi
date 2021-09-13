@@ -134,3 +134,16 @@
     border-radius: 5px;
     width: 100%;
 }
+.modal-body{
+    height: 50%;
+    overflow-y: scroll;
+}
+.table{
+    margin: 0;
+}
+#modalMain{
+    padding: 0;
+}
+#modalFooter{
+    padding: 5px;
+}

@@ -100,13 +100,11 @@ const Modal = (props) => {
     <div className={open ? 'openModal modal' : 'modal'}>
       {open ? (
         <section>
-          <header>
             {header}
-          </header>
-          <main>
+          <main id="modalMain">
             {props.children}
           </main>
-          <footer>
+          <footer id="modalFooter">
             <button id="close" onClick={close}>취소</button>
             <button id="modalModifybtn" onClick={modify}> 수정하기 </button>
           </footer>
@@ -140,39 +138,15 @@ function Board() {
   const [testStr, setTestStr] = useState('');
   const [requestStr, setRequestStr] = useState('');
 
-  // const t = Object.values(testStr).map(product => product.title).toString();
-  // const [title, setTitle] = useState(t)
-  // // // console.log(Object.values(testStr).map(product => (product.title)));
-  // // console.log(Object.values(testStr).map(product => (product.title))[0]);
+const [startDate, setStartDate] = useState("");
 
-  // const onChangeTitle = (e) => {
-  //   setTitle(e.target.value);
-  // }
-  const [startDate, setStartDate] = useState(new Date());
-
-  // const [price, setPrice] = useState('');
-
-  // const onChangePrice = (e) => {
-  //   setPrice(e.target.value);
-  // }
-  // const [content, setContent] = useState('');
-
-  // const onChangeContent = (e) => {
-  //   setContent(e.target.value);
-  // }
- 
-const products = Object.values(testStr).map(product => 
-  product.title
-)
-console.log(products.join());
-
-console.log(products.title);
  const [inputs, setInputs] = useState({
-   title: products.join(),
-  content:"dfsf",
-  price:5000
+   title: "",
+  content:"",
+  price:"",
+  matching:"",
+  url:""
  })
- const { title, content, price } = inputs;
 
  const onChange = (e) => { 
    setInputs(e.target.value); 
@@ -318,30 +292,42 @@ console.log(products.title);
                     <li><button className="urlBtn" onClick={() => window.open(`https://${product.url}`, '_blank')}>구매 사이트</button></li><hr />
                   </ul>
                   {window.sessionStorage.getItem('nickname') == product.user.nickname && <div><button id="contentModifybtn" onClick={openModal}>수정하기</button><button id="contentDeletebtn" onClick={contentDelete}>삭제하기</button></div>}
-                  <Modal open={modalOpen} close={closeModal} header="수정하기">
+                  <Modal open={modalOpen} close={closeModal} className="modal-body">
                     <table className="tablecss table">
                       <tr>
                         <th>제목</th>
                         <td>
-                          <input type="text" value={title} onChange={onChange} placeholder="제목" />
+                          <input type="text" defaultValue={product.title} onChange={onChange} placeholder="제목" />
                         </td>
                       </tr>
                       <tr>
                         <th>마감일</th>
                         <td>
-                        <DatePicker selected={startDate} minDate={moment().toDate()} onChange={(date) => setStartDate(date)} style={{width:"70%"}}/>
+                        <DatePicker selected={startDate} minDate={moment().toDate()} onChange={(date) => setStartDate(date)} style={{width:"70%"}} placeholderText="마감일을 선택해주세요"/>
                         </td>
                       </tr>
                       <tr>
                         <th>가격</th>
                         <td>
-                          <input type="text" value={price} onChange={onChange} placeholder="가격" />
+                          <input type="text" defaultValue={product.price} onChange={onChange} placeholder="가격" />
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>인원</th>
+                        <td>
+                          <input type="number" defaultValue={product.matching} onChange={onChange} placeholder="인원" />
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>상품 구매 주소</th>
+                        <td>
+                          <input type="text" defaultValue={product.url} onChange={onChange} placeholder="URL" />
                         </td>
                       </tr>
                       <tr>
                         <th>설명</th>
                         <td>
-                          <textarea type="text" value={content} onChange={onChange} placeholder="설명" />
+                          <textarea type="text" defaultValue={product.content} onChange={onChange} placeholder="설명" />
                         </td>
                       </tr>
                     </table>
