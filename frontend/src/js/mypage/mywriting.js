@@ -35,23 +35,21 @@ const useStyles = makeStyles({
 
 function Mypost() {
   const classes = useStyles();
-
-  // 요청받은 정보를 담아줄 변수 선언
+  const [isLogined, setIsLogined] = useState(window.sessionStorage.getItem('userId'))
   const [ testStr, setTestStr ] = useState('');
-  // console.log(testStr);
-  
 
-  // 변수 초기화
   function callback(str) {
     setTestStr(str);
   }
-
-  // 첫 번째 렌더링을 마친 후 실행
+  
   useEffect(
       () => {
         axios({
             url: '/mypage/mypost',
-            method: 'GET'
+            method: 'GET',
+            params: {
+              userId: window.sessionStorage.getItem('userId')
+            },
         }).then((res) => {
             callback(res.data);
         })

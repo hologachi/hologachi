@@ -3,10 +3,7 @@ package com.hologachi.backend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.hologachi.backend.model.Bookmark;
 import com.hologachi.backend.model.Comment;
@@ -43,8 +40,8 @@ public class MypageController {
 	
 	// 내가 작성한 글
 	@GetMapping("/mypost")
-	public List<Post> postFindByUserId() {
-		int userId = 1;
+	public List<Post> postFindByUserId(@RequestParam("userId") int userId) {
+//		int userId = 1;
 		return myPostRepository.findByUser_UserId(userId);
 	}
 	

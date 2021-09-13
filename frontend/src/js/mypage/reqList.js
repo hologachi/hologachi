@@ -34,57 +34,74 @@ const useStyles = makeStyles({
 });
 
 function Mypost() {
-    const { productId } = useParams();
+  const { productId } = useParams();
   const classes = useStyles();
 
-  const [ testStr, setTestStr ] = useState('');
+  const [testStr, setTestStr] = useState('');
   // console.log(testStr);
 
-  function ok(id){
+  function ok(id, ptcptId) {
     var answer;
-    var ok = id+"ok"
-    var reject = id +"reject"
+    var ok = id + "ok"
+    var reject = id + "reject"
     var okId = document.getElementById(ok);
     var rejectId = document.getElementById(reject);
 
     answer = window.confirm(`수락하시겠습니까?`);
     if (answer == true) {
-      okId.innerHTML = "수락완료";
-      okId.style.backgroundColor = "orange";
-      okId.disabled = true;
-      rejectId.remove();
+      axios({
+        url: `/mypage/mypost/${productId}/${ptcptId}/agree`,
+        method: 'post',
+        headers: { "Access-Control-Allow-Origin": "*" },
+      }).then(function () {
+        okId.innerHTML = "수락완료";
+        okId.style.backgroundColor = "orange";
+        okId.disabled = true;
+        rejectId.remove();
+      }).catch(error => {
+        console.log(error.response)
+      });
+
     }
   }
 
-  function reject(id) {
+  function reject(id, ptcptId) {
     var answer;
-    var ok = id+"ok"
-    var reject = id +"reject"
+    var ok = id + "ok"
+    var reject = id + "reject"
     var okId = document.getElementById(ok);
     var rejectId = document.getElementById(reject);
 
     answer = window.confirm(`거절하시겠습니까?`);
     if (answer == true) {
-      rejectId.innerHTML = "거절완료";
+      axios({
+        url: `/mypage/mypost/${productId}/${ptcptId}/reject`,
+        method: 'post',
+        headers: { "Access-Control-Allow-Origin": "*" },
+      }).then(function () {
+        rejectId.innerHTML = "거절완료";
       rejectId.disabled = true;
       okId.remove();
+      }).catch(error => {
+        console.log(error.response)
+      });
     }
   }
-  
+
 
   function callback(str) {
     setTestStr(str);
   }
 
   useEffect(
-      () => {
-        axios({
-            url: `/mypage/mypost/${productId}`,
-            method: 'GET'
-        }).then((res) => {
-            callback(res.data);
-        })
-      }, []
+    () => {
+      axios({
+        url: `/mypage/mypost/${productId}`,
+        method: 'GET'
+      }).then((res) => {
+        callback(res.data);
+      })
+    }, []
   );
 
   return (
@@ -108,30 +125,32 @@ function Mypost() {
                 <StyledTableCell align="center">{product.user.sgst_rate}</StyledTableCell>
                 <StyledTableCell align="center">{product.user.rqst_rate}</StyledTableCell>
                 <StyledTableCell align="center">
-                <button id={product.user.userId+'ok'} onClick={()=>ok(product.user.userId)} className="okbtn">수락</button><button id={product.user.userId+'reject'} onClick={()=>reject(product.user.userId)} className="rejectbtn">거절</button></StyledTableCell>
+                {product.step=="agree" && <button id={product.user.userId + 'agree'} disabled>수락완료</button>}
+                {product.step=="reject" && <button id={product.user.userId + 'reject'} disabled>거절완료</button>}
+                {product.step=="request" &&  <div><button id={product.user.userId + 'ok'} onClick={() => ok(product.user.userId, product.ptcptId)} className="okbtn">수락</button><button id={product.user.userId + 'reject'} onClick={() => reject(product.user.userId, product.ptcptId)} className="rejectbtn">거절</button></div>}
+                  </StyledTableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
     </div>
-
-   );
+  );
 }
 
-export default function reqList(){
+export default function reqList() {
   return (
     <div className="container py-4">
-    <div className="row align-items-md-stretch">
-      <div className="col-lg-12 py-2">
-        <div className=" h-100 p-5 bg-light border shadow rounded" id="page_title">
-          신청자 목록
+      <div className="row align-items-md-stretch">
+        <div className="col-lg-12 py-2">
+          <div className=" h-100 p-5 bg-light border shadow rounded" id="page_title">
+            신청자 목록
+          </div>
         </div>
       </div>
+      <div className="row align-items-md-stretch">
+        <Mypost />
+      </div>
     </div>
-    <div className="row align-items-md-stretch">
-        <Mypost/>
-    </div>
-  </div>
   )
 }
