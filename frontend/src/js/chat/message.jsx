@@ -11,9 +11,12 @@ class Message extends Component {
                 <div className="message">
                     <div className="messageTop">
                         <img className="messageImg" src="https://placeimg.com/50/50/any" alt="" />
-                        <p className="messageText">{this.props.message}</p>
+                        <div className="messageData">
+                            <span className="messageSender">{this.props.sender}</span>
+                            <p className="messageText">{this.props.message}</p>
+                            <span className="messageSendAt">{this.props.sendAt}에 전송</span>
+                        </div>    
                     </div>
-                    <div className="messageBottom">{this.props.sendAt}초 전</div>
                 </div>
             </div>
         )
