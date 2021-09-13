@@ -137,6 +137,7 @@
 .modal-body{
     height: 50%;
     overflow-y: scroll;
+   
 }
 .table{
     margin: 0;
@@ -146,4 +147,21 @@
 }
 #modalFooter{
     padding: 5px;
+}
+#close{
+    background-color: #0d6efd;
+    color: white;
+    border-radius: 5px;
+    margin-right: 5px;
+    width: 50px;
+}
+#modalModifybtn{
+    background-color: #0d6efd;
+    color: white;
+    border-radius: 5px;
+}
+@media screen and (max-width: 500px) { 
+    .table { 
+        width: 70%;
+    } 
 }

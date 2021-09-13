@@ -9,6 +9,8 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 import moment from 'moment';
 
+
+
 class Comment extends React.Component {
   constructor(props) {
     super(props);
@@ -93,32 +95,6 @@ function Singcomment({ comment }) {
   )
 }
 
-const Modal = (props) => {
-  const { open, close, header } = props;
-
-  return (
-    <div className={open ? 'openModal modal' : 'modal'}>
-      {open ? (
-        <section>
-            {header}
-          <main id="modalMain">
-            {props.children}
-          </main>
-          <footer id="modalFooter">
-            <button id="close" onClick={close}>취소</button>
-            <button id="modalModifybtn" onClick={modify}> 수정하기 </button>
-          </footer>
-        </section>
-      ) : null}
-    </div>
-  )
-}
-
-function modify() {
-  alert("수정이 완료되었습니다.");
-  window.location.reload();
-}
-
 function bookmarkremove() {
   document.getElementById("likebtn2").style.display = "none";
   document.getElementById("likebtn").style.display = "block";
@@ -126,6 +102,22 @@ function bookmarkremove() {
 function bookmarkbtn() {
   document.getElementById("likebtn").style.display = "none";
   document.getElementById("likebtn2").style.display = "block";
+}
+
+const Modal = (props) => {
+  const { open, header } = props;
+  return (
+    <div className={open ? 'openModal modal' : 'modal'}>
+      {open ? (
+        <section>
+          {header}
+          <main id="modalMain">
+            {props.children}
+          </main>
+        </section>
+      ) : null}
+    </div>
+  )
 }
 
 function Board() {
@@ -138,19 +130,51 @@ function Board() {
   const [testStr, setTestStr] = useState('');
   const [requestStr, setRequestStr] = useState('');
 
-const [startDate, setStartDate] = useState("");
+  const [deadline, setDeadline] = useState("");
+  const [title, setTitle] = useState()
+  const [price, setPrice] = useState()
+  const [url, setUrl] = useState()
+  const [content, setContent] = useState()
+  const [matching, setMatching] = useState();
 
- const [inputs, setInputs] = useState({
-   title: "",
-  content:"",
-  price:"",
-  matching:"",
-  url:""
- })
-
- const onChange = (e) => { 
-   setInputs(e.target.value); 
+  function handelChangeTitle(e){
+    setTitle(e.target.value)
   }
+  function handelChangePrice(e){
+    setPrice(e.target.value)
+  }
+  function handelChangeUrl(e){
+    setUrl(e.target.value)
+  }
+  function handelChangeContent(e){
+    setContent(e.target.value)
+  }
+  function handelChangeMatching(e){
+    setMatching(e.target.value)
+  }
+
+  const modifyContent = () => {
+      axios({
+        url: `/${productId}/update`,
+        method: 'post',
+        data: {
+          title: title,
+          content: content,
+          price: price,
+          matching: matching,
+          url: url,
+          deadline:deadline
+        },
+        baseURL: 'http://localhost:8080/post',
+        headers: { "Access-Control-Allow-Origin": "*" },
+      }).then(function () {
+        alert("수정되었습니다.")
+        window.location.reload();
+      }).catch(error => {
+        console.log(error.response)
+      });
+    
+  };
 
   function callback(str) {
     setTestStr(str);
@@ -262,7 +286,7 @@ const [startDate, setStartDate] = useState("");
     }, []
   );
 
-  var arr = Object.values(requestStr).map(product => (product.post.postId));
+  let arr = Object.values(requestStr).map(product => (product.post.postId));
 
   return (
     <div className="gbdetail">
@@ -292,45 +316,49 @@ const [startDate, setStartDate] = useState("");
                     <li><button className="urlBtn" onClick={() => window.open(`https://${product.url}`, '_blank')}>구매 사이트</button></li><hr />
                   </ul>
                   {window.sessionStorage.getItem('nickname') == product.user.nickname && <div><button id="contentModifybtn" onClick={openModal}>수정하기</button><button id="contentDeletebtn" onClick={contentDelete}>삭제하기</button></div>}
-                  <Modal open={modalOpen} close={closeModal} className="modal-body">
+                  <Modal open={modalOpen} className="modal-body">
                     <table className="tablecss table">
-                      <tr>
+                      <tr id="tableTitle">
                         <th>제목</th>
                         <td>
-                          <input type="text" defaultValue={product.title} onChange={onChange} placeholder="제목" />
+                          <input type="text"  defaultValue={product.title} onChange={handelChangeTitle} placeholder="제목" />
                         </td>
                       </tr>
                       <tr>
                         <th>마감일</th>
                         <td>
-                        <DatePicker selected={startDate} minDate={moment().toDate()} onChange={(date) => setStartDate(date)} style={{width:"70%"}} placeholderText="마감일을 선택해주세요"/>
+                          <DatePicker type="date" selected={deadline} minDate={moment().toDate()} onChange={(date) => setDeadline(date)} style={{ width: "70%" }} placeholderText="마감일을 선택해주세요" />
                         </td>
                       </tr>
                       <tr>
                         <th>가격</th>
                         <td>
-                          <input type="text" defaultValue={product.price} onChange={onChange} placeholder="가격" />
+                          <input type="number" defaultValue={product.price} onChange={handelChangePrice} placeholder="가격" />
                         </td>
                       </tr>
                       <tr>
                         <th>인원</th>
                         <td>
-                          <input type="number" defaultValue={product.matching} onChange={onChange} placeholder="인원" />
+                          <input type="number" defaultValue={product.matching} onChange={handelChangeMatching} placeholder="인원" />
                         </td>
                       </tr>
                       <tr>
                         <th>상품 구매 주소</th>
                         <td>
-                          <input type="text" defaultValue={product.url} onChange={onChange} placeholder="URL" />
+                          <input type="text" defaultValue={product.url} onChange={handelChangeUrl} placeholder="URL" />
                         </td>
                       </tr>
                       <tr>
                         <th>설명</th>
                         <td>
-                          <textarea type="text" defaultValue={product.content} onChange={onChange} placeholder="설명" />
+                          <textarea type="text" defaultValue={product.content} onChange={handelChangeContent} placeholder="설명" />
                         </td>
                       </tr>
                     </table>
+                    <footer id="modalFooter">
+                      <button id="close" onClick={closeModal}>취소</button>
+                      <button id="modalModifybtn" onClick={modifyContent}> 수정하기 </button>
+                    </footer>
                   </Modal>
                   <div className="quantity">
                     <div className="pro-qty">
@@ -366,6 +394,7 @@ const [startDate, setStartDate] = useState("");
     </div>
   )
 }
+
 
 function gbdetail() {
   return (
