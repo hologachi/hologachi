@@ -1,6 +1,6 @@
 import '../../css/chat.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import ChatRoom from "./chatRoom";
 import ChatMessage from "./chatMessage";
 //chat
@@ -35,7 +35,7 @@ socket.on('new-message', (newMessage) => { // 새로운 메세지 수신
 
         localStorage.setItem(newMessage.chatroomId, JSON.stringify(updateChats));
     }
-    // this.updateChatMessage();
+    // 메세지 화면 업데이트
     
 });
 
@@ -56,8 +56,9 @@ class ChatList extends Component {
             chatrooms: null,
             focus_chatroom: null,
             chatMessageList: [],
-            messages: []
         }
+        const messages = JSON.parse(localStorage.getItem(this.state.focus_chatroom));
+        this.updateChatMessage = this.updateChatMessage.bind(this);
     }
 
     componentDidMount() { 
@@ -80,7 +81,7 @@ class ChatList extends Component {
     handleChatroomSelect = (chatroomId) => {
 
         this.setState({focus_chatroom : chatroomId}); // 선택한 채팅방 열기
-        this.updateChatMessage();
+        this.updateChatMessage(chatroomId);
 
         if(!socket.connected) {
             this.onUsernameSelection(this.state.nickname); // 소켓 연결
@@ -90,14 +91,13 @@ class ChatList extends Component {
 
     }
 
-    updateChatMessage = () => {
+    updateChatMessage = (chatroomId) => {
 
-        let temp = localStorage.getItem(this.state.focus_chatroom);
-        console.log(temp);
+        let temp = localStorage.getItem(chatroomId);
+        console.log(this.state.focus_chatroom);
         if(temp !== null) {
-            temp = JSON.parse(temp);
             this.setState(
-                { messages: temp }
+                { messages: JSON.parse(temp) }
             );
         } else {
             this.setState(
@@ -146,7 +146,6 @@ class ChatList extends Component {
                             
                             <ChatMessage messages={this.state.messages} />
 
-                            
                             <div className="chatMessageBottom">
                                 <textarea className="chatMessageInput" id="messageInput" placeholder="메세지 작성..."></textarea>
                                 <button className="chatSubmitButton" onClick={this.onClickSend}>전송</button>
