@@ -1,8 +1,8 @@
-import React, { Component, useRef } from 'react';
-import ChatRoom from "./chatRoom";
-import ChatMessage from "./chatMessage";
 import '../../css/chat.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { Component } from 'react';
+import ChatRoom from "./chatRoom";
+import ChatMessage from "./chatMessage";
 //chat
 import ChatRoomService from '../services/ChatRoomService';
 
@@ -11,12 +11,11 @@ import { io } from "socket.io-client";
 const URL = "http://localhost:3001";
 const socket = io(URL, { autoConnect: false });
 
-// 소켓 관련 이벤트 발생 시 로그 출력
-socket.onAny((event, ...args) => {
+socket.onAny((event, ...args) => { // 소켓 관련 이벤트 발생 시 로그 출력
     console.log(event, args);
 });
-// 새로운 메세지 수신
-socket.on('new-message', (newMessage) => { 
+
+socket.on('new-message', (newMessage) => { // 새로운 메세지 수신
 
     console.log("receive", newMessage);
     
@@ -36,6 +35,7 @@ socket.on('new-message', (newMessage) => {
 
         localStorage.setItem(newMessage.chatroomId, JSON.stringify(updateChats));
     }
+    // this.updateChatMessage();
     
 });
 
@@ -50,64 +50,18 @@ class ChatList extends Component {
     constructor(props) {
         super(props);
 
-        this. state = {
+        this.state = {
             userId: window.sessionStorage.getItem('userId'),
             nickname: window.sessionStorage.getItem('nickname'),
             chatrooms: null,
-            focus_chatroom: 0,
-            chatMessageList: []
+            focus_chatroom: null,
+            chatMessageList: [],
+            messages: []
         }
-        this.child = React.createRef();
     }
 
     componentDidMount() { 
         this.loadChatrooms();
-    }
-
-    loadChatrooms = () => {
-        // 참여하고 있는 채팅방 id 목록 가져오기 
-        ChatRoomService.getChatRoomList(this.state.userId).then((res) => {
-            this.setState(
-                { chatrooms: res.data }
-            );
-            // console.log(this.state.chatrooms);
-            
-            if (this.state.chatrooms != null) {
-                this.setState(
-                    { chatMessageList: this.state.chatrooms.map(
-                        (chatroom) => <ChatMessage ref={this.child} chatroomId={chatroom.chatroomId} onSendMessage={this.handleSendMessage} /> )}
-                );
-                
-            }
-        })
-    }
-
-    handleChatroomSelect = (chatroomId) => {
-        this.setState({focus_chatroom : chatroomId}); // 선택한 채팅방 열기
-
-        if(!socket.active) {
-            this.onUsernameSelection(this.state.nickname); // 소켓 연결
-        }
-
-        socket.emit('join-room', { chatroomId: chatroomId }); // 채팅방 참가
-        console.log("You joined room:", chatroomId);
-
-        // this.child.current.updateChatMessage();
-    }
-
-    onUsernameSelection = (username) => { // 사용자 이름 설정 및 소켓 연결
-        socket.auth = { username };
-        socket.connect();
-    }
-
-    handleSendMessage = (param) => { // 메세지 전송
-        console.log("You send message :", param);
-        socket.emit('new-message', 
-            { chatroomId: this.state.focus_chatroom, message: param.message, date: param.date, sender: param.sender });
-    }
-
-    handleReceiveMessage = (args) => {
-        this.child.current.updateChatMessage();
     }
 
     componentWillUnmount() {
@@ -115,17 +69,93 @@ class ChatList extends Component {
         console.log("소켓 연결 끊기");
     };
 
+    loadChatrooms = () => {
+        ChatRoomService.getChatRoomList(this.state.userId).then((res) => { // 참여하고 있는 채팅방 id 목록 가져오기 
+            this.setState(
+                { chatrooms: res.data }
+            );
+        })
+    }
+
+    handleChatroomSelect = (chatroomId) => {
+
+        this.setState({focus_chatroom : chatroomId}); // 선택한 채팅방 열기
+        this.updateChatMessage();
+
+        if(!socket.connected) {
+            this.onUsernameSelection(this.state.nickname); // 소켓 연결
+        }
+
+        socket.emit('join-room', { chatroomId: chatroomId }); // 채팅방 참가
+
+    }
+
+    updateChatMessage = () => {
+
+        let temp = localStorage.getItem(this.state.focus_chatroom);
+        console.log(temp);
+        if(temp !== null) {
+            temp = JSON.parse(temp);
+            this.setState(
+                { messages: temp }
+            );
+        } else {
+            this.setState(
+                { messages: [] }
+            ); 
+        }
+        console.log(temp);
+        console.log("메세지 로드" + this.state.messages);
+
+    }
+
+    onUsernameSelection = (username) => { // 사용자 이름 설정 및 소켓 연결
+        socket.auth = { username };
+        socket.connect();
+    }
+
+    onClickSend = () => { // 메세지 전송
+
+        const param = { // 메세지 데이터
+            message: document.getElementById("messageInput").value, 
+            date: Date.now(),
+            sender: sessionStorage.getItem('nickname')
+        }
+
+        if(param.message !== '') { // 빈 메세지가 아니라면 전송 
+            console.log("You send message :", param);
+            socket.emit('new-message', 
+                { chatroomId: this.state.focus_chatroom, message: param.message, date: param.date, sender: param.sender });
+    
+            document.getElementById("messageInput").value = ''; // 메세지 창 clear
+        }
+        
+    }
+
     render() {
         
         return (
             <div className="chat">
-                
                 <div className="chatList">
+
                     <ChatRoom chatrooms={this.state.chatrooms} onSelectChatroom={this.handleChatroomSelect} />
                     
-                    {this.state.chatMessageList[this.state.focus_chatroom-1]}
+                    <div className="chatMessage">
+                    { this.state.focus_chatroom && 
+                        <div className="chatMessageWrapper">
+                            
+                            <ChatMessage messages={this.state.messages} />
+
+                            
+                            <div className="chatMessageBottom">
+                                <textarea className="chatMessageInput" id="messageInput" placeholder="메세지 작성..."></textarea>
+                                <button className="chatSubmitButton" onClick={this.onClickSend}>전송</button>
+                            </div>
+
+                        </div>}
+                    </div>
+                    
                 </div>
-                
             </div>
         )
     }
