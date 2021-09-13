@@ -5,10 +5,6 @@ import Message from './message';
 
 class ChatMessage extends Component {
 
-    // componentDidUpdate() {
-    //     this.updateChatMessage();
-    // }
-
     checkMessageOwn = (sender) => {
         if(sessionStorage.getItem('nickname') === sender) {
             return true;
