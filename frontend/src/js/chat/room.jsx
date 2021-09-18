@@ -15,7 +15,7 @@ const Room = (props) => {
     function endDeal() {
         setEndDealModal(true);
 
-        props.onClickEndDeal();
+        // props.onClickEndDeal();
     }
 
 
