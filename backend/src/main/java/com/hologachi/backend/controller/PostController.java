@@ -1,12 +1,16 @@
 package com.hologachi.backend.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.hologachi.backend.repository.MyRequestRepository;
 import com.hologachi.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +31,8 @@ public class PostController {
 	PostRepository postRepository;
 	@Autowired
 	PtcptRepository ptcptRepository;
+	@Autowired
+	MyRequestRepository myRequestRepository;
 
 	// 모든 공동구매 목록
 	@GetMapping("")
@@ -56,13 +62,14 @@ public class PostController {
 	}
 	
 	// 공동구매 신청 취소
-//	@RequestMapping("/{postId}/cancel")
-//	public void updateRqstCancel(@PathVariable int postId) {
-//		Ptcpt ptcpt = ptcptRepository.findByPost_PostId(postId);
+	@RequestMapping("/{postId}/cancel")
+	public void updateRqstCancel(@PathVariable int postId, @RequestParam("userId") int userId) {
+		int ptcpt = ptcptRepository.findByPost_PostId(postId, userId);
+		System.out.println(ptcpt);
 //		ptcpt.setStep("cancel");
-//		
-//		ptcptRepository.save(ptcpt);
-//	}
+
+		ptcptRepository.deleteById(ptcpt);
+	}
 	
 	// 공동구매 삭제
 	@RequestMapping("/{postId}/delete")
@@ -77,17 +84,18 @@ public class PostController {
 	// 공동구매 등록
 	@RequestMapping("/register")
 	@JsonProperty("post")
-	public void addPost(@RequestBody Post post) {
+	public void addPost(@RequestBody Post post, @RequestParam("userId") int userId) {
 		Date now = new Date(System.currentTimeMillis());
 		post.setRgstAt(now);
 		post.setUpdateAt(now);
 		
 		User user = new User();
 		Category2 ctg = new Category2();
-		user.setUserId(1);
+		user.setUserId(userId);
 		ctg.setCategory2Id(131);
 		post.setUser(user);
 		post.setCategory2(ctg);
+		post.setStep("request");
 		postRepository.save(post);
 	}
 	
@@ -104,8 +112,8 @@ public class PostController {
 	}
 	
 	// 공동구매 검색
-	@GetMapping("/search")
-	public List<Post> searchPost(@RequestParam String keyword) {
+	@GetMapping("/search/{keyword}")
+	public List<Post> searchPost(@PathVariable String keyword) {
 		return postRepository.searchByTitle(keyword);
 	}
 	
@@ -132,6 +140,13 @@ public class PostController {
 		ctg.setCategory2Id(131);
 		post.get(0).setCategory2(ctg);
 		postRepository.save(post.get(0));
+	}
+
+	// 공동구매 중복 신청 방지
+	@GetMapping("/requestpost")
+	public List<Ptcpt> requestPostFindByUserId(@RequestParam("userId") int userId) {
+//		int userId = 3;
+		return myRequestRepository.findByUser_UserId(userId);
 	}
 	
 

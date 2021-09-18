@@ -20,3 +20,15 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+#grid-container{
+    grid-template-rows: repeat(2, 60px);
+  grid-template-columns: 90px 90px;
+}
+.input {
+    padding: 5px 15px;
+    width: 300px;
+    align-items: center;
+  }
+  #selectBox{
+      float: right;
+  }

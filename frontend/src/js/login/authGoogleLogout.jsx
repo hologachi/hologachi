@@ -9,7 +9,7 @@ export default function authGoogleLogout(props){
         window.sessionStorage.clear(); // 세션 정보 삭제
     	console.log('Logout Success: ', response);
         props.setIsLogined(false);
-
+        window.location.href="/home"
     }
 
     const onFailure = (error) => {

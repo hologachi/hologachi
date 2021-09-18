@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from "react-router-dom"
 import '../../css/post.css'
 import '../../css/gblist.css'
 import { Container, Grid, Card, CardMedia, CardContent, Typography, makeStyles, } from '@material-ui/core';
@@ -32,7 +33,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function Gblist() {
+function SearchList() {
+    const { keyword } = useParams();
+
+    console.log(keyword);
   const [title, setTitle] = useState('');
   const [testStr, setTestStr] = useState('');
   const classes = useStyles();
@@ -47,7 +51,7 @@ function Gblist() {
   useEffect(
     () => {
       axios({
-        url: `/post/timesort`,
+        url: `/post/search/${keyword}`,
         method: 'GET'
       }).then((res) => {
         callback(res.data);
@@ -83,19 +87,7 @@ function Gblist() {
   return (
     <Container className={classes.cardGrid} maxWidth="md">
     <div>
-      <h2>공동구매</h2>
-      <select id="selectBox" onChange={Matchingsort}>
-        <option value="1" defaultValue="default">최신등록순</option>
-        <option value="2" >참가인원 적은순</option>
-      </select><br /><br /><br />
-      <SearchIcon></SearchIcon>
-      <input
-        type="search"
-        value={title}
-        onChange={filter}
-        className="input"
-        placeholder="Search"
-      />
+      <h2>검색 결과</h2>
       <hr />
     </div>
     <Grid container spacing={4}
@@ -143,4 +135,4 @@ function Gblist() {
   );
 }
 
-export default Gblist;
+export default SearchList
