@@ -1,69 +1,26 @@
 import '../../css/chat.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { Component } from 'react';
+import React from 'react';
 import Message from './message';
 
-class ChatMessage extends Component {
+const ChatMessage = (props) => {
 
-    state = {
-        messages : []
-    }
-
-    onClickSend = () => {
-        const param = {
-            m: document.getElementById("messageInput").value, 
-            s: Date.now()
+    const checkMessageOwn = (sender) => {
+        if(sessionStorage.getItem('nickname') === sender) {
+            return true;
+        } else { 
+            return false; 
         }
-        console.log("가져온 메세지", param.m)
-        this.props.onSendMessage(param)
-
-        import('./message').then(({message})=>{
-            const {messages} = this.state;
-            const position = messages.length +1;
-            const newMessage = <Message own={true} key={position} sendAt={param.s} message={param.m} />
-            this.setState({messages:[...messages,newMessage]})
-        })
-
-        document.getElementById("messageInput").value = ''
     }
 
-    receiveMessage = (input) => {
-        import('./message').then(({message})=>{
-            const {messages} = this.state;
-            const position = messages.length +1;
-            const newMessage = <Message key={position} sendAt={input.s} message={input.m} />
-            this.setState({messages:[...messages,newMessage]})
-        })
-    }
-    
-    saveToDos = (data) => {
-        localStorage.setItem(this.chatroom.chatroomId, JSON.stringify(data))
-    }
-
-    render() {
-        // let cover = <div className="chatMessageCover">채팅방을 눌러보세요.</div>;
-
-        // let message = <div className="no-content-message">대화를 시작해보세요</div>;
-        // if (this.props.chatrooms) {
-        //     message = this.props.chatrooms.map(chatroom => <Room chatroomId={chatroom.chatroomId} roomName={chatroom.roomName} lastchat={chatroom.lastchat} onClick={this.handleClick}/>);
-        // }
-        const {messages} = this.state;
-
-        return (
-            <div className="chatMessage">
-                <div className="chatMessageWrapper">
-                    <div className="chatMessageTop">
-                        {messages}
-                    </div>
-                    <div className="chatMessageBottom">
-                        <textarea className="chatMessageInput" id="messageInput" placeholder="메세지 작성..."></textarea>
-                        <button className="chatSubmitButton" onClick={this.onClickSend}>전송</button>
-                    </div>
-                </div>
-            </div>
-        )
-    }
+    return (
+        <div className="chatMessageTop">
+            { (props.messages.length == 0) && <p>이전에 나눈 메세지가 없습니다.</p>} 
+            { props.messages && props.messages.map((message, i) => <div key={i}><Message own={checkMessageOwn(message.sender)} sendAt={message.date} message={message.message} sender={message.sender} /></div>)}
+            
+        </div>
+    )
 }
 
-export default ChatMessage
+export default ChatMessage;
 
