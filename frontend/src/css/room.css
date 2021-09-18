@@ -18,8 +18,8 @@
 .roomName {
     font-weight: 500;
 }
-.endDealBtn {
-    font-size: 12px;
-    padding: 1px;
-    margin-left: auto;
+.roomLastChat {
+    font-size: 15px;
+    color: gray;
+    padding: 15px;
 }

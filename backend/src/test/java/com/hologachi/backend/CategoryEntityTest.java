@@ -2,9 +2,6 @@ package com.hologachi.backend;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,11 +10,9 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.hologachi.backend.model.ChatRoom;
-import com.hologachi.backend.model.User;
-import com.hologachi.backend.repository.ChatRoomRepository;
-import com.hologachi.backend.repository.UserRepository;
-
+import com.hologachi.backend.model.Category1;
+import com.hologachi.backend.model.Category2;
+import com.hologachi.backend.repository.Category2Repository;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -25,23 +20,36 @@ import com.hologachi.backend.repository.UserRepository;
 public class CategoryEntityTest {
 	
 	@Autowired
-	private ChatRoomRepository chatRoomRepository;
-	@Autowired
-	private UserRepository userRepository;
+	private Category2Repository category2Repository;
 	
 	@Before
 	public void init() 
 	{
-		
+		Category2 category = new Category2(new Category1("test"), "test");
+		category2Repository.save(category);
 	}
 	
 	@Test
-	public void 엔티티_조회_테스트() 
+	public void 엔티티_저장_테스트() 
 	{
-		List<ChatRoom> chatrRoom = chatRoomRepository.findByUsersUserId(6);
-		Optional<User> user = userRepository.findById(6);
+		Category2 category = category2Repository.findByName("test");
 
-		assertEquals(chatrRoom.get(0).getUsers().get(0).getUserId(), user.get().getUserId());
+		assertEquals(category.getCategory1().getName(), "test");
 	}
+	
+//	@Test
+//	public void 카테고리_삭제_테스트() 
+//	{	
+//		Category2 category = categoryRepository.findByCat2("test");
+//		int id = category.getId2();
+//		
+//		long beforeDelete = categoryRepository.count();
+//		
+//		categoryRepository.deleteById2(id);
+//		
+//		long afterDelete = categoryRepository.count();
+//		
+//		assertEquals(beforeDelete, afterDelete + 1);
+//	}
 	
 }
