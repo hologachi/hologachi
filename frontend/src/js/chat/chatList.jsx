@@ -73,6 +73,7 @@ const ChatList = () => {
     function loadChatrooms() {
         ChatRoomService.getChatRoomList(userId).then((res) => { // 참여하고 있는 채팅방 id 목록 가져오기 
             setChatrooms(res.data);
+            console.log(res.data)
         })
     }
 
@@ -126,22 +127,41 @@ const ChatList = () => {
         
     }
 
+    function onClickEndDeal() { // 거래 종료
+
+        const param = { // 메세지 데이터
+            message: document.getElementById("messageInput").value, 
+            date: Date.now(),
+            sender: sessionStorage.getItem('nickname')
+        }
+
+        if(param.message !== '') { // 빈 메세지가 아니라면 전송 
+            console.log("You send message :", param);
+            socket.emit('new-message', 
+                { chatroomId: focus_chatroom, message: param.message, date: param.date, sender: param.sender });
+    
+            document.getElementById("messageInput").value = ''; // 메세지 창 clear
+        }
+        
+    }
+
     return (
         <div className="chat">
             <div className="chatList">
 
-                <ChatRoom chatrooms={chatrooms} onSelectChatroom={handleChatroomSelect} />
+                <ChatRoom chatrooms={chatrooms} onSelectChatroom={handleChatroomSelect} onClickEndDeal={onClickEndDeal}/>
                     
                 <div className="chatMessage">
                 { focus_chatroom && 
-                <div className="chatMessageWrapper">
-                    
-                    <ChatMessage messages={messages} />
-                        <div className="chatMessageBottom">
-                            <textarea className="chatMessageInput" id="messageInput" placeholder="메세지 작성..." onKeyPress={event => event.key === 'Enter' ? onClickSend(event) : null}></textarea>
-                            <button className="chatSubmitButton" onClick={onClickSend}>전송</button>
-                        </div>
-                </div>}
+                    <div className="chatMessageWrapper">
+                        
+                        <ChatMessage messages={messages} />
+                            <div className="chatMessageBottom">
+                                <textarea className="chatMessageInput" id="messageInput" placeholder="메세지 작성..." onKeyPress={event => event.key === 'Enter' ? onClickSend(event) : null}></textarea>
+                                <button className="chatSubmitButton" onClick={onClickSend}>전송</button>
+                            </div>
+                    </div>
+                }
                 </div>
                 
             </div>
