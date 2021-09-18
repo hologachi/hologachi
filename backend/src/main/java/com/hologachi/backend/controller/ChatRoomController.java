@@ -20,8 +20,6 @@ public class ChatRoomController {
 	
 	@Autowired
 	private ChatRoomRepository chatRoomRepository;
-	@Autowired
-	private ChatPtcptsRepository chatPtcptsRepository;
 	
 	@GetMapping("/list/{userId}")
 	public List<ChatRoom> getMyChatrooms(@PathVariable int userId) {
