@@ -58,8 +58,8 @@ class manageGBPost extends Component {
     render() {
         return (
             <div className="MPost">
+                <div className="wrapper">
                 <AdminNav />
-
                 <ListGBPost 
                     gbPosts={this.state.gbPosts} 
                     handleDeletePost={this.handleDeletePost} 
@@ -67,6 +67,7 @@ class manageGBPost extends Component {
                     loadComments={this.loadComments}
                     handleDeleteComment={this.handleDeleteComment}
                 />
+                </div>
 
             </div>
         )

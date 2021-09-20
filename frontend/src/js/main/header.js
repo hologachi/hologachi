@@ -54,7 +54,7 @@ export default function Header() {
                         </NavDropdown> }
                        
                         { isLogined && <Nav.Link href="/chat/list" className="menu">채팅</Nav.Link>}
-                        { isAdmin && <Nav.Link href="/admin/mUser" className="menu">관리자 페이지</Nav.Link>}
+                        { isAdmin == 1 && <Nav.Link href="/admin/mUser" className="menu">관리자 페이지</Nav.Link>}
                     </Nav>
                     <div  id="totalSearchForm">
                     <form className="searchform">

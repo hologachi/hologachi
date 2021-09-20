@@ -164,6 +164,7 @@ class manageGBCategory extends Component {
 
         return (
             <div className="MGBCategory">
+                <div className="wrapper">
                 <AdminNav />
 
                 <div className="categoryList">
@@ -189,18 +190,18 @@ class manageGBCategory extends Component {
                                 <tr key = {category.category2Id}>
                                     <td>{category.category1.name}</td>
                                     <td>{category.name}</td>
-                                    <td><Button onClick={(event) => 
+                                    <td><Button variant="secondary" onClick={(event) => 
                                             {this.handleShow(event, 'showModalU'); 
                                             this.setState({updateId2: category.category2Id, updateCat1: category.category1.name, updateCat2: category.name})}
                                         }>수정</Button></td>
-                                    <td><Button onClick={(event) => this.handleDelete(event, category.category2Id)}>삭제</Button></td>    
+                                    <td><Button variant="secondary" onClick={(event) => this.handleDelete(event, category.category2Id)}>삭제</Button></td>    
                                     {/* <td><input type="checkbox" onChange={this.handleCheck} value={category.id2}></input></td> */}
                                 </tr>
                             )
                         }
                         <tr>
                             <td colSpan="3">
-                                <Button onClick={(event) => this.handleShow(event, 'showModalA')}>카테고리 추가</Button>
+                                <Button variant="secondary" onClick={(event) => this.handleShow(event, 'showModalA')}>카테고리 추가</Button>
                             </td>
                             <td>
                                 {/* <Button onClick={() => this.state.handleDelete(this.state.ids)}>선택 항목 삭제</Button> */}
@@ -263,6 +264,7 @@ class manageGBCategory extends Component {
                             <Button onClick={this.handleUpdate}>수정</Button>
                         </Modal.Footer>
                     </Modal>
+                </div>
                 </div>
             </div>
         )

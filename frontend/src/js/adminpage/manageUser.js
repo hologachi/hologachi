@@ -55,16 +55,18 @@ class manageUser extends Component {
     render() {
         return (
             <div className="AdminPage">
+                <div className="wrapper">
                 <AdminNav />
-
-                {/* <SearchUser /> */}
-
                 <ListUser 
                     users={this.state.users} 
                     handleUpdateAuth={this.handleUpdateAuth} 
                     userPost={this.state.userPost} 
                     loadUserPost={this.loadUserPost}
                 />
+                </div>
+
+                {/* <SearchUser /> */}
+
             </div>
         )
     }
