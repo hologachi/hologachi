@@ -41,6 +41,7 @@ class AuthGoogleLogin extends Component {
             window.sessionStorage.setItem('email', email);
             window.sessionStorage.setItem('image', image);
             window.sessionStorage.setItem('provider', 'google');
+            window.sessionStorage.setItem('isAdmin', res.data.isAdmin);
 
             this.props.history.push('/home'); // 메인으로 이동
             window.location.reload(false); // 메인 리로드
