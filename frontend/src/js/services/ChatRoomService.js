@@ -1,10 +1,14 @@
 import axios from 'axios';
 
-const CHATROOM_LIST_URL = "http://localhost:8080/chat/list";
+const CHAT_LIST_URL = "http://localhost:8080/chat";
 
 class ChatRoomService {
     getChatRoomList(userId) {
-        return axios.get(CHATROOM_LIST_URL + "/" + userId);
+        return axios.get(CHAT_LIST_URL + "/list/" + userId);
+    }
+
+    endDeal(userId, postId, rating) {
+        return axios.post(CHAT_LIST_URL + "/endDeal", {userId: userId, postId: postId, rating: rating});
     }
 }
 
