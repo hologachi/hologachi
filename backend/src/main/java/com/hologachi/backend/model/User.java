@@ -28,11 +28,11 @@ public class User {
 	@Column(name="IMAGE")
 	private String image;
 	
-	@Column(name="SGST_RATE")
-	private String sgstRate;
+	@Column(name="DEAL_RATE")
+	private String dealRate;
 	
-	@Column(name="RQST_RATE")
-	private String rqstRate;
+	@Column(name="DEAL_COUNT")
+	private int dealCount;
 	
 	@Column(name="IS_ADMIN")
 	private int isAdmin;
