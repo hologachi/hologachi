@@ -31,10 +31,7 @@ public class Ptcpt {
 	@Column(name="STEP")
 	private String step;
 	
-	@Column(name="RATE_SGSTER", nullable=true)
-	private Double rateSgster;
-	
-	@Column(name="RATE_RQSTER", nullable=true)
-	private Double rateRqster;
+	@Column(name="RATE_DEAL", nullable=true)
+	private int rateDeal;
 	
 }
