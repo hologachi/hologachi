@@ -111,7 +111,7 @@ const ListUser = (props) => {
                             <td>{user.email}</td>
                             <td>
                                 {user.sgstRate} 점 <br />
-                                <Button onClick={() => {
+                                <Button variant="secondary" onClick={() => {
                                     setForm({id: user.userId, nickname: user.nickname, new_auth: user.isAdmin}); 
                                     props.loadUserPost(user.userId); 
                                     handleModalPostShow();
@@ -120,7 +120,7 @@ const ListUser = (props) => {
                             <td>{user.rqstRate} 점</td>
                             <td>
                                 {translationIsAdmin(user.isAdmin)} <br />
-                                <Button onClick={() => {
+                                <Button variant="secondary" onClick={() => {
                                     setForm({id: user.userId, nickname: user.nickname, new_auth: user.isAdmin}); 
                                     setAuthGroup({[user.isAdmin]: true});
                                     handleModalAdminShow();
@@ -163,7 +163,7 @@ const ListUser = (props) => {
                     <Button variant="secondary" onClick={handleModalAdminClose}>
                         취소
                     </Button>
-                    <Button variant="primary" onClick={() => {props.handleUpdateAuth(id, new_auth); reset_authGroupChange(); handleModalAdminClose();}}>
+                    <Button variant="secondary" onClick={() => {props.handleUpdateAuth(id, new_auth); reset_authGroupChange(); handleModalAdminClose();}}>
                         수정
                     </Button>
                 </Modal.Footer>

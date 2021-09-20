@@ -52,7 +52,7 @@ class ListGB extends Component {
                                         <td>{gb.rateSgster || '미등록'}</td>
                                         <td>{gb.rateRqster || '미등록'}</td>
                                         <td>{this.translationStep(gb.step)}</td>
-                                        <td><Button onClick={() => this.props.handleStopPtcpt(gb.ptcptId)}>공동구매 중지</Button></td>
+                                        <td><Button variant="secondary" onClick={() => this.props.handleStopPtcpt(gb.ptcptId)}>공동구매 중지</Button></td>
                                     </tr>
                                 )
                             }
