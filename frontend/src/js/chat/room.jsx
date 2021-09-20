@@ -14,7 +14,15 @@ const Room = (props) => {
     }
 
     function handleRateChange(event) { // 평점 설정
-        setRating(event.target.value);
+        if(event.target.value < 0){
+            event.target.value = 0;
+            setRating(0);
+        } else if(event.target.value > 100) {
+            event.target.value = 100;
+            setRating(100);
+        } else {
+            setRating(event.target.value);
+        }
     }
 
     function endDeal() { // 거래 평점 및 종료
