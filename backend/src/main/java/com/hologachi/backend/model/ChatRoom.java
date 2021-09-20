@@ -41,6 +41,9 @@ public class ChatRoom {
 	@Column(name="UPDATE_AT")
 	private Date updateAt;
 	
+	@Column(name="POST_ID")
+	private int postId;
+	
 	@ManyToMany
 	@JoinTable(name = "TBL_CHAT_PTCPTS",
 			joinColumns = @JoinColumn(name = "CHATROOM_ID"),

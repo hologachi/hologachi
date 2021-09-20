@@ -99,8 +99,8 @@ const ChatList = () => {
         } else {
             setMessages([]);
         }
-        console.log(temp);
-        console.log("메세지 로드" + messages);
+        // console.log(temp);
+        // console.log("메세지 로드" + messages);
 
     }
 
@@ -127,22 +127,10 @@ const ChatList = () => {
         
     }
 
-    function onClickEndDeal() { // 거래 종료
-
-        const param = { // 메세지 데이터
-            message: document.getElementById("messageInput").value, 
-            date: Date.now(),
-            sender: sessionStorage.getItem('nickname')
-        }
-
-        if(param.message !== '') { // 빈 메세지가 아니라면 전송 
-            console.log("You send message :", param);
-            socket.emit('new-message', 
-                { chatroomId: focus_chatroom, message: param.message, date: param.date, sender: param.sender });
-    
-            document.getElementById("messageInput").value = ''; // 메세지 창 clear
-        }
-        
+    function onClickEndDeal(postId, rating) { // 거래 종료
+        ChatRoomService.endDeal(userId, postId, rating).then((res) => {
+            console.log(userId, postId, rating);
+        })
     }
 
     return (
