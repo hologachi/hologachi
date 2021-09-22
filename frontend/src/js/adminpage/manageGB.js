@@ -37,12 +37,13 @@ class manageGB extends Component {
     render() {
         return (
             <div className="MGB">
+                <div className="wrapper">
                 <AdminNav />
-
                 <ListGB 
                     gbs={this.state.gbs}
                     handleStopPtcpt={this.handleStopPtcpt}
                 />
+                </div>
             </div>
         )
     }

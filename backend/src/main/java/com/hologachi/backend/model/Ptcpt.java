@@ -15,7 +15,7 @@ import lombok.Data;
 @Entity
 @Table(name="TBL_PTCPT")
 public class Ptcpt {
-	
+
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="PTCPT_ID")
 	private int ptcptId;
@@ -25,16 +25,13 @@ public class Ptcpt {
 	private Post post;
 	
 	@ManyToOne
-	@JoinColumn(name="RQSTER_ID")
+	@JoinColumn(name="RQSTER_ID", nullable=true)
 	private User user;
 	
 	@Column(name="STEP")
 	private String step;
 	
-	@Column(name="RATE_SGSTER", nullable=true)
-	private Double rateSgster;
-	
-	@Column(name="RATE_RQSTER", nullable=true)
-	private Double rateRqster;
+	@Column(name="RATE_DEAL", nullable=true)
+	private int rateDeal;
 	
 }

@@ -107,8 +107,8 @@ class ListGBPost extends Component {
                                         <td>{gbPost.deadline}</td>
                                         <td>{this.translationStep(gbPost.step)}</td>
                                         <td>{this.translationDeletedBy(gbPost.deletedBy)}</td>
-                                        <td><Button onClick={() => this.props.handleDeletePost(gbPost.postId)}>글 삭제</Button></td>
-                                        <td><Button onClick={() => {
+                                        <td><Button variant="secondary" onClick={() => this.props.handleDeletePost(gbPost.postId)}>글 삭제</Button></td>
+                                        <td><Button variant="secondary" onClick={() => {
                                                 this.props.loadComments(gbPost.postId); 
                                                 this.setState({postTitle: gbPost.title}); 
                                                 this.handleShow('showModalC');

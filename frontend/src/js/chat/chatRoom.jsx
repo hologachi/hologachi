@@ -9,10 +9,17 @@ class ChatRoom extends Component {
         this.props.onSelectChatroom(chatroomId);
     }
 
+    handleEndDeal = (postId, rating) => {
+        this.props.onClickEndDeal(postId, rating);
+    }
+
     render() {
         let list = <div className="no-content-message">참여하고 있는 공동구매가 없습니다.</div>;
         if (this.props.chatrooms) {
-            list = this.props.chatrooms.map(chatroom => <Room chatroomId={chatroom.chatroomId} roomName={chatroom.roomName} lastchat={chatroom.lastchat} onClick={this.handleClick}/>);
+            list = this.props.chatrooms.map(chatroom => 
+                <Room key={chatroom.chatroomId} chatroomId={chatroom.chatroomId} 
+                roomName={chatroom.roomName} users={chatroom.users} 
+                postId={chatroom.postId} onClick={this.handleClick} endDeal={this.handleEndDeal}/>);
         }
 
         return (
