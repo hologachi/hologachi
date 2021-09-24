@@ -27,8 +27,6 @@ import  MGB  from "./js/adminpage/manageGB";
 import  MGBPost  from "./js/adminpage/manageGBPost";
 import  MGBCategory  from "./js/adminpage/manageGBCategory";
 import  Chat  from "./js/chat/chatList";
-import  Login  from "./js/login/login";
-import  Logout  from "./js/login/authGoogleLogout";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -110,8 +108,6 @@ function App() {
           <Route path="/admin/mGBPost" component={MGBPost} />
           <Route path="/admin/mGBCategory" component={MGBCategory} />
           <Route path="/chat/List" component={Chat} />
-          <Route path="/login" component={Login} />
-          <Route path="/logout" component={Logout} />
 
         </Switch>
       </BrowserRouter>

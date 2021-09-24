@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
+import { Button } from 'react-bootstrap';
 import axios from 'axios';
 import { refreshTokenSetup } from './refreshTokenSetup';
 
 const clientId = "866725412925-ftovfr48c7hbbdm5l96ebaqsc52hodbf.apps.googleusercontent.com";
-const redirect_uri = "http://localhost:3000/login";
+const redirect_uri = "http://localhost:3000/home";
 const LOGIN_URL = "http://localhost:8080/login/google";
 
 class AuthGoogleLogin extends Component {
@@ -43,13 +43,13 @@ class AuthGoogleLogin extends Component {
             window.sessionStorage.setItem('provider', 'google');
             window.sessionStorage.setItem('isAdmin', res.data.isAdmin);
 
-            this.props.history.push('/home'); // 메인으로 이동
+            // this.props.history.push('/home'); // 메인으로 이동
             window.location.reload(false); // 메인 리로드
             refreshTokenSetup(response); // 토큰 유지  
 
         }).catch((err) => {
 
-            this.props.history.push('/login'); // 로그인으로 이동 
+            // this.props.history.push('/home'); // 로그인으로 이동 
             console.log(err);
 
         }).then(() => {
@@ -66,7 +66,9 @@ class AuthGoogleLogin extends Component {
             <div>
                 <GoogleLogin
                     clientId={clientId}
-                    buttonText="구글로 로그인하기"
+                    render={renderProps => (
+                        <Button onClick={renderProps.onClick}>구글로 로그인하기</Button>
+                      )}
                     onSuccess={this.responseGoogle}
                     onFailure={this.onFailure}
                     uxMode="redirect"
@@ -80,4 +82,4 @@ class AuthGoogleLogin extends Component {
     }
 }
 
-export default withRouter(AuthGoogleLogin);
+export default AuthGoogleLogin;

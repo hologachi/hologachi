@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'react-bootstrap';
 import { GoogleLogout } from 'react-google-login'
 
 const clientId = "866725412925-ftovfr48c7hbbdm5l96ebaqsc52hodbf.apps.googleusercontent.com";
@@ -22,6 +23,9 @@ export default function authGoogleLogout(props){
         <div className="logout">
             <GoogleLogout
                 clientId={clientId}
+                render={renderProps => (
+                    <Button onClick={renderProps.onClick}>로그아웃</Button>
+                  )}
                 onLogoutSuccess={logout}
                 onFailure={onFailure}/>
         </div>
