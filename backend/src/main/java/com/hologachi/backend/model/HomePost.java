@@ -41,5 +41,5 @@ public class HomePost {
 	private int price;
 	private String url;
 	private String image;
-	
+	private String location;
 }

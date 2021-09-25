@@ -38,7 +38,7 @@ class Comment extends React.Component {
       this.setState({
         comments: [...this.state.comments, {
           id: this.state.comments.length + 1,
-          writer: "홀로가치",
+          writer: window.sessionStorage.getItem('userId'),
           date: new Date().toISOString().slice(0, 10),
           content: value
         }]
@@ -50,6 +50,7 @@ class Comment extends React.Component {
   }
 
   render() {
+    let userId=window.sessionStorage.getItem('nickname')
     return (
       <div id="root">
         <div>
@@ -60,11 +61,11 @@ class Comment extends React.Component {
               })
             }
           </ul>
-          <div id="writing-area">
-            <h5 id="nickname">홀로가치</h5>
+          {userId !== null && <div id="writing-area">
+            <h5 id="nickname">{userId}</h5>
             <textarea id="new-comment-content" placeholder="댓글을 입력하세요"></textarea>
             <button id="submit-new-comment" onClick={this.addComment}>댓글쓰기</button>
-          </div>
+          </div>}
         </div>
       </div>
     )
@@ -81,6 +82,7 @@ function removeBtn(e) {
 }
 
 function Singcomment({ comment }) {
+  let userId=window.sessionStorage.getItem('userId')
   return (
     <div className="comment">
       <table>
@@ -88,21 +90,15 @@ function Singcomment({ comment }) {
           <th id="writerName">{comment.writer}</th>
           <td id="content">{comment.content}</td>
           <td id="date">{comment.date}</td>
-          <td><button id="removebtn" onClick={removeBtn}>삭제</button></td>
+          {userId == comment.id && <td><button id="removebtn" onClick={removeBtn}>삭제</button></td>}
         </tr>
       </table>
     </div>
   )
 }
 
-function bookmarkremove() {
-  document.getElementById("likebtn2").style.display = "none";
-  document.getElementById("likebtn").style.display = "block";
-}
-function bookmarkbtn() {
-  document.getElementById("likebtn").style.display = "none";
-  document.getElementById("likebtn2").style.display = "block";
-}
+
+
 
 const Modal = (props) => {
   const { open, header } = props;
@@ -124,11 +120,14 @@ function Board() {
   const { productId } = useParams()
   const [isLogined, setIsLogined] = useState(window.sessionStorage.getItem('userId'))
 
+  console.log(window.sessionStorage.getItem('userId'));
+
   useEffect(() => { // useEffect 적용!
   }, [isLogined]);
 
   const [testStr, setTestStr] = useState('');
   const [requestStr, setRequestStr] = useState('');
+  const [bookStr, setBookedStr] = useState('');
 
   const [deadline, setDeadline] = useState("");
   const [title, setTitle] = useState()
@@ -137,6 +136,39 @@ function Board() {
   const [content, setContent] = useState()
   const [matching, setMatching] = useState();
 
+
+  function bookmarkbtn() {
+    axios({
+      url: `/bookmark/${productId}/add`,
+      method: 'post',
+      params: {
+        userId: window.sessionStorage.getItem('userId')
+      },
+      baseURL: 'http://localhost:8080/post',
+      headers: { "Access-Control-Allow-Origin": "*" },
+    }).then(function () {
+      window.location.reload();
+    }).catch(error => {
+      console.log(error.response)
+    });
+  }
+
+  function bookmarkremove() {
+    axios({
+      url: `/bookmark/${productId}/delete`,
+      method: 'post',
+      params: {
+        userId: window.sessionStorage.getItem('userId')
+      },
+      baseURL: 'http://localhost:8080/post',
+      headers: { "Access-Control-Allow-Origin": "*" },
+    }).then(function () {
+      window.location.reload();
+    }).catch(error => {
+      console.log(error.response)
+    });
+  }
+  
   function handelChangeTitle(e){
     setTitle(e.target.value)
   }
@@ -184,6 +216,10 @@ function Board() {
     setRequestStr(str);
   }
 
+  function callbackBooked(str) {
+    setBookedStr(str);
+  }
+
   useEffect(
     () => {
       axios({
@@ -194,6 +230,20 @@ function Board() {
         },
       }).then((res) => {
         callbackReq(res.data);
+      })
+    }, []
+  );
+
+  useEffect(
+    () => {
+      axios({
+        url: `/post/bookmark`,
+        method: 'GET',
+        params: {
+          userId: window.sessionStorage.getItem('userId')
+        },
+      }).then((res) => {
+        callbackBooked(res.data);
       })
     }, []
   );
@@ -286,7 +336,10 @@ function Board() {
     }, []
   );
 
+  console.log(requestStr);
   let arr = Object.values(requestStr).map(product => (product.post.postId));
+  let bookarr = Object.values(bookStr).map(product => (product.post.postId));
+  console.log(bookarr);
 
   return (
     <div className="gbdetail">
@@ -370,8 +423,10 @@ function Board() {
                             {!arr.includes(Object.values(testStr).map(product => product.postId)[0]) && <button id="apply" value="apply" onClick={apply} >신청하기</button>
                             }
                           </div>
-                          <a href="#" className="heart-icon" onClick={bookmarkbtn} id="likebtn"><FavoriteBorderIcon /></a>
-                          <a href="#" className="heart-icon" onClick={bookmarkremove} id="likebtn2" style={{ display: "none" }}><FavoriteIcon /></a>
+                          <div id="bookmarkContainer">
+                            {!bookarr.includes(Object.values(testStr).map(product => product.postId)[0]) && <a href="#" className="heart-icon" onClick={bookmarkbtn} id="likebtn"><FavoriteBorderIcon /></a> }
+                            {bookarr.includes(Object.values(testStr).map(product => product.postId)[0]) && <a href="#" className="heart-icon" onClick={bookmarkremove} id="likebtn2"><FavoriteIcon /></a>}
+                          </div>
                         </div>}
                       </div>
                     </div>

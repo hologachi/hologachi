@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -8,6 +8,14 @@ import moment from 'moment';
 import ImageUploading from 'react-images-uploading';
 import { PictureOutlined } from '@ant-design/icons';
 import axios from "axios";
+
+function Location(){
+  return(
+    <div>공동구매 지역 설정</div>
+
+  )
+}
+
 
 function UploadImage() {
 
@@ -65,6 +73,7 @@ function UploadImage() {
           </div>
         )}
       </ImageUploading>
+      <button>업로드</button>
     </div>
   )
 }
@@ -261,7 +270,7 @@ return(
         </strong></h5></Form.Label>
         <Form.Control as="textarea" cols={70} rows={5} placeholder="Content" style={{ resize: "none" }} value={content} onChange={handelChangeContent} />
       </Form.Group><br />
-
+      <Location />
       <Button id="submitbtn" onClick={addContent}>추가</Button>
     </div>
   </div>

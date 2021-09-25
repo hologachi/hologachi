@@ -2,6 +2,7 @@ package com.hologachi.backend.controller;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -109,7 +110,8 @@ public class MypageController {
 		int userId = 1;
 		return myBookmarkRepository.findByUser_UserId(userId);
 	}
-	
+
+
 	// 북마크 삭제
 	@RequestMapping("/bookmark/{bookmarkId}/delete")
 	public void deleteBookmark(@PathVariable("bookmarkId") int bookmarkId) {
