@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hologachi.backend.model.Category2;
+import com.hologachi.backend.model.Comment;
 import com.hologachi.backend.model.Post;
 import com.hologachi.backend.model.Ptcpt;
 import com.hologachi.backend.model.User;
+import com.hologachi.backend.repository.CommentRepository;
 import com.hologachi.backend.repository.PostRepository;
 import com.hologachi.backend.repository.PtcptRepository;
 
@@ -27,6 +29,8 @@ public class PostController {
 	PostRepository postRepository;
 	@Autowired
 	PtcptRepository ptcptRepository;
+	@Autowired
+	CommentRepository commentRepository;
 
 	// 모든 공동구매 목록
 	@GetMapping("")
@@ -133,4 +137,41 @@ public class PostController {
 		postRepository.save(post.get(0));
 	}
 	
+	// 공동구매 댓글 작성
+	@RequestMapping("/{postId}/cocreate")
+	public void createComment(@RequestBody Comment comment, @PathVariable int postId) {
+		Date now = new Date(System.currentTimeMillis());
+		comment.setRgst_at(now);
+		comment.setUpdate_at(now);
+		
+		User user = new User();
+		user.setUserId(1);
+		comment.setUser(user);
+		Post post = new Post();
+		post.setPostId(6);
+		comment.setPost(post);
+		comment.setStatus(1);
+		comment.setOnly_sgster(0);
+		commentRepository.save(comment);
+	}
+	
+	// 공동구매 댓글 수정
+	@RequestMapping("/{postId}/{commentId}/coupdate")
+	public void updateComment(@RequestBody Comment newComment, @PathVariable int postId, @PathVariable int commentId) {
+		Date now = new Date(System.currentTimeMillis());
+		Comment comment = commentRepository.findByCommentId(commentId);
+		System.out.println(comment);
+		comment.setContent(newComment.getContent());
+		comment.setUpdate_at(now);
+		commentRepository.save(comment);
+	}
+	
+	// 공동구매 댓글 삭제
+	@RequestMapping("/{postId}/{commentId}/codelete")
+	public void deleteComment(@PathVariable int postId, @PathVariable int commentId) {
+		Comment comment = commentRepository.findByCommentId(commentId);
+		comment.setStatus(0);
+		
+		commentRepository.save(comment);
+	}
 }

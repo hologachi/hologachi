@@ -19,11 +19,10 @@ public class User {
 	private String nickname;
 	private String email;
 	private String image;
-	private int accesstoken;
-	private String expire;
-	private String tokentype;
-	private String id_token;
-	private String sgst_rate;
-	private String rqst_rate;
+	private String deal_rate;
+	private int deal_count;
 	private int is_admin;
+	private String google_id;
+	private String token_id;
+	private String location;
 }
