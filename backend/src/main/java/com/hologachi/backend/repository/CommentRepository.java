@@ -10,4 +10,6 @@ import com.hologachi.backend.model.Comment;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
 	public Comment findByCommentId(int commentId);
+	
+	public List<Comment> findByPost_PostId(int postId);
 }

@@ -174,4 +174,10 @@ public class PostController {
 		
 		commentRepository.save(comment);
 	}
+	
+	// 공동구매 댓글 조회
+	@RequestMapping("/{postId}/comment")
+	public List<Comment> selectComment(@PathVariable int postId) {
+		return commentRepository.findByPost_PostId(postId);
+	}
 }
