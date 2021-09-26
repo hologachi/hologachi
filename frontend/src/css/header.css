@@ -54,4 +54,10 @@
         margin-left: 7px;
         border-left: 2px solid rgb(121, 121, 121);
     }
+    #basic-nav-dropdown::after{
+        display: none;
+    }
+}
+#basic-nav-dropdown::after{
+    display: none;
 }

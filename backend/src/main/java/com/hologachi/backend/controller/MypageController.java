@@ -111,11 +111,18 @@ public class MypageController {
 		return myBookmarkRepository.findByUser_UserId(userId);
 	}
 
-
 	// 북마크 삭제
 	@RequestMapping("/bookmark/{bookmarkId}/delete")
 	public void deleteBookmark(@PathVariable("bookmarkId") int bookmarkId) {
 		myBookmarkRepository.deleteById(bookmarkId);
+	}
+
+	// 개인정보 수정
+	@RequestMapping("/privacy/modify")
+	public void modifyPrivacy(@RequestParam("userId") int userId, @RequestParam String modifyNickname) {
+		List<User> user = profileRepository.findByUserId(userId);
+		user.get(0).setNickname(modifyNickname);
+		profileRepository.save(user.get(0));
 	}
 	
 }

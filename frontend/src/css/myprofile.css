@@ -26,6 +26,14 @@
   .nickname{
     text-align: center;
   }
+  .dealRate{
+    color: coral;
+  }
+  .info{
+    font-weight: 800;
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
   .field{
     margin: 5px;
     display: flex;
@@ -57,11 +65,15 @@
     border: 1px solid rgb(218, 167, 74)
   }
   .img-wrap{
-    width: 200px;
     height: 200px;
-    overflow: hidden;
     border-radius: 50%;
-    background: linear-gradient(270deg, #3fa1a9, #79f1a4);
+    margin-bottom: 30px;
+    margin-top: 30px;
+  }
+  .proImg{
+    background-color: rgb(74, 151, 223);
+    border-radius: 50%;
+    text-align: center;
   }
   .img-upload:before{
     content: url("https://i.postimg.cc/FFwPZV2K/photo.png");
