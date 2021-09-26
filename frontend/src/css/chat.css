@@ -1,5 +1,5 @@
 .chatList {
-    height: calc(100vh - 70px);
+    height: calc(100vh);
     display: flex;
 }
 .chatRoom {
@@ -47,7 +47,4 @@
 .chatRoomWrapper, .chatMessageWrapper {
     padding: 10px;
     height: 100%;
-}
-.chatMessageCover {
-    flex : 5.5; 
 }
