@@ -2,7 +2,7 @@ import '../../css/chat.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
 import ChatRoom from "./chatRoom";
-import ChatMessage from "./chatMessage";
+
 //chat
 import ChatRoomService from '../services/ChatRoomService';
 
@@ -40,7 +40,7 @@ const ChatList = () => {
 
             console.log("receive", newMessage);
             
-            if(localStorage.getItem(newMessage.chatroomId) === null) { // 채팅방 첫 메세지인 경우
+            if(localStorage.getItem(newMessage.chatroomId) === null) { // 1. 채팅방 첫 메세지인 경우
         
                 let newChat = new Array();
                 newChat.push(newMessage);
@@ -48,7 +48,7 @@ const ChatList = () => {
         
                 localStorage.setItem(newMessage.chatroomId, JSON.stringify(newChat));
         
-            } else { // 첫 메세지가 아닌 경우
+            } else { // 2. 첫 메세지가 아닌 경우
         
                 let updateChats = JSON.parse(localStorage.getItem(newMessage.chatroomId));
                 updateChats.push(newMessage);

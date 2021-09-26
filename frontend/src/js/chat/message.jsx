@@ -1,11 +1,10 @@
 import '../../css/message.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
-import  { Redirect } from 'react-router-dom'
 
 const Message = (props) => {
 
-    function calcSendAt(sendAt) { 
+    function calcSendAt(sendAt) { // 전송날짜 출력
         // 1분 미만이면 초 단위를, 이외에는 yyyy.MM.dd 단위로 계산
         // var now = Date.now();
         // var elapsedTime = (now - sendAt) / 1000;
@@ -18,8 +17,8 @@ const Message = (props) => {
         // }
     }
 
-    function checkMessageOwn(sender) {
-        if(sessionStorage.getItem('nickname') === sender) {
+    function checkMessageOwn(senderId) {
+        if(sessionStorage.getItem('userId') === senderId) {
             return true;
         } else { 
             return false; 
@@ -27,10 +26,10 @@ const Message = (props) => {
     }
 
     return (
-        <div className={checkMessageOwn(props.sender) ? "message own" : "message"}>
+        <div className={checkMessageOwn(props.senderId) ? "message own" : "message"}>
             <div className="message">
                 <div className="messageTop">
-                    <img className="messageImg" src="https://placeimg.com/50/50/any" alt="" />
+                    <img className="messageImg" src={props.img} alt="사진" />
                     <div className="messageData">
                             <span className="messageSender">{props.sender}</span>
                             <p className="messageText">{props.message}</p>

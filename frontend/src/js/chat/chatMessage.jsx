@@ -35,7 +35,7 @@ const ChatMessage = (props) => {
             <div className="chatMessageTop">
                 {chatroomId}
                 { (messages.length == 0) && <p>이전에 나눈 메세지가 없습니다.</p>} 
-                { messages && messages.map((m, i) => <div key={i}><Message sendAt={m.date} message={m.message} sender={m.sender} /></div>)}
+                { messages && messages.map((m, i) => <div key={i}><Message sendAt={m.date} message={m.message} sender={m.sender} img={m.img} senderId={m.senderId}/></div>)}
             </div>
             <div className="chatMessageBottom">
                 <textarea className="chatMessageInput" id="messageInput" placeholder="메세지 작성..." onKeyPress={event => event.key === 'Enter' ? props.onClickSend(event) : null}></textarea>
