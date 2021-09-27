@@ -2,7 +2,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import { useState, useEffect } from 'react';
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 import '../../css/header.css';
-import  Logout  from "../login/authGoogleLogout";
+import  AuthGoogleLogout  from "../login/authGoogleLogout";
+import  AuthGoogleLogin  from "../login/authGoogleLogin";
 
 export default function Header() {
     const [isLogined, setIsLogined] = useState(window.sessionStorage.getItem('nickname'))
@@ -70,13 +71,13 @@ export default function Header() {
                         <div id="googleOauth">
                             {/* 로그인 한 경우 */}
                             {isLogined && <span>{window.sessionStorage.getItem('nickname')} 님 안녕하세요</span>}
-                            {isLogined && <Logout id="logoutbtn" setIsLogined={setIsLogined} />}
+                            {isLogined && <AuthGoogleLogout setIsLogined={setIsLogined}/>}
                         </div>
                         <div className="writeBtn">
                         { isLogined && <button href="/gb/gbwrite" className="gbwritebtn">공동구매 글쓰기</button>}
                         </div>
                         {/* 로그인 안 한 경우 */}
-                        {!isLogined && <Button href="/login" className="loginbtn">Login</Button>}
+                        {!isLogined && <AuthGoogleLogin />}
                 
                 </Navbar.Collapse>
             </Navbar>
