@@ -10,7 +10,7 @@ import axios from "axios";
     const { postId, ptcptId } = useParams();
 
     const [ testStr, setTestStr ] = useState('');
-    // console.log(testStr);
+    console.log(testStr);
     
     function callback(str) {
       setTestStr(str);
@@ -25,7 +25,7 @@ import axios from "axios";
           })
         }, []
     );
-  
+    
     return (
         <div className="card">
           <h1>{testStr.user.nickname}의 프로필</h1>
