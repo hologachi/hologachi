@@ -48,7 +48,7 @@ const rate = Object.values(testStr).map(profile => profile.dealRate)
 
   const profiles = Object.values(testStr).map(profile => {
     return (
-      <div className="card">
+      <div>
         <h1>{profile.nickname}의 프로필</h1>
         <div className="row">
         <div className="img-wrap" >
@@ -61,21 +61,18 @@ const rate = Object.values(testStr).map(profile => profile.dealRate)
         </div>
         
         <div className="menu">
-          <ButtonGroup aria-label="Basic example">
-            <Button className="menuItems" variant="secondary" onClick={() => { location('privacy') }}>개인정보 확인 및 수정</Button>
             <Button className="menuItems" variant="secondary" onClick={() => { location('mywriting') }}>내가 작성한 글</Button>
             <Button className="menuItems" variant="secondary" onClick={() => { location('applygb') }}>내가 신청한 글</Button>
             <Button className="menuItems" variant="secondary" onClick={() => { location('commentwrite') }}>내가 댓글 남긴 글</Button>
             <Button className="menuItems" variant="secondary" onClick={() => { location('bookmark') }}>북마크</Button>
-          </ButtonGroup>
-
+            <Button className="menuItems" variant="secondary" onClick={() => { location('privacy') }}>개인정보 확인 및 수정</Button>
         </div>
       </div>
     );
   });
 
   return (
-    <div className="Profile">
+    <div className="container py-4">
       <div className="profile__body">
         {profiles}
       </div>

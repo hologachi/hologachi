@@ -8,25 +8,25 @@ import '../../css/detail.css'
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import moment from 'moment';
-
-
+import CommentIcon from '@mui/icons-material/Comment';
 
 class Comment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       comments: [
-        {
-          id: 1,
-          writer: "홀로가치1",
-          date: "2021-08-27",
-          content: "참여하고 싶은데 각자 12개씩 나누는건가요?"
-        }, {
-          id: 2,
-          writer: "홀로가치2",
-          date: "2021-08-27",
-          content: "배송 지역이 어디인가요?"
-        },
+        //  {
+        //   id: 1,
+        //   writer: "홀로가치2",
+        //   date: "2021-08-27",
+        //   content: "배송 지역이 어디인가요?"
+        // },
+        // {
+        //   id: 2,
+        //   writer: "홀로가치",
+        //   date: "2021-08-27",
+        //   content: "배송 지역이 어디인가요?"
+        // },
       ]
     }
     this.addComment = this.addComment.bind(this);
@@ -38,7 +38,7 @@ class Comment extends React.Component {
       this.setState({
         comments: [...this.state.comments, {
           id: this.state.comments.length + 1,
-          writer: window.sessionStorage.getItem('userId'),
+          writer: window.sessionStorage.getItem('nickname'),
           date: new Date().toISOString().slice(0, 10),
           content: value
         }]
@@ -351,22 +351,20 @@ function Board() {
                 <div className="product__details__pic">
                   <div className="product__details__pic__item">
                     <img className="product__details__pic__item--large"
-                      src={product.image} alt="" />
+                      src={product.image} alt="" id="productImg"/>
                   </div>
                 </div>
               </div>
               <div className="col-lg-6 col-md-6" id="productDetail">
                 <div className="product__details__text">
-                  <strong><span id="titleText">{product.title}</span></strong><br /><br />
+                <strong className="left"></strong><div id="nicknameText" align="left">{product.user.nickname}</div>
+                  <div id="titleText" >{product.title}</div><br />
                   <ul id="infoList">
-                    <li><span id="stepSta">{product.step}</span></li><hr />
-                    <li><strong className="left"></strong><span id="nicknameText">{product.user.nickname}</span>님이 진행합니다
-                    </li><br />
-                    <li id="priceText"><strong className="left"></strong>{product.price}원</li><br />
-                    <li><strong className="left">🗓 </strong><span id="dateMoment">{moment(product.rgstAt).format('YYYY-MM-DD')} ~ {moment(product.deadline).format('YYYY-MM-DD')}</span></li><br />
-                    <li><strong className="left">목표 인원 </strong><span id="matchingNum">{product.matching}명</span></li><br />
-                    <li><strong className="left">카테고리  : </strong>{product.category2.name}</li><hr />
-                    <li><button className="urlBtn" onClick={() => window.open(`https://${product.url}`, '_blank')}>구매 사이트</button></li><hr />
+                    <li align="left"><strong className="left"><span className="leftLabel">상태 </span></strong><span id="stepSta" align="left">{product.step}</span></li><br />
+                    <li  align="left"><strong className="left"><span className="leftLabel">가격 </span></strong><span id="priceText">{product.price}원</span></li><br />
+                    <li align="left"><strong className="left"><span className="leftLabel">기간 </span></strong><span id="dateMoment">{moment(product.rgstAt).format('YYYY-MM-DD')} ~ {moment(product.deadline).format('YYYY-MM-DD')}</span></li><br />
+                    <li align="left"><strong className="left"><span className="leftLabel">목표 </span></strong><span id="dateMoment">{product.matching}명</span></li><br />
+                    <li align="left"><button className="urlBtn" onClick={() => window.open(`https://${product.url}`, '_blank')}>구매 사이트</button></li>
                   </ul>
                   {window.sessionStorage.getItem('nickname') == product.user.nickname && <div><button id="contentModifybtn" onClick={openModal}>수정하기</button><button id="contentDeletebtn" onClick={contentDelete}>삭제하기</button></div>}
                   <Modal open={modalOpen} className="modal-body">
@@ -439,6 +437,7 @@ function Board() {
                     <span>상품 설명</span>
                     <p>{product.content}</p>
                   </div><hr />
+                  <div id="commentTitle"><CommentIcon/> 댓글</div><br /><br />
                   <Comment />
                 </div>
               </div>
