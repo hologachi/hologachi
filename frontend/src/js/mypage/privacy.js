@@ -4,6 +4,7 @@ import '../../css/modal.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import moment from 'moment';
 import DatePicker from "react-datepicker";
+import axios from "axios";
 
 const Modal = (props) => {
     const { open, close, header } = props;
@@ -18,19 +19,32 @@ const Modal = (props) => {
                     <main>
                         {props.children}
                     </main>
-                    <footer>
+                    {/* <footer>
                         <button id="close" onClick={close}>취소</button>
                         <button id="modalModifybtn" onClick={modify}> 수정하기 </button>
-                    </footer>
+                    </footer> */}
                 </section>
             ) : null}
         </div>
     )
 }
 
-function modify(){
-    alert("수정이 완료되었습니다.");
+function modify(nickname){
+    axios({
+        url: `/privacy/modify`,
+        method: 'post',
+        params: {
+          userId: window.sessionStorage.getItem('userId'),
+          modifyNickname: nickname
+        },
+        baseURL: 'http://localhost:8080/mypage',
+        headers: { "Access-Control-Allow-Origin": "*" },
+      }).then(function () {
+        alert("수정이 완료되었습니다.");
     window.location.reload();
+      }).catch(error => {
+        console.log(error.response)
+      });
 }
 
 function Privacy() {
@@ -75,9 +89,13 @@ function Privacy() {
                 </tr>
                 <tr>
                     <th>닉네임</th>
-                    <td><input type="text" value={textNick} onChange={onChangeNick} placeholder="닉네임" /></td>
+                    <td><input type="text" value={textNick} onChange={onChangeNick} placeholder="닉네임" defaultValue={window.sessionStorage.getItem('nickname')} /></td>
                 </tr>
             </table>
+            <footer>
+                        <button id="close" onClick={closeModal}>취소</button>
+                        <button id="modalModifybtn" onClick={() => modify(textNick)}> 수정하기 </button>
+                    </footer>
             </Modal>
         </div>
     )

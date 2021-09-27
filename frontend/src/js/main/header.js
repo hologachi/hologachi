@@ -74,10 +74,8 @@ export default function Header() {
                             {isLogined && <AuthGoogleLogout setIsLogined={setIsLogined}/>}
                         </div>
                         <div className="writeBtn">
-                        { isLogined && <Button href="/gb/gbwrite" className="gbwritebtn">공동구매 글쓰기</Button>}
+                        { isLogined && <button href="/gb/gbwrite" className="gbwritebtn">공동구매 글쓰기</button>}
                         </div>
-                        
-
                         {/* 로그인 안 한 경우 */}
                         {!isLogined && <AuthGoogleLogin />}
                 

@@ -8,16 +8,19 @@
     box-shadow: none;
     background-color: #0b58cc;
 } */
+#productImg{
+    border-radius: 10px;
+}
 #submit-new-comment{
     color: #fff;
-    background-color: #0d6efd;
+    background-color: #1a63b6;
     border-radius: 5px;
 }
-#submit-new-comment:hover{
-    width: 99px;
+/* #submit-new-comment:hover{
+    width: 85px;
     box-shadow: none;
-    background-color: #0b58cc;
-}
+    background-color: #1a63b6;
+} */
 #writer{
     font-size: 20px;
 }
@@ -33,15 +36,18 @@
     width: 100%;
     border-radius: 5px;
 }
+table > tr > th{
+    width: 30%;
+}
 #writerName{
-    width: 25%;
+    width: 20%;
 }
 #content{
     width: 45%;
 } 
 #date{
     width: 20%;
-}
+} 
 #commentContainer{
    margin-top: 50px;
    margin-bottom: 50px;
@@ -55,6 +61,9 @@
 #nickname{
     float: left;
 }
+.left{
+    width: 100px;
+}
 #submit-new-comment{
     float: right;
 }
@@ -65,7 +74,7 @@
     float: right;
 }
 .product__details__text{
-    margin-top: 60px;
+    margin-top: 90px;
 }
 #removebtn{
     width: 90px;
@@ -83,15 +92,23 @@
     background-color: #0d6efd;
     border-radius: 5px;
 }
-.urlBtn{
+#contentModifybtn{
+    float: right;
     color: #fff;
     background-color: #0d6efd;
     border-radius: 5px;
 }
+.urlBtn{
+    color: #fff;
+    background-color: #009b00;
+    border-radius: 5px;
+    border: none;
+    padding:8px
+}
 #priceText{
     font-size: 20px;
     font-weight: 800;
-    color: rgb(255, 115, 0);
+    color: #1a63b6;
 }
 #nicknameText{
     font-size: 20px;
@@ -104,12 +121,12 @@
 #dateMoment{
     font-size: 20px;
     font-weight: 800;
-    color: rgb(175, 100, 2);
+    color: #1a63b6;
 }
 #stepSta{
     font-size: 20px;
     font-weight: 800;
-    color: rgb(246, 20, 20);
+    color: red
 }
 #matchingNum{
     font-size: 20px;
@@ -117,9 +134,10 @@
     color: rgb(0, 26, 98);
 }
 #titleText{
-    font-size: 30px;
-    font-weight: 800;
+    font-size: 25px;
+    font-weight: 600;
     color: rgb(0, 11, 42);
+    text-align: left;
 }
 #apply{
     border: none;
@@ -127,4 +145,43 @@
     color: white;
     border-radius: 5px;
     width: 100%;
+}
+.modal-body{
+    height: 50%;
+    overflow-y: scroll;
+   
+}
+.table{
+    margin: 0;
+}
+#modalMain{
+    padding: 0;
+}
+#modalFooter{
+    padding: 5px;
+}
+#close{
+    background-color: #0d6efd;
+    color: white;
+    border-radius: 5px;
+    margin-right: 5px;
+    width: 50px;
+}
+#modalModifybtn{
+    background-color: #0d6efd;
+    color: white;
+    border-radius: 5px;
+}
+/* @media screen and (max-width: 500px) { 
+    .table { 
+        width: 70%;
+    } 
+} */
+.leftLabel{
+    width: 100px;
+}
+#commentTitle{
+    float: left;
+    font-size: 20px;
+    font-weight: 700;
 }

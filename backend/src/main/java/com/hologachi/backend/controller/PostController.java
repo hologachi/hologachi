@@ -6,21 +6,14 @@ import java.util.List;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.hologachi.backend.repository.MyRequestRepository;
-import com.hologachi.backend.repository.UserRepository;
+import com.hologachi.backend.model.*;
+import com.hologachi.backend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
-import com.hologachi.backend.model.Category2;
-import com.hologachi.backend.model.Post;
-import com.hologachi.backend.model.Ptcpt;
-import com.hologachi.backend.model.User;
-import com.hologachi.backend.repository.PostRepository;
-import com.hologachi.backend.repository.PtcptRepository;
 
 @RequestMapping("/post")
 @RestController
@@ -33,6 +26,8 @@ public class PostController {
 	PtcptRepository ptcptRepository;
 	@Autowired
 	MyRequestRepository myRequestRepository;
+	@Autowired
+	MyBookmarkRepository myBookmarkRepository;
 
 	// 모든 공동구매 목록
 	@GetMapping("")
@@ -148,7 +143,35 @@ public class PostController {
 //		int userId = 3;
 		return myRequestRepository.findByUser_UserId(userId);
 	}
-	
+
+	// 북마크 추가
+	@RequestMapping("/bookmark/{postId}/add")
+	public void addBookmark(@PathVariable("postId") int postId, @RequestParam("userId") int userId) {
+		Bookmark bookmark = new Bookmark();
+		User user = new User();
+		user.setUserId(userId);
+		bookmark.setUser(user);
+
+		Post post = new Post();
+		post.setPostId(postId);
+		bookmark.setPost(post);
+		myBookmarkRepository.save(bookmark);
+	}
+
+	// 북마크 삭제
+	@RequestMapping("/bookmark/{postId}/delete")
+	public void deleteBookmark(@PathVariable int postId, @RequestParam("userId") int userId) {
+		int bookmark = myBookmarkRepository.findByBookmark_BookmarkId(postId, userId);
+		System.out.println(bookmark);
+		myBookmarkRepository.deleteById(bookmark);
+	}
+
+	// 나의 북마크
+	@GetMapping("/bookmark")
+	public List<Bookmark> bookmarkFindByUserId(@RequestParam("userId") int userId) {
+		return myBookmarkRepository.findByUser_UserId(userId);
+	}
+
 
 //	@RequestMapping("/gb/gblist")
 //	public List<Post> postFindAll() {

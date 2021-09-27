@@ -2,11 +2,9 @@ package com.hologachi.backend.controller;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.hologachi.backend.model.Bookmark;
 import com.hologachi.backend.model.Comment;
@@ -43,8 +41,8 @@ public class MypageController {
 	
 	// 내가 작성한 글
 	@GetMapping("/mypost")
-	public List<Post> postFindByUserId() {
-		int userId = 1;
+	public List<Post> postFindByUserId(@RequestParam("userId") int userId) {
+//		int userId = 1;
 		return myPostRepository.findByUser_UserId(userId);
 	}
 	
@@ -112,11 +110,19 @@ public class MypageController {
 		int userId = 1;
 		return myBookmarkRepository.findByUser_UserId(userId);
 	}
-	
+
 	// 북마크 삭제
 	@RequestMapping("/bookmark/{bookmarkId}/delete")
 	public void deleteBookmark(@PathVariable("bookmarkId") int bookmarkId) {
 		myBookmarkRepository.deleteById(bookmarkId);
+	}
+
+	// 개인정보 수정
+	@RequestMapping("/privacy/modify")
+	public void modifyPrivacy(@RequestParam("userId") int userId, @RequestParam String modifyNickname) {
+		List<User> user = profileRepository.findByUserId(userId);
+		user.get(0).setNickname(modifyNickname);
+		profileRepository.save(user.get(0));
 	}
 	
 }

@@ -42,5 +42,8 @@ public class User {
 	
 	@Column(name="TOKEN_ID")
 	private String tokenId;
+
+	@Column(name="LOCATION")
+	private String location;
 	
 }

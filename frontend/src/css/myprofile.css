@@ -1,4 +1,4 @@
-  .card{
+  /* .card{
     color: #054231;
     width: 70%;
     height: 627px;
@@ -12,7 +12,7 @@
     animation: open .5s;
     margin-left: 14.5%;
     margin-bottom: 50px;
-  }
+  } */
   form{
     display: flex;
     justify-content: center;
@@ -25,6 +25,14 @@
   } */
   .nickname{
     text-align: center;
+  }
+  .dealRate{
+    color: coral;
+  }
+  .info{
+    font-weight: 800;
+    font-size: 20px;
+    margin-bottom: 15px;
   }
   .field{
     margin: 5px;
@@ -45,23 +53,30 @@
     margin-bottom: 25px;
   }
   .menu > button{
-    background-color: rgb(251, 209, 118);
-    border-radius: 10px;
+    background-color: rgb(98, 98, 98);
+    border-radius: 5px;
     margin: 10px;
     margin-top: 30px;
     padding: 5px;
-    border: 1px solid rgb(218, 167, 74)
+    border: 1px solid rgb(218, 167, 74);
+    padding: 10px;
   }
   .menu > button:hover{
-    background-color: rgb(255, 193, 60);
-    border: 1px solid rgb(218, 167, 74)
+    background-color: rgb(182, 142, 55);
+    border: 1px solid rgb(182, 142, 55);
   }
   .img-wrap{
-    width: 200px;
-    height: 200px;
-    overflow: hidden;
+    height: 10%;
     border-radius: 50%;
-    background: linear-gradient(270deg, #3fa1a9, #79f1a4);
+    margin-bottom: 30px;
+    margin-top: 30px;
+  }
+  .proImg{
+    width: 30%;
+    background-color: rgb(74, 151, 223);
+    border-radius: 50%;
+    text-align: center;
+    
   }
   .img-upload:before{
     content: url("https://i.postimg.cc/FFwPZV2K/photo.png");
@@ -157,3 +172,8 @@
   button:focus{
     outline: none;
   } */
+  .btn-group{
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }

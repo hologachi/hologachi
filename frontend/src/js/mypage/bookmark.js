@@ -4,148 +4,17 @@ import '../../css/mywriting.css'
 import '../../css/applygb.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
-import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
-import { Link } from "react-router-dom";
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import axios from "axios";
 import moment from 'moment';
-// import filterFactory from "react-bootstrap-table2-filter";
-// import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
-// import BootstrapTable from 'react-bootstrap-table-next';
-// import paginationFactory from "react-bootstrap-table2-paginator";
-// import productsData from "../ProductData";
-// import { Link } from "react-router-dom";
-
-// const { SearchBar } = Search;
-
-// const productFormatter = () => {
-//   const products = productsData.map(product => {
-//   return (
-//     <Link to={`/gb/gbdetail/${product.id}`}>상세보기</Link>
-//   );
-// });
-// return(
-//   <div>
-//  {products}
-//   </div>
- 
-// )
-// }
-
-// class Board extends React.Component{
-    
-//   columns = [{
-//     dataField: 'id',
-//     text: 'id',
-//     hidden: true,
-//   }, {
-//     dataField: 'date',
-//     text: '신청일',
-//     sort: true,
-//     headerStyle: () => {
-//       return { width: "13%" };
-//     }
-//   }, {
-//     dataField: 'category',
-//     text: '카테고리',
-//     headerStyle: () => {
-//       return { width: "15%" };
-//     }
-//   }, {
-//     dataField: 'title',
-//     text: '제목',
-//   }, {
-//     dataField: 'proposer',
-//     text: '제안자',
-//     headerStyle: () => {
-//       return { width: "15%" };
-//     }
-//   }, {
-//     dataField: 'status',
-//     text: '진행상황',
-//     headerStyle: () => {
-//       return { width: "13%" };
-//     }
-//   },{
-//     dataField: 'follow',
-//     text: '',
-//     headerStyle: () => {
-//       return { width: "13%" };
-//     },
-//     formatter: productFormatter
-//   }
-// ];
-
-//   render() {
-//     return (
-//       <div className="container py-4">
-
-//       <div className="row align-items-md-stretch">
-//         <div className="col-lg-12 py-2">
-//           <div className=" h-100 p-5 bg-light border shadow rounded" id="page_title">
-//             신청한 글
-//           </div>
-//         </div>
-//       </div>
-
-//       <div className="row align-items-md-stretch">
-//         <div className="col-lg-2 py-2">
-//           <div className=" h-100 p-2 bg-light border shadow rounded" id="page_menu">
-//             <SideMenu />
-//           </div>
-//         </div>
-//         <div className="col-lg-10 py-2">
-//           <div className=" h-100 p-5 bg-light border shadow rounded" id="boottable">
-//           <ToolkitProvider
-//           bootstrap4
-//           keyField="id"
-//           data={productsData}
-//           columns={this.columns}
-//           search
-//         >
-//           {props => (
-//             <div>
-//             <SearchBar 
-//                 {...props.searchProps}
-//                 style={{ width: "300px", height: "40px" }}
-//               />
-              
-//               <BootstrapTable
-//                 {...props.baseProps}
-//                 filter={filterFactory()}
-//                 noDataIndication="There is no solution"
-//                 hover
-//                 deleteRow
-//                 pagination={paginationFactory({ sizePerPage: 10, display:'flex'}) }
-//               />
-//             </div>
-//           )}
-//         </ToolkitProvider>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//     )
-//   }
-// }
-
-
-const StyledTableCell = withStyles((theme) => ({
-  head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  body: {
-    fontSize: 14,
-  },
-}))(TableCell);
+import { CardHeader } from "reactstrap";
+import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore';
 
 const useStyles = makeStyles({
   table: {
@@ -193,31 +62,33 @@ function Mypost() {
 
   return (
     <div>
+     <CardHeader className="border-0">
+        <h3 className="mb-1 mt-1" id="tableTitle"><LocalGroceryStoreIcon id="createIcon" />북마크</h3>
+      </CardHeader>
           <TableContainer component={Paper}>
         <Table className={classes.table} size="small" aria-label="a dense table">
-          <TableHead>
-            <TableRow className="table_box">
-            <StyledTableCell align="center" width="5%">제안자</StyledTableCell>
-              <StyledTableCell align="center" width="22%">공구 기간</StyledTableCell>
-              <StyledTableCell align="center">제목</StyledTableCell>
-              <StyledTableCell align="center" width="15%">가격</StyledTableCell>
-              <StyledTableCell align="center" width="15%">목표 인원</StyledTableCell>
-              <StyledTableCell align="center" width="8%">진행상황</StyledTableCell>
-              <StyledTableCell align="center" width="10%" >삭제</StyledTableCell>
-            </TableRow>
-          </TableHead>
+        <thead className="thead-light" id="mywriteTitle">
+            <tr>
+              <th scope="col">제안자</th>
+              <th scope="col">공구기간</th>
+              <th scope="col">제목</th>
+              <th scope="col">가격</th>
+              <th scope="col">진행상황</th>
+              <th scope="col">삭제</th>
+            </tr>
+          </thead>
           <TableBody>
           {Object.values(testStr).map(product => (
               <TableRow key={product.postId} hover>
-              <StyledTableCell align="center">{product.post.user.nickname}</StyledTableCell>
-                <StyledTableCell align="center">{moment(product.rgstAt).format('YYYY-MM-DD')} ~ {moment(product.deadline).format('MM-DD')}</StyledTableCell>
-                <Link to={`/gb/gbdetail/${product.post.postId}`}>
-                <StyledTableCell align="center">{product.post.title}</StyledTableCell>
-                </Link>
-                <StyledTableCell align="center">{product.post.price}원</StyledTableCell>
-                <StyledTableCell align="center">{product.post.matching}명</StyledTableCell>
-                <StyledTableCell align="center">{product.post.step}</StyledTableCell>
-                <StyledTableCell align="center"><button onClick={()=> bookmarkDelete(product.bookmarkId)}>삭제</button></StyledTableCell>
+              <td align="center">{product.post.user.nickname}</td>
+                <td align="center">{moment(product.rgstAt).format('YYYY-MM-DD')} ~ {moment(product.deadline).format('MM-DD')}</td>
+                <a href={`/gb/gbdetail/${product.post.postId}`}>
+                <td align="center">{product.post.title}</td>
+                </a>
+                <td align="center">{product.post.price}원</td>
+                <td align="center">{product.post.matching}명</td>
+                <td align="center">{product.post.step}</td>
+                <td align="center"><button onClick={()=> bookmarkDelete(product.bookmarkId)}>삭제</button></td>
               </TableRow>
               ))}
           </TableBody>
@@ -231,26 +102,18 @@ function Mypost() {
 export default function applygb(){
   return (
     <div className="container py-4">
-    <div className="row align-items-md-stretch">
-      <div className="col-lg-12 py-2">
-        <div className=" h-100 p-5 bg-light border shadow rounded" id="page_title">
-          북마크
+      <div className="row align-items-md-stretch">
+        <div className="col-lg-2 py-2">
+          <div className=" h-100 p-2 bg-light border shadow rounded" id="page_menu">
+            <SideMenu />
+          </div>
+        </div>
+        <div className="col-lg-10 py-2">
+          <div className=" h-100 p-5 bg-light border shadow rounded" id="boottable">
+            <Mypost />
+          </div>
         </div>
       </div>
     </div>
-
-    <div className="row align-items-md-stretch">
-      <div className="col-lg-2 py-2">
-        <div className=" h-100 p-2 bg-light border shadow rounded" id="page_menu">
-          <SideMenu />
-        </div>
-      </div>
-      <div className="col-lg-10 py-2">
-        <div className=" h-100 p-5 bg-light border shadow rounded" id="boottable">
-        <Mypost></Mypost>
-        </div>
-      </div>
-    </div>
-  </div>
   )
 }
