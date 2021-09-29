@@ -5,6 +5,7 @@ import { Table, Button } from 'react-bootstrap';
 import AdminNav from "./adminNav"
 import '../../css/adminpage.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import AdminSearch from "./adminSearch"
 import AdminService from '../services/AdminService'; //백엔드 연결
 
 function ManageGB(){
@@ -100,6 +101,7 @@ function ManageGB(){
             <AdminNav />
             <div className="GBList">
             <h2>공동구매 목록</h2>
+            <AdminSearch />
                 {   gbs && <BootstrapTable keyField='ptcptId' data={ gbs } columns={ columns } striped hover condensed wrapperClasses="table-responsive" pagination={ paginationFactory() }/> }
            </div>
          </div>

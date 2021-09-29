@@ -2,9 +2,10 @@ import React, {useState, useEffect} from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import { Table, Button, Modal } from 'react-bootstrap';
-import AdminNav from "./adminNav"
 import '../../css/adminpage.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import AdminNav from "./adminNav"
+import AdminSearch from "./adminSearch"
 import AdminService from '../services/AdminService'; //백엔드 연결
 
 function ManageGBPost() {
@@ -164,9 +165,8 @@ function ManageGBPost() {
             <AdminNav />
             <div className="managePost_body">
                 <div className="postList">
-                    <br/>
                     <h2>공동구매 글</h2>
-                    <br/>
+                    <AdminSearch />
                     {   gbPosts && <BootstrapTable keyField='postId' data={ gbPosts } columns={ columns } striped hover condensed wrapperClasses="table-responsive" pagination={ paginationFactory() }/> }
 
                     {/* 댓글 조회용 모달 */}

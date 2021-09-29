@@ -6,6 +6,7 @@ import '../../css/adminpage.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import AdminNav from "./adminNav"
+import AdminSearch from "./adminSearch"
 import AdminService from '../services/AdminService'; //백엔드 연결
 
 function ManageUser() {
@@ -206,6 +207,7 @@ function ManageUser() {
             
             <div className="userList">
                 <h2>사용자 목록</h2>
+                <AdminSearch />
                 {   users && <BootstrapTable keyField='userId' data={ users } columns={ columns } striped hover condensed wrapperClasses="table-responsive" pagination={ paginationFactory() }/> }
 
                 {/* 권한 수정 관련 모달 */}
