@@ -1,7 +1,6 @@
 import React from 'react';
 import '../../css/adminpage.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Link } from "react-router-dom";
 
 function adminNav() {
     return (

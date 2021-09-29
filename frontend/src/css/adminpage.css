@@ -3,8 +3,8 @@
     color: #fafafa;
 }
 .smallUserProfile {
-    width : 80px;
-    height: 80px;
+    width : 50px;
+    height: 50px;
 }
 
 .wrapper {
@@ -101,5 +101,10 @@
     font-size: 0.9em !important;
     padding-left: 30px !important;
     background: #a3a3a3;
+  }
+
+  .react-bootstrap-table table {
+    table-layout: auto;
+    width: 100%;
   }
   
