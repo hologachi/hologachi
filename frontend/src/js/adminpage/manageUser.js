@@ -12,7 +12,7 @@ import AdminService from '../services/AdminService'; //백엔드 연결
 function ManageUser() {
 
     const [users, setUsers] = useState(null);
-    const [userList, setUserList] = useState(null);
+    // const [userList, setUserList] = useState(null);
     const [userPost, setUserPost] = useState(null);
 
     const columns = [{
@@ -51,7 +51,7 @@ function ManageUser() {
 
     function ImageFormatter(cell, row) {
         return (
-            <img className="smallUserProfile" src={cell}/>
+            <img className="smallUserProfile" src={cell} alt="없음"/>
         );
     }
 

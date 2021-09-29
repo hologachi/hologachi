@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
-import { Table, Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import AdminNav from "./adminNav"
 import '../../css/adminpage.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -43,7 +43,7 @@ function ManageGB(){
     ];	
     
     function RateFormatter(cell, row) {
-        if (cell == '') {
+        if (cell === '') {
             return "미등록";
         }
         return cell;

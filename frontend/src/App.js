@@ -30,6 +30,11 @@ import  ChatroomList  from "./js/chat/chatList";
 import  Chatroom  from "./js/chat/chatMessage";
 import  Login  from "./js/login/login";
 
+import EventList from "./js/event/eventList";
+
+import DonationApply from "./js/donation/donationApply";
+import MyDonation from "./js/donation/myDonation";
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // function App() {
@@ -104,6 +109,13 @@ function App() {
           <Route path="/mypage/privacy" component={Privacy} />
           <Route path="/mypage/mypost/:postId/:ptcptId" component={ReqUserProfile} />
           <Route path="/mypage/myrequest/sgstProfile/:ptcptId" component={SgstProfile} />
+
+          {/* Event */}
+          <Route path="/event" component={EventList} />
+
+          {/* Donation */}
+          <Route path="/donation" component={DonationApply} />
+          <Route path="/donation/my" component={MyDonation} />
 
           {/* AdminPage */}
           <Route path="/admin/mUser" component={MUser} />

@@ -53,9 +53,18 @@ export default function Header() {
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="#action/3.7">평점 등록</NavDropdown.Item>
                         </NavDropdown> }
+
+                        <Nav.Link href="/event" className="menu">EVENT</Nav.Link>
                        
                         { isLogined && <Nav.Link href="/chatList" className="menu">채팅</Nav.Link>}
+
+                        <NavDropdown title="기부" id="basic-nav-dropdown">
+                            <NavDropdown.Item href="/donation">기부하기</NavDropdown.Item>
+                            <NavDropdown.Item href="/donation/my">나의 기부</NavDropdown.Item>
+                        </NavDropdown> 
+                        
                         { isAdmin == 1 && <Nav.Link href="/admin/mUser" className="menu">관리자 페이지</Nav.Link>}
+
                     </Nav>
                     <div  id="totalSearchForm">
                     <form className="searchform">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Button } from 'react-bootstrap';
 // import AdminService from '../services/AdminService'; //백엔드 연결
 
