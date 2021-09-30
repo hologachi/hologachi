@@ -9,11 +9,34 @@ import ImageUploading from 'react-images-uploading';
 import { PictureOutlined } from '@ant-design/icons';
 import axios from "axios";
 
-function Location(){
-  return(
-    <div>공동구매 지역 설정</div>
+var geolocation = require('geolocation')
 
-  )
+geolocation.getCurrentPosition(function (err, position) {
+  if (err) throw err
+  let latitude = position.coords.latitude
+  let longtitude = position.coords.longitude
+  GetLoc(latitude,longtitude)
+})
+
+const API_KEY = "AIzaSyBvBhrhLvIwa2ytO9wOfmwHJYBwdZOK740";
+
+const currentLoc = document.getElementById('#currentLoc');
+
+function GetLoc(lat, lon){
+  fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}2&key=${API_KEY}`)
+  .then(function(response){
+      return response.json();
+  }).then(function(json){
+      // const temp = json.main.temp;
+      // const place = json.name;
+      // const status = json.weather[0].main;
+      // const html = '<div>신청취소</div>';
+      // currentLoc.innerHTML = html
+      // currentLoc.innerHTML = `[현재위치] : ${json.results[4].address_components[1]} ${json.results[4].address_components[2]}`
+
+      console.log(json.results[4].address_components[1]);
+      console.log(json.results[4].address_components[2]);
+  }).catch(error => console.log('error', error));
 }
 
 
@@ -270,7 +293,9 @@ return(
         </strong></h5></Form.Label>
         <Form.Control as="textarea" cols={70} rows={5} placeholder="Content" style={{ resize: "none" }} value={content} onChange={handelChangeContent} />
       </Form.Group><br />
-      <Location />
+      <div id="currentLoc">
+        {/* <GetLoc/> */}
+      </div>
       <Button id="submitbtn" onClick={addContent}>추가</Button>
     </div>
   </div>

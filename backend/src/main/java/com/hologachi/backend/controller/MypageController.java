@@ -1,6 +1,10 @@
 package com.hologachi.backend.controller;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,8 +58,16 @@ public class MypageController {
 	
 	// 작성한 글의 신청자 프로필
 	@RequestMapping("/mypost/{postId}/{ptcptId}")
-	public Ptcpt rqsterFindByPtcptId(@PathVariable("postId") int postId, @PathVariable("ptcptId") int ptcptId) {
-		return myRequestRepository.findByPtcptId(ptcptId);
+	public ArrayList rqsterFindByPtcptId(@PathVariable("postId") int postId, @PathVariable("ptcptId") int ptcptId) {
+		User user =  myRequestRepository.findByPtcptId(ptcptId).getUser();
+		String nickname = user.getNickname();
+		String rate = user.getDealRate();
+		HashMap map = new HashMap();
+		map.put("nickname",nickname);
+		map.put("rate",rate);
+		ArrayList list = new ArrayList();
+		list.add(map);
+		return list;
 	}
 	
 	// 작성한 글 신청 수락 처리
