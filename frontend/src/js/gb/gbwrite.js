@@ -9,35 +9,7 @@ import ImageUploading from 'react-images-uploading';
 import { PictureOutlined } from '@ant-design/icons';
 import axios from "axios";
 
-var geolocation = require('geolocation')
-
-geolocation.getCurrentPosition(function (err, position) {
-  if (err) throw err
-  let latitude = position.coords.latitude
-  let longtitude = position.coords.longitude
-  GetLoc(latitude,longtitude)
-})
-
 const API_KEY = "AIzaSyBvBhrhLvIwa2ytO9wOfmwHJYBwdZOK740";
-
-const currentLoc = document.getElementById('#currentLoc');
-
-function GetLoc(lat, lon){
-  fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}2&key=${API_KEY}`)
-  .then(function(response){
-      return response.json();
-  }).then(function(json){
-      // const temp = json.main.temp;
-      // const place = json.name;
-      // const status = json.weather[0].main;
-      // const html = '<div>신청취소</div>';
-      // currentLoc.innerHTML = html
-      // currentLoc.innerHTML = `[현재위치] : ${json.results[4].address_components[1]} ${json.results[4].address_components[2]}`
-
-      console.log(json.results[4].address_components[1]);
-      console.log(json.results[4].address_components[2]);
-  }).catch(error => console.log('error', error));
-}
 
 
 function UploadImage() {
@@ -133,6 +105,7 @@ function Board() {
   const [price, setPrice] = useState('')
   const [url, setUrl] = useState('')
   const [content, setContent] = useState('')
+  const [location, setLocation] = useState('')
 
   const [postfiles, setPostfiles] = useState({
     file: [],
@@ -187,7 +160,8 @@ function Board() {
         deletedBy: -1,
         price: price,
         url: url,
-        step:"proceed"
+        step:"proceed",
+        location: location
       },
       params: {
         userId: window.sessionStorage.getItem('userId')
@@ -201,6 +175,32 @@ function Board() {
       console.log(error.response)
   });
   };
+
+
+
+  var geolocation = require('geolocation')
+
+geolocation.getCurrentPosition(function (err, position) {
+  if (err) throw err
+  let latitude = position.coords.latitude
+  let longtitude = position.coords.longitude
+  GetLoc(latitude,longtitude)
+})
+
+function GetLoc(lat, lon){
+  fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}2&key=${API_KEY}`)
+  .then(function(response){
+      return response.json();
+  }).then(function(json){
+    const currentLoc = document.querySelector('.currentLoc')
+    const loc = json.results[3].formatted_address;
+    setLocation(loc);
+    // console.log(json.results[4].formatted_address);
+    let location = `<span>${loc}</span>`;
+    currentLoc.innerHTML = location
+  }).catch(error => console.log('error', error));
+}
+// console.log(location);
 
 return(
 <div id="container" className="container">
@@ -292,10 +292,9 @@ return(
         상품 소개 및 설명
         </strong></h5></Form.Label>
         <Form.Control as="textarea" cols={70} rows={5} placeholder="Content" style={{ resize: "none" }} value={content} onChange={handelChangeContent} />
-      </Form.Group><br />
-      <div id="currentLoc">
-        {/* <GetLoc/> */}
-      </div>
+      </Form.Group>
+      <span id="locComment">현재위치로 공동구매가 등록됩니다.</span>
+      <div className="currentLoc"></div><br />
       <Button id="submitbtn" onClick={addContent}>추가</Button>
     </div>
   </div>
