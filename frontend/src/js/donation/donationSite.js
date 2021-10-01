@@ -1,10 +1,9 @@
-import '../../css/chat.css';
+import '../../css/donation.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
-import BootstrapTable from 'react-bootstrap-table-next';
-import paginationFactory from 'react-bootstrap-table2-paginator';
+import { Grid } from "@material-ui/core";
+import { Card, Button } from 'react-bootstrap';
 import DonationService from '../services/DonationService';
-import { Form, Button } from 'react-bootstrap';
 
 function DonationSite() {
 
@@ -44,10 +43,31 @@ function DonationSite() {
     return (
         <div className="donationSite">
             <div className="donationSiteListDescription">
-                <h2>물품 기부 사이트</h2>
+                <h2>물품기부 사이트</h2>
                 <p></p>
             </div>
-            {   sites && <BootstrapTable keyField='siteId' data={ sites } columns={ columns } striped hover condensed wrapperClasses="table-responsive" pagination={ paginationFactory() }/> }
+            
+            <div className="donationCard" >
+            <Grid container spacing={4}>
+            { sites && sites.length > -1 ? 
+                (sites.map(site => 
+                    <Grid item xs={6} sm={3}>
+                    <Card style={{ margin: '0px' }}>
+                    <Card.Img variant="top" src={site.logo} alt={site.name} style={{ padding:'20px' }}/>
+                    <Card.Body>
+                        <Card.Title></Card.Title>
+                        <Card.Text>
+                        {site.description}
+                        </Card.Text>
+                        <Button variant="primary" href={site.site}>사이트로 이동</Button>
+                        </Card.Body>
+                    </Card> 
+                    </Grid>
+                )) : ( <h1>No results found!</h1>)
+            }
+            </Grid>
+            </div>
+
         </div>
     );
 }

@@ -22,16 +22,16 @@ public class DonationSite {
 		@Column(name="D_SITE_ID")
 		private int dSiteId;
 		
-		@JoinColumn(name="NAME")
+		@Column(name="NAME")
 		private String name;
 		
-		@JoinColumn(name="SITE")
+		@Column(name="SITE")
 		private String site;
 		
-		@JoinColumn(name="DESCRIPTION")
+		@Column(name="DESCRIPTION")
 		private String description;
 		
-		@JoinColumn(name="LOGO")
+		@Column(name="LOGO")
 		private String logo;
 		
 	}

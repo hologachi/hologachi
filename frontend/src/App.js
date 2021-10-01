@@ -30,7 +30,7 @@ import  ChatroomList  from "./js/chat/chatList";
 import  Chatroom  from "./js/chat/chatMessage";
 import  Login  from "./js/login/login";
 
-import EventList from "./js/event/eventList";
+import BrandEventList from "./js/brandEvent/brandEventList";
 
 import DonationSite from "./js/donation/donationSite";
 // import DonationApply from "./js/donation/donationApply";
@@ -112,7 +112,7 @@ function App() {
           <Route path="/mypage/myrequest/sgstProfile/:ptcptId" component={SgstProfile} />
 
           {/* Event */}
-          <Route path="/event" component={EventList} />
+          <Route path="/brandEvent" component={BrandEventList} />
 
           {/* Donation */}
           <Route path="/donation/site" component={DonationSite} />

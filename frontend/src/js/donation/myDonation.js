@@ -1,4 +1,4 @@
-import '../../css/chat.css';
+import '../../css/donation.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
 import DonationService from '../services/DonationService';

@@ -54,7 +54,7 @@ export default function Header() {
                             <NavDropdown.Item href="#action/3.7">평점 등록</NavDropdown.Item>
                         </NavDropdown> }
 
-                        <Nav.Link href="/event" className="menu">EVENT</Nav.Link>
+                        <Nav.Link href="/brandEvent" className="menu">B-EVENT</Nav.Link>
                        
                         { isLogined && <Nav.Link href="/chatList" className="menu">채팅</Nav.Link>}
 
