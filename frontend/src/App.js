@@ -32,8 +32,9 @@ import  Login  from "./js/login/login";
 
 import EventList from "./js/event/eventList";
 
-import DonationApply from "./js/donation/donationApply";
-import MyDonation from "./js/donation/myDonation";
+import DonationSite from "./js/donation/donationSite";
+// import DonationApply from "./js/donation/donationApply";
+// import MyDonation from "./js/donation/myDonation";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -114,8 +115,9 @@ function App() {
           <Route path="/event" component={EventList} />
 
           {/* Donation */}
-          <Route path="/donation" component={DonationApply} />
-          <Route path="/donation/my" component={MyDonation} />
+          <Route path="/donation/site" component={DonationSite} />
+          {/* <Route path="/donation/apply" component={DonationApply} /> */}
+          {/* <Route path="/donation/my" component={MyDonation} /> */}
 
           {/* AdminPage */}
           <Route path="/admin/mUser" component={MUser} />

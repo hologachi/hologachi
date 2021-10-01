@@ -58,10 +58,12 @@ export default function Header() {
                        
                         { isLogined && <Nav.Link href="/chatList" className="menu">채팅</Nav.Link>}
 
-                        <NavDropdown title="기부" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="/donation">기부하기</NavDropdown.Item>
+                        <Nav.Link href="/donation/site" className="menu">기부사이트</Nav.Link>
+                        {/* <NavDropdown title="기부" id="basic-nav-dropdown">
+                            <NavDropdown.Item href="/donation/apply">기부하기</NavDropdown.Item>
                             <NavDropdown.Item href="/donation/my">나의 기부</NavDropdown.Item>
-                        </NavDropdown> 
+                            <NavDropdown.Item href="/donation/site">기부 사이트</NavDropdown.Item>
+                        </NavDropdown>  */}
                         
                         { isAdmin == 1 && <Nav.Link href="/admin/mUser" className="menu">관리자 페이지</Nav.Link>}
 

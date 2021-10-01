@@ -13,9 +13,9 @@
   }
   
   #sidebar {
-    min-width: 250px;
-    max-width: 250px;
-    min-height: 100vh;
+    min-width: 200px;
+    max-width: 200px;
+    min-height: 75vh;
   }
   
   #sidebar.active {
@@ -56,7 +56,6 @@
   }
   
   #sidebar {
-    /* don't forget to add all the previously mentioned styles here too */
     background: #f8f8f8;
     color: #777;
     transition: all 0.3s;
@@ -104,7 +103,7 @@
   }
 
   .react-bootstrap-table table {
-    table-layout: auto;
-    width: 100%;
+    min-height: 75vh;
+    font-size: 0.9em;
   }
   
