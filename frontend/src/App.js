@@ -33,8 +33,8 @@ import  Login  from "./js/login/login";
 import BrandEventList from "./js/brandEvent/brandEventList";
 
 import DonationSite from "./js/donation/donationSite";
-// import DonationApply from "./js/donation/donationApply";
-// import MyDonation from "./js/donation/myDonation";
+import DonationApply from "./js/donation/donationApply";
+import MyDonation from "./js/donation/myDonation";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -116,8 +116,8 @@ function App() {
 
           {/* Donation */}
           <Route path="/donation/site" component={DonationSite} />
-          {/* <Route path="/donation/apply" component={DonationApply} /> */}
-          {/* <Route path="/donation/my" component={MyDonation} /> */}
+          <Route path="/donation/apply" component={DonationApply} /> 
+          <Route path="/donation/my" component={MyDonation} />
 
           {/* AdminPage */}
           <Route path="/admin/mUser" component={MUser} />

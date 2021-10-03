@@ -4,11 +4,11 @@ const DONATION_URL = "http://localhost:8080/donation";
 
 class DonationService {
     getMyDonation(userId) {
-        return axios.post(DONATION_URL + "/my" + userId);
+        return axios.post(DONATION_URL + "/my", {userId: userId});
     }
 
     applyDonation(userId, data) {
-        return axios.post(DONATION_URL + "/apply", {userId: userId});
+        return axios.post(DONATION_URL + "/apply/" + userId, data);
     }
 
     getDonationSites() {
