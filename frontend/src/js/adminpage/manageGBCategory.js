@@ -4,6 +4,7 @@ import { Hint } from 'react-autocomplete-hint';
 import AdminNav from "./adminNav"
 import '../../css/adminpage.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import AdminSearch from "./adminSearch"
 import AdminService from '../services/AdminService'; //백엔드 연결
 
 
@@ -168,9 +169,8 @@ class manageGBCategory extends Component {
                 <AdminNav />
 
                 <div className="categoryList">
-                    <br/>
                     <h2>카테고리 목록</h2>
-                    <br/>
+                    <AdminSearch />
                     {/* <form onSubmit={() => {this.state.handleDelete()}}> */}
                     <Table striped bordered hover>
                         <thead>

@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import axios from 'axios';
 import { refreshTokenSetup } from './refreshTokenSetup';
 
-const clientId = "866725412925-ftovfr48c7hbbdm5l96ebaqsc52hodbf.apps.googleusercontent.com";
+const clientId = `${process.env.REACT_APP_API_KEY}`;
 const redirect_uri = "http://localhost:3000/home";
 const LOGIN_URL = "http://localhost:8080/login/google";
 

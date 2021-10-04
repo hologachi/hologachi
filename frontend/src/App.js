@@ -26,14 +26,21 @@ import  MUser  from "./js/adminpage/manageUser";
 import  MGB  from "./js/adminpage/manageGB";
 import  MGBPost  from "./js/adminpage/manageGBPost";
 import  MGBCategory  from "./js/adminpage/manageGBCategory";
-import  Chat  from "./js/chat/chatList";
+import  ChatroomList  from "./js/chat/chatList";
+import  Chatroom  from "./js/chat/chatMessage";
+import  Login  from "./js/login/login";
+
+import EventList from "./js/event/eventList";
+
+import DonationApply from "./js/donation/donationApply";
+import MyDonation from "./js/donation/myDonation";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
     <div className="App">
-    <Header />
+    {window.location.pathname.includes("/chat/", 0) ? null : <Header />}
       <BrowserRouter>
         <Switch>
           {/* Home */}
@@ -58,14 +65,28 @@ function App() {
           <Route path="/mypage/mypageside" component={Sidemenu} />
           <Route path="/mypage/commentwrite" component={Comment} />
           <Route path="/mypage/privacy" component={Privacy} />
-            <Route path="/mypage/mypost/:postId/:ptcptId" component={ReqUserProfile} />
-            <Route path="/mypage/myrequest/sgstProfile/:ptcptId" component={SgstProfile} />
+          <Route path="/mypage/mypost/:postId/:ptcptId" component={ReqUserProfile} />
+          <Route path="/mypage/myrequest/sgstProfile/:ptcptId" component={SgstProfile} />
 
+          {/* Event */}
+          <Route path="/event" component={EventList} />
+
+          {/* Donation */}
+          <Route path="/donation" component={DonationApply} />
+          <Route path="/donation/my" component={MyDonation} />
+
+          {/* AdminPage */}
           <Route path="/admin/mUser" component={MUser} />
           <Route path="/admin/mGB" component={MGB} />
           <Route path="/admin/mGBPost" component={MGBPost} />
           <Route path="/admin/mGBCategory" component={MGBCategory} />
-          <Route path="/chat/List" component={Chat} />
+
+          {/* Chat */}
+          <Route path="/chatList" component={ChatroomList} />
+          <Route path="/chat/:chatroomId" component={Chatroom} />
+
+          {/* login */}
+          <Route path="/login" component={Login} />
 
         </Switch>
       </BrowserRouter>

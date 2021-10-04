@@ -42,7 +42,7 @@ public class ChatRoomController {
 		if(foundPtcpt.isPresent()) {
 			Ptcpt updatePtcpt = foundPtcpt.get();
 			
-			updatePtcpt.setRateDeal(data.get("rating"));
+//			updatePtcpt.setRateDeal(data.get("rating"));
 			updatePtcpt.setStep("finish");
 			System.out.println(updatePtcpt.toString());
 			ptcptRepository.save(updatePtcpt);
