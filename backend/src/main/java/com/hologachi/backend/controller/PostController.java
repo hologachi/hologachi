@@ -1,10 +1,8 @@
 package com.hologachi.backend.controller;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Logger;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -113,12 +111,6 @@ public class PostController {
 	public List<Post> searchPost(@PathVariable String keyword) {
 		return postRepository.searchByTitle(keyword);
 	}
-
-	// 공동구매 자동종료
-//	@GetMapping("/autofinish")
-//	public List<Post> autofinishPost() {
-//		return postRepository.finishPost();
-//	}
 	
 //	@GetMapping("/requestsort")
 //	public List<Ptcpt> searchRqstSort() {
@@ -179,6 +171,7 @@ public class PostController {
 	public List<Bookmark> bookmarkFindByUserId(@RequestParam("userId") int userId) {
 		return myBookmarkRepository.findByUser_UserId(userId);
 	}
+
 
 //	@RequestMapping("/gb/gblist")
 //	public List<Post> postFindAll() {

@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,11 +27,12 @@ public class Scheduler {
     }
 
 //    @Scheduled(cron = "0 * * * * *")	// 1분마다
-//    public void test3() throws Exception {
+//    public void autoFinish2() throws Exception {
 //        List<Post> post = postRepository.finishPost();
 //        for(int i=0; i<post.size(); i++){
 //            post.get(i).setStep("finish");
 //            postRepository.save(post.get(i));
 //        }
+//        System.out.println(post.size());
 //    }
 }

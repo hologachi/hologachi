@@ -21,7 +21,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 
 	LocalDate now = LocalDate.now();
 
- 	@Query("select p from Post p where p.deadline = DATE_ADD(CURDATE(), interval -1 day)")
+ 	@Query(value = "select * from TBL_POST where deadline < CURDATE()", nativeQuery = true)
 	public List<Post> finishPost();
 
 
