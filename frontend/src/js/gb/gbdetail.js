@@ -338,6 +338,8 @@ function Board() {
 
   console.log(requestStr);
   let arr = Object.values(requestStr).map(product => (product.post.postId));
+  let userStep = Object.values(requestStr).map(product => (product.step));
+  console.log(userStep);
   let bookarr = Object.values(bookStr).map(product => (product.post.postId));
   console.log(bookarr);
 
@@ -426,6 +428,10 @@ function Board() {
                             {bookarr.includes(Object.values(testStr).map(product => product.postId)[0]) && <a href="#" className="heart-icon" onClick={bookmarkremove} id="likebtn2"><FavoriteIcon /></a>}
                           </div>
                         </div>}
+                        <div id="chatDiv">
+                        {userStep[0] == "agree" &&  arr.includes(Object.values(testStr).map(product => product.postId)[0]) && <button align="left" id="chat" value="chat" >채팅</button>}
+                        </div>
+                        
                       </div>
                     </div>
                   </div>
@@ -435,7 +441,7 @@ function Board() {
                 <div className="product__details__tab">
                   <div>
                     <span>상품 설명</span>
-                    <p>{product.content}</p>
+                    <p id="productContent">{product.content}</p>
                   </div><hr />
                   <div id="commentTitle"><CommentIcon/> 댓글</div><br /><br />
                   <Comment />

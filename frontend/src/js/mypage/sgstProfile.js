@@ -32,8 +32,7 @@ import axios from "axios";
           <div className="img-wrap" >
           <img className="pr" src="https://i.postimg.cc/7LT6kXtR/user.png" alt="" />
         </div><br />
-        <div className="grade"><span>제시자로서 평점 : </span>{testStr.user.sgst_rate}</div>
-        <div className="name"><span>신청자로서 평점 : </span>{testStr.user.rqst_rate}</div>
+        <div className="grade"><span>평점 : </span>{testStr.user.deal_rate}</div>
         </div>
       );
   }

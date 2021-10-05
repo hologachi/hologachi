@@ -38,8 +38,8 @@ public class MypageController {
 	
 	// 프로필
 	@GetMapping("/mypage/profile")
-	public List<User> userFindByUserId() {
-		int userId = 3;
+	public List<User> userFindByUserId(@RequestParam("userId") int userId) {
+//		int userId = 3;
 		return profileRepository.findByUserId(userId);
 	}
 	
@@ -97,8 +97,8 @@ public class MypageController {
 	
 	// 내가 신청한 글
 	@GetMapping("/myrequest")
-	public List<Ptcpt> requestFindByUserId() {
-		int userId = 3;
+	public List<Ptcpt> requestFindByUserId(@RequestParam("userId") int userId) {
+//		int userId = 3;
 		return myRequestRepository.findByUser_UserId(userId);
 	}
 
@@ -111,15 +111,15 @@ public class MypageController {
 	
 	// 내가 작성한 댓글
 	@GetMapping("/mycomment")
-	public List<Comment> commentFindByUserId() {
-		int userId = 1;
+	public List<Comment> commentFindByUserId(@RequestParam("userId") int userId) {
+//		int userId = 1;
 		return myCommentRepository.findByUser_UserId(userId);
 	}
 	
 	// 나의 북마크
 	@GetMapping("/bookmark")
-	public List<Bookmark> bookmarkFindByUserId() {
-		int userId = 1;
+	public List<Bookmark> bookmarkFindByUserId(@RequestParam("userId") int userId) {
+//		int userId = 1;
 		return myBookmarkRepository.findByUser_UserId(userId);
 	}
 

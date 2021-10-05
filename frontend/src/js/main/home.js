@@ -2,8 +2,12 @@ import React from 'react'
 import Feed from "./feed"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Post from "./post"
+import dotenv from "dotenv";
+dotenv.config();
 
-const API_KEY = process.env.REACT_APP_LOCATION_KEY;
+// const API_KEY = `${process.env.REACT_APP_LOCATION_KEY}`;
+const API_KEY ="AIzaSyBvBhrhLvIwa2ytO9wOfmwHJYBwdZOK740"
+
 console.log(API_KEY);
 
 function home() {
@@ -23,9 +27,6 @@ geolocation.getCurrentPosition(function (err, position) {
     }).then(function(json){
       const loc = json;
       console.log(loc);
-        // let detLoc = json.results[4].formatted_address;
-        // let location = `<span>${detLoc}</span>`;
-        // detailLoc.innerHTML = location
     }).catch(error => console.log('error', error));
   }
     return (

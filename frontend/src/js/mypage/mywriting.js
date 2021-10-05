@@ -57,9 +57,10 @@ function Mypost() {
             <tr>
               <th scope="col" width="20%">기간</th>
               <th scope="col" width="10%">카테고리</th>
-              <th scope="col" width="30%">제목</th>
+              <th scope="col" width="25%">제목</th>
               <th scope="col" width="10%">목표</th>
               <th scope="col">신청자</th>
+              <th scope="col" />
               <th scope="col" />
             </tr>
           </thead>
@@ -75,6 +76,7 @@ function Mypost() {
                   <td align="center"><button className="reqListCheck">확인하기</button></td>
                 </Link>
                 <td align="right">{product.step} <button className="reqRate">평점</button></td>
+                <td align="right"><button className="reqRate" disabled>공구 진행하기</button></td>
               </TableRow>
             ))}
           </TableBody>

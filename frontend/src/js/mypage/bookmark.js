@@ -41,7 +41,10 @@ function Mypost() {
       () => {
         axios({
             url: '/mypage/bookmark',
-            method: 'GET'
+            method: 'GET',
+            params: {
+              userId: window.sessionStorage.getItem('userId')
+            },
         }).then((res) => {
             callback(res.data);
         })
