@@ -5,50 +5,38 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import lombok.AccessLevel;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
+@Data
 @Entity
 @Table(name="TBL_COMMENT")
 public class Comment {
 
-	@Id @GeneratedValue
-	@Column(name="COMMENT_ID")
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="comment_id")
 	private int commentId;
 	
 	@ManyToOne
-	@JoinColumn(name="WRITER_ID")
+	@JoinColumn(name="writer_id")
 	private User user;
 	
 	@ManyToOne
-	@JoinColumn(name="POST_ID")
+	@JoinColumn(name="post_id")
 	private Post post;
 	
 	private String content;
-	
-	@JsonFormat(pattern="yyyy-MM-dd")
-	@Column(name="RGST_AT")
-	private Date rgstAt;
-	
-	@JsonFormat(pattern="yyyy-MM-dd")
-	@Column(name="UPDATE_AT")
-	private Date updateAt;
-	
-	@Setter
+	private Date rgst_at;
+	private Date update_at;
 	private int status;
-	
-	@Column(name="ONLY_SGSTER")
-	private int onlySgster;
+	private int only_sgster;
 	
 }
