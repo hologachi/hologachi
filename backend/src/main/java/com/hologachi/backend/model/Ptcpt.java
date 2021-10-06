@@ -31,7 +31,7 @@ public class Ptcpt {
 	@Column(name="STEP")
 	private String step;
 	
-	@Column(name="DEAL_RATE", nullable=true)
+	@Column(name="DEAL_RATE")
 	private int rateDeal;
 	
 }

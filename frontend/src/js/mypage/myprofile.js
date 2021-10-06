@@ -37,7 +37,10 @@ function Myprofile() {
     () => {
       axios({
         url: '/mypage/mypage/profile',
-        method: 'GET'
+        method: 'GET',
+        params: {
+          userId: window.sessionStorage.getItem('userId')
+        },
       }).then((res) => {
         callback(res.data);
       })

@@ -187,16 +187,17 @@ public class PostController {
 
 	// 공동구매 댓글 작성
 	@RequestMapping("/{postId}/cocreate")
-	public void createComment(@RequestBody Comment comment, @PathVariable int postId) {
+	@JsonProperty("comment")
+	public void createComment(@RequestBody Comment comment, @PathVariable int postId, @RequestParam("userId") int userId) {
 		Date now = new Date(System.currentTimeMillis());
 		comment.setRgst_at(now);
 		comment.setUpdate_at(now);
 
 		User user = new User();
-		user.setUserId(1);
+		user.setUserId(userId);
 		comment.setUser(user);
 		Post post = new Post();
-		post.setPostId(6);
+		post.setPostId(postId);
 		comment.setPost(post);
 		comment.setStatus(1);
 		comment.setOnly_sgster(0);
@@ -217,10 +218,7 @@ public class PostController {
 	// 공동구매 댓글 삭제
 	@RequestMapping("/{postId}/{commentId}/codelete")
 	public void deleteComment(@PathVariable int postId, @PathVariable int commentId) {
-		Comment comment = commentRepository.findByCommentId(commentId);
-		comment.setStatus(0);
-
-		commentRepository.save(comment);
+		commentRepository.deleteById(commentId);
 	}
 
 	// 공동구매 댓글 조회

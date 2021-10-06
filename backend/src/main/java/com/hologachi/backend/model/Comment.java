@@ -22,15 +22,15 @@ import lombok.NoArgsConstructor;
 public class Comment {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="comment_id")
+	@Column(name="COMMENT_ID")
 	private int commentId;
 	
 	@ManyToOne
-	@JoinColumn(name="writer_id")
+	@JoinColumn(name="WRITER_ID")
 	private User user;
 	
 	@ManyToOne
-	@JoinColumn(name="post_id")
+	@JoinColumn(name="POST_ID")
 	private Post post;
 	
 	private String content;
