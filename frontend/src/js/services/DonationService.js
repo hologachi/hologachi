@@ -9,9 +9,8 @@ const headers = {
 class DonationService {
 
     getMyDonation(userId) {
-        return axios.get(DONATION_URL + "/my/" + userId
-        , {headers: headers}
-        );
+        let data = {userId: userId};
+        return axios.post(DONATION_URL + "/my", data);
     }
 
     applyDonation(userId, data) {
