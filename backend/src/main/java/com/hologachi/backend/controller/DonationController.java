@@ -20,9 +20,9 @@ import com.hologachi.backend.repository.DonationRepository;
 import com.hologachi.backend.repository.DonationSiteRepository;
 import com.hologachi.backend.repository.UserRepository;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/donation")
-@CrossOrigin(origins = "http://localhost:3000")
 public class DonationController {
 	
 	@Autowired
@@ -48,11 +48,11 @@ public class DonationController {
 		
 	}
 	
-	@GetMapping("/my/{userId}")
-	public List<Donation> getMyDonation(@PathVariable String userId) {
-//		System.out.println(data.get("userId"));
+	@PostMapping("/my")
+	public List<Donation> getMyDonation(@RequestBody Map<String, Integer> data) {
+		System.out.println(data);
 		
-		List<Donation> foundDonation = donationRepository.findByUserUserId(Integer.valueOf(userId));
+		List<Donation> foundDonation = donationRepository.findByUserUserId(data.get("userId"));
 		System.out.println(foundDonation);
 		
 		if(foundDonation.size() > 0) {

@@ -6,7 +6,6 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import DonationService from '../services/DonationService';
 
 function MyDonation() {
-    const userId = useState(window.sessionStorage.getItem('userId'));
     const [myDonation, setMyDonation] = useState([]);
 
     useEffect(
@@ -17,10 +16,10 @@ function MyDonation() {
 
     function LoadMyDonation() {
         // 기부 내역  
-        DonationService.getMyDonation(userId)
+        DonationService.getMyDonation(sessionStorage.getItem('userId'))
         .then((res) => {
             setMyDonation(res.data);
-            console.log(res.data);
+            console.log(myDonation);
         }).catch(error => {
             console.log(error.response)
         });  
@@ -44,9 +43,9 @@ function MyDonation() {
 
     function ReceiptFormatter(cell, row) {
         switch(cell){
-            case "1":
+            case true:
                 return "신청";
-            case "0":
+            case false:
                 return "미신청";
         }
     }
@@ -59,10 +58,12 @@ function MyDonation() {
                 <p>{window.sessionStorage.getItem('nickname')}님이 현재까지 진행한 기부입니다.</p>
             </div>
 
+            <div className="myDonations">
             { myDonation && myDonation.length > 0 ?
                 (<BootstrapTable keyField='donationId' data={ myDonation } columns={ columns } striped hover condensed wrapperClasses="table-responsive" pagination={ paginationFactory() }/>)
                 : ( <h1>결과가 없습니다.</h1> )
             }
+            </div>
 
         </div>
     );
