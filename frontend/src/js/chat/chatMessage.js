@@ -14,6 +14,7 @@ const ChatMessage = () => {
     const userId = sessionStorage.getItem("userId");
 
     const socket = useRef();
+    const scrollRef = useRef();
 
     useEffect(() => {
         function updateChatMessage() {
@@ -85,7 +86,10 @@ const ChatMessage = () => {
 
     }, [socket]);
 
-    
+    useEffect(() => {
+        scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, [messages]);
+
     function onClickSend() { // 메세지 전송
     
         let message = document.getElementById("messageInput").value;
@@ -115,7 +119,7 @@ const ChatMessage = () => {
             <div className="chatMessageWrapper">
             <div className="chatMessageTop">
                 { messages && messages.length > -1 ? 
-                    (messages.map((m, i) => <div><Message key={i} sendAt={m.date} message={m.message} sender={m.sender} userId={userId} img={m.img} senderId={m.senderId}/></div>))
+                    (messages.map((m, i) => <div ref={scrollRef}><Message key={i} sendAt={m.date} message={m.message} sender={m.sender} userId={userId} img={m.img} senderId={m.senderId}/></div>))
                     : (<p>이전에 나눈 메세지가 없습니다.</p>)
                 }
             </div>
