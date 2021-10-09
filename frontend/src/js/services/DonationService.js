@@ -2,9 +2,16 @@ import axios from 'axios';
 
 const DONATION_URL = "http://localhost:8080/donation";
 
+const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'JWT fefege...'
+  }
 class DonationService {
+
     getMyDonation(userId) {
-        return axios.post(DONATION_URL + "/my", {userId: userId});
+        return axios.get(DONATION_URL + "/my/" + userId
+        , {headers: headers}
+        );
     }
 
     applyDonation(userId, data) {

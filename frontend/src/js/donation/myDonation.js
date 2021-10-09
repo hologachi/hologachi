@@ -1,10 +1,12 @@
 import '../../css/donation.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
+import BootstrapTable from 'react-bootstrap-table-next';
+import paginationFactory from 'react-bootstrap-table2-paginator';
 import DonationService from '../services/DonationService';
-// import {  } from 'react-bootstrap';
 
 function MyDonation() {
+    const userId = useState(window.sessionStorage.getItem('userId'));
     const [myDonation, setMyDonation] = useState([]);
 
     useEffect(
@@ -15,10 +17,38 @@ function MyDonation() {
 
     function LoadMyDonation() {
         // 기부 내역  
-        DonationService.getMyDonation().then((res) => {
+        DonationService.getMyDonation(userId)
+        .then((res) => {
             setMyDonation(res.data);
             console.log(res.data);
-        })   
+        }).catch(error => {
+            console.log(error.response)
+        });  
+    }
+
+    const columns = [{
+        dataField: 'name',
+        text: '기부자 성함'
+      }, {
+        dataField: 'phone',
+        text: '기부자 연락처'
+      }, {
+        dataField: 'product',
+        text: '기부 물품'
+      }, {
+        dataField: 'receipt',
+        text: '기부 영수증 신청 여부',
+        formatter: ReceiptFormatter	
+      }
+    ];	
+
+    function ReceiptFormatter(cell, row) {
+        switch(cell){
+            case "1":
+                return "신청";
+            case "0":
+                return "미신청";
+        }
     }
 
     return (
@@ -29,9 +59,8 @@ function MyDonation() {
                 <p>{window.sessionStorage.getItem('nickname')}님이 현재까지 진행한 기부입니다.</p>
             </div>
 
-            { myDonation && myDonation.length > -1 ?
-                myDonation.map((d, i) => 
-                <p>{d.id}</p> )
+            { myDonation && myDonation.length > 0 ?
+                (<BootstrapTable keyField='donationId' data={ myDonation } columns={ columns } striped hover condensed wrapperClasses="table-responsive" pagination={ paginationFactory() }/>)
                 : ( <h1>결과가 없습니다.</h1> )
             }
 

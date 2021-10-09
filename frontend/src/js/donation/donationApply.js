@@ -14,18 +14,18 @@ function DonationApply() {
     const [receipt, setReceipt] = useState(false);
 
     const handleNameChange = (e) => {
-        setName( e.target.value)
+        setName(e.target.value)
       }
 
     const handlePhoneChange = (e) => {
-        setPhone( e.target.value)
+        setPhone(e.target.value)
       }
 
     const handleProductChange = (e) => {
-        setProduct( e.target.value)
+        setProduct(e.target.value)
       }
     const handleReceiptChange = (e) => {
-        setReceipt( e.target.value)
+        setReceipt(e.target.value)
       }
 
     // useEffect(
@@ -33,31 +33,29 @@ function DonationApply() {
             
     //     }, []
     // );
+
     const [validated, setValidated] = useState(false);
 
-    const handleSubmit = (event) => {
+    function sendDonationApplyForm(event) {
+
         const form = event.currentTarget;
-        if (form.checkValidity() === false) {
-        event.preventDefault();
-        event.stopPropagation();
+
+        if (form.checkValidity() === true){
+            const data = {name: name, phone: phone, product: product, receipt: receipt};
+
+            DonationService.applyDonation(userId, data)
+            .then((res) => { 
+                alert("기부 신청이 등록되었습니다.")
+                window.location.href="/donation/my"
+            }).catch(error => {
+                console.log(error.response)
+            });
+
+        } else {
+            event.preventDefault();
+            event.stopPropagation();
         }
-
-        console.log(form.value);
-        
         setValidated(true);
-        sendDonationApplyForm();
-    };
-
-    function sendDonationApplyForm() {
-        const data = {name: name, phone: phone, product: product, receipt: receipt};
-
-        DonationService.applyDonation(userId, data)
-        .then((res) => { 
-            alert("기부 신청이 등록되었습니다.")
-            window.location.href="/donation/apply"
-        }).catch(error => {
-            console.log(error.response)
-        });
     }
 
     return (
@@ -65,12 +63,12 @@ function DonationApply() {
             
             <div className="donationApplyDescription">
                 <h1>기부 신청하기</h1>
-                <p>필요한 사람에게 기부하고 혜택 받아가세요</p>
+                <p>필요한 사람에게 기부하고 기부 영수증 받아가세요</p>
             </div>
 
-            <Form noValidate validated={validated} onSubmit={handleSubmit}>
+            <Form noValidate validated={validated}>
             
-            <Form.Group className="mb-3" controlId="formBasicName">
+            <Form.Group className="mb-3">
                 <Form.Label>성함</Form.Label>
                 <Form.Control name="name" value={name} onChange={handleNameChange} placeholder="성함을 입력하세요" size="lg" required/>
                 <Form.Control.Feedback>저장되었습니다</Form.Control.Feedback>
@@ -79,7 +77,7 @@ function DonationApply() {
                 </Form.Text>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Group className="mb-3">
                 <Form.Label>연락처</Form.Label>
                 <Form.Control name="phone" value={phone} onChange={handlePhoneChange} placeholder="ex. 010-1234-5678" size="lg" required/>
                 <Form.Control.Feedback>저장되었습니다</Form.Control.Feedback>
@@ -88,7 +86,7 @@ function DonationApply() {
                 </Form.Text>
             </Form.Group>
             
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Group className="mb-3">
                 <Form.Label>물품 종류</Form.Label>
                 <Form.Control name="product" value={product} onChange={handleProductChange} placeholder="ex. 휴지, 마스크" size="lg" required/>
                 <Form.Control.Feedback>저장되었습니다</Form.Control.Feedback>
@@ -97,7 +95,7 @@ function DonationApply() {
                 </Form.Text>
             </Form.Group>
 
-            <Form.Group controlId="exampleForm.SelectCustom">
+            <Form.Group className="mb-3">
                 <Form.Label>기부금 영수증 발급 여부</Form.Label>
                 <Form.Control as="select" value={receipt} onChange={handleReceiptChange} size="lg" custom required>
                 <option value="true">네</option>
