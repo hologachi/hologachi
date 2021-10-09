@@ -10,7 +10,7 @@ const Room = (props) => {
 
     function click() { // 채팅방 클릭
         props.onClick(props.chatroomId);
-        console.log("채팅방 " + props.chatroomId + "을 눌렀습니다.");
+        // console.log("채팅방 " + this.props.chatroomId + "을 눌렀습니다.");
     }
 
     function handleRateChange(event) { // 평점 설정

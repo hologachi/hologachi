@@ -33,7 +33,7 @@ const ChatList = () => {
 
     function onClickEndDeal(postId, rating) { // 거래 종료
         ChatRoomService.endDeal(userId, postId, rating).then((res) => {
-            console.log(userId, postId, rating);
+            // console.log(userId, postId, rating);
         })
     }
 

@@ -42,11 +42,20 @@ public class ChatRoomController {
 		if(foundPtcpt.isPresent()) {
 			Ptcpt updatePtcpt = foundPtcpt.get();
 			
-//			updatePtcpt.setRateDeal(data.get("rating"));
-			updatePtcpt.setStep("finish");
-			System.out.println(updatePtcpt.toString());
+			if(updatePtcpt.getUser().getUserId() == data.get("userId") && updatePtcpt.getStep().equals("agree")) {
+				if(updatePtcpt.getDealRate() != 0) {
+					int score = updatePtcpt.getDealRate();
+					score = (score + data.get("rating")) / 2;
+					updatePtcpt.setDealRate(score);
+					updatePtcpt.setStep("finish");
+				} else {
+					updatePtcpt.setDealRate(data.get("rating"));
+					updatePtcpt.setStep("finish");
+				}
+			}
+			
 			ptcptRepository.save(updatePtcpt);
-		}
+		} 
 	}
 
 }
