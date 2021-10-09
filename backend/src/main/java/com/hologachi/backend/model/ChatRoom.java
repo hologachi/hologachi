@@ -26,9 +26,6 @@ public class ChatRoom {
 	@Column(name="CHATROOM_ID")
 	private int chatroomId;
 	
-	@Column(name="LASTCHAT")
-	private String lastchat;
-	
 	@Column(name="ROOM_NAME")
 	private String roomName;
 
@@ -48,6 +45,6 @@ public class ChatRoom {
 	@JoinTable(name = "TBL_CHAT_PTCPTS",
 			joinColumns = @JoinColumn(name = "CHATROOM_ID"),
 			inverseJoinColumns = @JoinColumn(name = "USER_ID"))
-    public List<User> users = new ArrayList<User>();
+    private List<User> users = new ArrayList<User>();
 
 }

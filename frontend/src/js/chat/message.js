@@ -17,16 +17,8 @@ const Message = (props) => {
         // }
     }
 
-    function checkMessageOwn(senderId) {
-        if(sessionStorage.getItem('userId') === senderId) {
-            return true;
-        } else { 
-            return false; 
-        }
-    }
-
     return (
-        <div className={checkMessageOwn(props.senderId) ? "message own" : "message"}>
+        <div className={(props.senderId === props.userId) ? "message own" : "message"}>
             <div className="message">
                 <div className="messageTop">
                     <img className="messageImg" src={props.img} alt="사진" />

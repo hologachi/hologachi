@@ -32,9 +32,11 @@ const Room = (props) => {
 
 
     return (
-        <div className="room" key={props.chatroomId} onClick={click}>
-            <img className="roomImg" src="https://placeimg.com/50/50/any" alt="" />
-            <span className="roomName">{props.roomName}</span>
+        <div className="room" key={props.chatroomId}>
+            <div onClick={click}>
+                <img className="roomImg" src="https://placeimg.com/50/50/any" alt="" />
+                <span className="roomName">{props.roomName}</span>
+            </div>
             <button className="btn btn-info endDealBtn" onClick={() => {setEndDealModal(true);}}>거래 평점 매기기</button>
 
             {/* 평점 저장용 모달 */}
