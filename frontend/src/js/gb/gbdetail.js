@@ -10,97 +10,6 @@ import DatePicker from "react-datepicker";
 import moment from 'moment';
 import CommentIcon from '@mui/icons-material/Comment';
 
-// class Comment extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       comments: [
-//         //  {
-//         //   id: 1,
-//         //   writer: "홀로가치2",
-//         //   date: "2021-08-27",
-//         //   content: "배송 지역이 어디인가요?"
-//         // },
-//         // {
-//         //   id: 2,
-//         //   writer: "홀로가치",
-//         //   date: "2021-08-27",
-//         //   content: "배송 지역이 어디인가요?"
-//         // },
-//       ]
-//     }
-//     this.addComment = this.addComment.bind(this);
-//   }
-
-  // addComment() {
-  //   let value = document.querySelector('#new-comment-content').value;
-  //   if (value !== '') {
-  //     this.setState({
-  //       comments: [...this.state.comments, {
-  //         id: this.state.comments.length + 1,
-  //         writer: window.sessionStorage.getItem('nickname'),
-  //         date: new Date().toISOString().slice(0, 10),
-  //         content: value
-  //       }]
-  //     })
-  //   } else {
-  //     alert('입력된 댓글이 없습니다.')
-  //   }
-  //   document.querySelector('#new-comment-content').value = '';
-  // }
-
-//   render() {
-//     let userId=window.sessionStorage.getItem('nickname')
-//     return (
-//       <div id="root">
-//         <div>
-//           <ul id="comments">
-//             {
-//               this.state.comments.map(comment => {
-//                 return <Singcomment key={comment.id} comment={comment} />
-//               })
-//             }
-//           </ul>
-          // {userId !== null && <div id="writing-area">
-          //   <h5 id="nickname">{userId}</h5>
-          //   <textarea id="new-comment-content" placeholder="댓글을 입력하세요"></textarea>
-          //   <button id="submit-new-comment" onClick={this.addComment}>댓글쓰기</button>
-          // </div>}
-//         </div>
-//       </div>
-//     )
-//   }
-// }
-
-// function removeBtn(e) {
-//   e.preventDefault();
-//   var answer;
-//   answer = window.confirm(`댓글을 삭제하시겠습니까?`);
-//   if (answer == true) {
-
-//   }
-// }
-
-// function Singcomment({ comment }) {
-//   let nickname=window.sessionStorage.getItem('nickname')
-//   console.log(comment);
-//   return (
-//     <div className="comment">
-//       <table>
-//         <tr id={comment.id}>
-//           <th id="writerName">{comment.writer}</th>
-//           <td id="content">{comment.content}</td>
-//           <td id="date">{comment.date}</td>
-//           {nickname == comment.writer && <td><button id="removebtn" onClick={removeBtn}>삭제</button></td>}
-//         </tr>
-//       </table>
-//     </div>
-//   )
-// }
-
-
-
-
 const Modal = (props) => {
   const { open, header } = props;
   return (
@@ -443,6 +352,7 @@ function Board() {
                     <li align="left"><strong className="left"><span className="leftLabel">가격 </span></strong><span id="priceText">{product.price}원</span></li><br />
                     <li align="left"><strong className="left"><span className="leftLabel">기간 </span></strong><span id="dateMoment">{moment(product.rgstAt).format('YYYY-MM-DD')} ~ {moment(product.deadline).format('YYYY-MM-DD')}</span></li><br />
                     <li align="left"><strong className="left"><span className="leftLabel">목표 </span></strong><span id="dateMoment">{product.matching}명</span></li><br />
+                    <li align="left"><strong className="left"><span className="leftLabel">지역 </span></strong><p id="location">{product.location}</p></li><br />
                     <li align="left"><button className="urlBtn" onClick={() => window.open(`https://${product.url}`, '_blank')}>구매 사이트</button></li>
                   </ul>
                   {window.sessionStorage.getItem('nickname') == product.user.nickname && <div><button id="contentModifybtn" onClick={openModal}>수정하기</button><button id="contentDeletebtn" onClick={contentDelete}>삭제하기</button></div>}

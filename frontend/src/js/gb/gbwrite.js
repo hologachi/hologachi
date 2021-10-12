@@ -16,8 +16,8 @@ const API_KEY = process.env.REACT_APP_API_LOC_KEY;
 
 const S3_BUCKET ='hologachi-bucket';
 const REGION ='ap-northeast-2';
-const ACCESS_KEY ='AKIAUMQOJWZ3A3T6KLHF';
-const SECRET_ACCESS_KEY ='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';
+const ACCESS_KEY =process.env.REACT_APP_API_ACCESS_KEY;
+const SECRET_ACCESS_KEY =process.env.REACT_APP_API_SECRET_ACCESS_KEY;
 
 const config = {
     bucketName: S3_BUCKET,

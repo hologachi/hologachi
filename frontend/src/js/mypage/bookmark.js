@@ -78,6 +78,7 @@ function Mypost() {
               <th scope="col">가격</th>
               <th scope="col">진행상황</th>
               <th scope="col">삭제</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <TableBody>
@@ -91,7 +92,7 @@ function Mypost() {
                 <td align="center">{product.post.price}원</td>
                 <td align="center">{product.post.matching}명</td>
                 <td align="center">{product.post.step}</td>
-                <td align="center"><button onClick={()=> bookmarkDelete(product.bookmarkId)}>삭제</button></td>
+                <td align="center"><button onClick={()=> bookmarkDelete(product.bookmarkId)} id="bookmarkDel">삭제</button></td>
               </TableRow>
               ))}
           </TableBody>

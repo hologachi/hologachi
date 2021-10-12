@@ -61,10 +61,14 @@ public class MypageController {
 	public ArrayList rqsterFindByPtcptId(@PathVariable("postId") int postId, @PathVariable("ptcptId") int ptcptId) {
 		User user =  myRequestRepository.findByPtcptId(ptcptId).getUser();
 		String nickname = user.getNickname();
-		String rate = user.getDealRate();
+		String dealRate = user.getDealRate();
+		int dealCount = user.getDealCount();
+		String image = user.getImage();
 		HashMap map = new HashMap();
 		map.put("nickname",nickname);
-		map.put("rate",rate);
+		map.put("dealRate",dealRate);
+		map.put("dealCount",dealCount);
+		map.put("image",image);
 		ArrayList list = new ArrayList();
 		list.add(map);
 		return list;
