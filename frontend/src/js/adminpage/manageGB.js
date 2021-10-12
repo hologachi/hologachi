@@ -28,13 +28,16 @@ function ManageGB(){
         text: '진행 단계', 
         formatter: StepFormatter
       }, {
-        dataField: 'rqstrRate',
-        text: '요청자가 매긴 제시자 평점', 
+        dataField: 'dealRate',
+        text: '거래 총 평점', 
         formatter: RateFormatter
-      }, {
-        dataField: 'sgstrRate',
-        text: '제시자가 매긴 요청자 평점', 
-        formatter: RateFormatter
+    //     dataField: 'rqstrRate',
+    //     text: '요청자가 매긴 제시자 평점', 
+    //     formatter: RateFormatter
+    //   }, {
+    //     dataField: 'sgstrRate',
+    //     text: '제시자가 매긴 요청자 평점', 
+    //     formatter: RateFormatter
       }, {
           dataField: 'stopGB',
           text: '거래 중지',
