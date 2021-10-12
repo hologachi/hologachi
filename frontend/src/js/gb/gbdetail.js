@@ -409,6 +409,10 @@ function Board() {
     }, []
   );
 
+  function chatLink(){
+    window.location.href="/chatList"
+  }
+
   // console.log(requestStr);
   let arr = Object.values(requestStr).map(product => (product.post.postId));
   let userStep = Object.values(requestStr).map(product => (product.step));
@@ -502,9 +506,8 @@ function Board() {
                           </div>
                         </div>}
                         <div id="chatDiv">
-                          {userStep[0] == "agree" && arr.includes(Object.values(testStr).map(product => product.postId)[0]) && <button align="left" id="chat" value="chat" >채팅</button>}
+                          {userStep[0] == "agree" && product.step == "proceed" && arr.includes(Object.values(testStr).map(product => product.postId)[0]) && <button align="left" id="chat" value="chat" onClick={chatLink}>채팅</button>}
                         </div>
-
                       </div>
                     </div>
                   </div>

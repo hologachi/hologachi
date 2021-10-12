@@ -46,7 +46,23 @@
 #content{
     padding-right: 15px;
 } 
-
+#imgdeletebtn{
+    border-radius: 5px;
+    background-color: rgb(233, 233, 233);
+    border: 0.5px solid rgb(196, 196, 196);
+    margin-bottom: 3px;
+}
+#imgUpbtn{
+    border-radius: 5px;
+    background-color: rgb(233, 233, 233);
+    border: 0.5px solid gray;
+    margin-bottom: 3px;
+}
+#imgUpload{
+    border-radius: 5px;
+    background-color: rgb(233, 233, 233);
+    border: 0.5px solid rgb(196, 196, 196);
+}
 #date{
     padding-right: 15px;
 } 

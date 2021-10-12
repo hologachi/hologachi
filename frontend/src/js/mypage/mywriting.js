@@ -46,6 +46,22 @@ function Mypost() {
     }, []
   );
 
+   function goGb(productId){
+    var answer;
+    answer = window.confirm(`공동구매를 진행하시겠습니까?`);
+
+    if (answer == true) {
+    axios({
+      url: `/mypage/mypost/${productId}/proceed`,
+      method: 'post',
+      headers: { "Access-Control-Allow-Origin": "*" },
+    }).then(function () {
+      window.location.reload();
+    }).catch(error => {
+      console.log(error.response)
+    });
+   }}
+   
   return (
     <div>
       <CardHeader className="border-0">
@@ -76,7 +92,7 @@ function Mypost() {
                   <td align="center"><button className="reqListCheck">확인하기</button></td>
                 </Link>
                 <td align="right">{product.step} <button className="reqRate">평점</button></td>
-                <td align="right"><button className="reqRate" disabled>공구 진행하기</button></td>
+                <td align="right">{product.step == "request" && <button className="reqRate" id="goGb" onClick={() => goGb(product.postId)}>공구 진행하기</button>}</td>
               </TableRow>
             ))}
           </TableBody>

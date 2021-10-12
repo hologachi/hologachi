@@ -24,6 +24,9 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
  	@Query(value = "select * from TBL_POST where deadline < CURDATE()", nativeQuery = true)
 	public List<Post> finishPost();
 
+	@Query("select p from Post p where p.location = :loc")
+	public List<Post> locItem(String loc);
+
 
 // 	Optional<Post> findByPostId(int postId);
 }
