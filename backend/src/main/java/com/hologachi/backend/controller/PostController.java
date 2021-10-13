@@ -206,7 +206,7 @@ public class PostController {
 
 	// 공동구매 댓글 수정
 	@RequestMapping("/{postId}/{commentId}/coupdate")
-	public void updateComment(@RequestBody Comment newComment, @PathVariable int postId, @PathVariable int commentId) {
+	public void updateComment(@RequestBody Comment newComment, @RequestParam String commentStr, @PathVariable int postId, @PathVariable int commentId) {
 		Date now = new Date(System.currentTimeMillis());
 		Comment comment = commentRepository.findByCommentId(commentId);
 		System.out.println(comment);

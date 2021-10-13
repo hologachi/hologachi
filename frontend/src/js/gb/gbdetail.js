@@ -185,7 +185,7 @@ function Board() {
   //   )
   // }
 
-  function addComment(e){
+  function addComment(e) {
     e.preventDefault();
     let value = document.querySelector('#new-comment-content').value;
     if (value !== '') {
@@ -318,9 +318,10 @@ function Board() {
     }, []
   );
 
-  function chatLink(){
-    window.location.href="/chatList"
+  function chatLink() {
+    window.location.href = "/chatList"
   }
+
 
   // console.log(requestStr);
   let arr = Object.values(requestStr).map(product => (product.post.postId));
@@ -355,7 +356,7 @@ function Board() {
                     <li align="left"><strong className="left"><span className="leftLabel">지역 </span></strong><p id="location">{product.location}</p></li><br />
                     <li align="left"><button className="urlBtn" onClick={() => window.open(`https://${product.url}`, '_blank')}>구매 사이트</button></li>
                   </ul>
-                  {window.sessionStorage.getItem('nickname') == product.user.nickname && <div><button id="contentModifybtn" onClick={openModal}>수정하기</button><button id="contentDeletebtn" onClick={contentDelete}>삭제하기</button></div>}
+                  {window.sessionStorage.getItem('email') == product.user.email && <div><button id="contentModifybtn" onClick={openModal}>수정하기</button><button id="contentDeletebtn" onClick={contentDelete}>삭제하기</button></div>}
                   <Modal open={modalOpen} className="modal-body">
                     <table className="tablecss table">
                       <tr id="tableTitle">
@@ -435,18 +436,18 @@ function Board() {
           ))}
           <div id="commentTitle"><CommentIcon /> 댓글</div><br /><br />
           {Object.values(commentStr).map(comment => (
-                  <div className="comment">
-                    <table>
-                      <tr id={comment.commentId}>
-                        <th id="writerName">{comment.user.nickname}</th>
-                        <td id="content">{comment.content}</td>
-                        <td id="date">{moment(comment.update_at).format('YYYY-MM-DD')}</td>
-                        {window.sessionStorage.getItem('nickname') == comment.user.nickname && <td><button id="commentModibtn">수정</button><button id="removebtn" onClick={() => removeBtn(comment.commentId)}>삭제</button></td>}
-                      </tr>
-                    </table>
-                  </div>
-                  ))}
-                  {window.sessionStorage.getItem('nickname') !== null && <div id="writing-area">
+            <div className="comment">
+              <table>
+                <tr id={comment.commentId}>
+                  <th id="writerName">{comment.user.nickname}</th>
+                  <td id="content">{comment.content}</td>
+                  <td id="date">{moment(comment.update_at).format('YYYY-MM-DD')}</td>
+                  {window.sessionStorage.getItem('email') == comment.user.email && <td><button id="commentModibtn" >수정</button><button id="removebtn" onClick={() => removeBtn(comment.commentId)}>삭제</button></td>}
+                </tr>
+              </table>
+            </div>
+          ))}
+          {window.sessionStorage.getItem('nickname') !== null && <div id="writing-area">
             <h5 id="nickname">{window.sessionStorage.getItem('nickname')}</h5>
             <textarea id="new-comment-content" placeholder="댓글을 입력하세요"></textarea>
             <button id="submit-new-comment" onClick={addComment}>댓글쓰기</button>

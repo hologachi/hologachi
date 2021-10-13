@@ -12,7 +12,7 @@ import  Applygb  from "./js/mypage/applygb";
 import  Sidemenu  from "./js/mypage/mypageside";
 import  Bookmark  from "./js/mypage/bookmark";
 import  Comment  from "./js/mypage/commentwrite";
-import  Privacy  from "./js/mypage/privacy";
+// import  Privacy  from "./js/mypage/privacy";
 import  ReqUserProfile from "./js/mypage/reqUserProfile";
 import  SgstProfile from "./js/mypage/sgstProfile";
 
@@ -65,7 +65,7 @@ function App() {
           <Route path="/mypage/bookmark" component={Bookmark} />
           <Route path="/mypage/mypageside" component={Sidemenu} />
           <Route path="/mypage/commentwrite" component={Comment} />
-          <Route path="/mypage/privacy" component={Privacy} />
+          {/* <Route path="/mypage/privacy" component={Privacy} /> */}
           <Route path="/mypage/mypost/:postId/:ptcptId" component={ReqUserProfile} />
           <Route path="/mypage/myrequest/sgstProfile/:ptcptId" component={SgstProfile} />
 
