@@ -8,14 +8,23 @@ import moment from 'moment';
 import ImageUploading from 'react-images-uploading';
 import { PictureOutlined } from '@ant-design/icons';
 import axios from "axios";
+import { uploadFile } from 'react-s3';
+import dotenv from "dotenv";
+dotenv.config();
 
-function Location(){
-  return(
-    <div>공동구매 지역 설정</div>
+const API_KEY = process.env.REACT_APP_API_LOC_KEY;
 
-  )
+const S3_BUCKET ='hologachi-bucket';
+const REGION ='ap-northeast-2';
+const ACCESS_KEY =process.env.REACT_APP_API_ACCESS_KEY;
+const SECRET_ACCESS_KEY =process.env.REACT_APP_API_SECRET_ACCESS_KEY;
+
+const config = {
+    bucketName: S3_BUCKET,
+    region: REGION,
+    accessKeyId: ACCESS_KEY,
+    secretAccessKey: SECRET_ACCESS_KEY,
 }
-
 
 function UploadImage() {
 
@@ -34,6 +43,26 @@ function UploadImage() {
       alert("이미지는 4개까지만 첨부할 수 있습니다")
     }
   }
+
+  const UploadImageToS3WithReactS3 = () => {
+
+    // const [selectedFile, setSelectedFile] = useState(null);
+
+    // const handleFileInput = (e) => {
+    //   setImages(e.target.files[0]);
+    // }
+  
+    const handleUpload = async (file) => {
+        uploadFile(file, config)
+            .then(data => console.log(data))
+            .catch(err => console.error(err))
+    }
+
+    return <div>
+        <input type="file" onChange={onChange}/>
+        <button onClick={() => handleUpload(images)}> 업로드</button>
+    </div>
+}
 
   return (
     <div className="imageup">
@@ -54,7 +83,7 @@ function UploadImage() {
         }) => (
           // write your building UI
           <div className="upload__image-wrapper">
-            <button
+            <button id="imgUpbtn"
               style={isDragging ? { color: 'red' } : undefined}
               onClick={onImageUpload}
               {...dragProps}
@@ -66,14 +95,14 @@ function UploadImage() {
               <div key={index} className="image-item">
                 <img src={image['data_url']} alt="" width="100" style={{ width: "100px" }} />
                 <div className="image-item__btn-wrapper">
-                  <button onClick={() => onImageRemove(index)}>삭제</button>
+                  <button id="imgdeletebtn" onClick={() => onImageRemove(index)}>삭제</button>
                 </div>
               </div>
             ))}
           </div>
         )}
       </ImageUploading>
-      <button>업로드</button>
+      <UploadImageToS3WithReactS3/>
     </div>
   )
 }
@@ -110,6 +139,7 @@ function Board() {
   const [price, setPrice] = useState('')
   const [url, setUrl] = useState('')
   const [content, setContent] = useState('')
+  const [location, setLocation] = useState('')
 
   const [postfiles, setPostfiles] = useState({
     file: [],
@@ -130,9 +160,9 @@ function Board() {
   }
 
   let profile_preview = null;
-  if (postfiles.file !== null) {
-    profile_preview = <img src={postfiles.previewURL} alt="이미지를 등록하세요" style={{width:"50px"}}/>
-  }
+  // if (postfiles.file !== null) {
+  //   profile_preview = <img src={postfiles.previewURL} alt="이미지를 등록하세요" style={{width:"50px"}}/>
+  // }
 
   const uploadFile = (e) => {
     e.preventDefault();
@@ -164,7 +194,8 @@ function Board() {
         deletedBy: -1,
         price: price,
         url: url,
-        step:"proceed"
+        step:"proceed",
+        location: location
       },
       params: {
         userId: window.sessionStorage.getItem('userId')
@@ -178,6 +209,33 @@ function Board() {
       console.log(error.response)
   });
   };
+
+
+
+  var geolocation = require('geolocation')
+
+geolocation.getCurrentPosition(function (err, position) {
+  if (err) throw err
+  let latitude = position.coords.latitude
+  let longtitude = position.coords.longitude
+  GetLoc(latitude,longtitude)
+})
+
+function GetLoc(lat, lon){
+  fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}2&key=${API_KEY}`)
+  .then(function(response){
+      return response.json();
+  }).then(function(json){
+    const currentLoc = document.querySelector('.currentLoc')
+    const loc = json.results[4].formatted_address;
+    const locs = loc.split(' ');
+    setLocation(locs[3]);
+    // console.log(json.results[4].formatted_address);
+    let location = `<span>${loc}</span>`;
+    currentLoc.innerHTML = location
+  }).catch(error => console.log('error', error));
+}
+// console.log(location);
 
 return(
 <div id="container" className="container">
@@ -269,8 +327,9 @@ return(
         상품 소개 및 설명
         </strong></h5></Form.Label>
         <Form.Control as="textarea" cols={70} rows={5} placeholder="Content" style={{ resize: "none" }} value={content} onChange={handelChangeContent} />
-      </Form.Group><br />
-      <Location />
+      </Form.Group>
+      <span id="locComment">현재위치로 공동구매가 등록됩니다.</span>
+      <div className="currentLoc"></div><br />
       <Button id="submitbtn" onClick={addContent}>추가</Button>
     </div>
   </div>

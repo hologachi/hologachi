@@ -41,7 +41,10 @@ function Mypost() {
       () => {
         axios({
             url: '/mypage/myrequest',
-            method: 'GET'
+            method: 'GET',
+            params: {
+              userId: window.sessionStorage.getItem('userId')
+            },
         }).then((res) => {
             callback(res.data);
         })
@@ -57,12 +60,13 @@ function Mypost() {
         <Table className={classes.table} size="small" aria-label="a dense table">
         <thead className="thead-light" id="mywriteTitle">
             <tr>
-              <th scope="col" width="20%">제안자</th>
+              <th scope="col" width="18%">제안자</th>
               <th scope="col" width="10%">기간</th>
-              <th scope="col" width="30%">제목</th>
+              <th scope="col" width="25%">제목</th>
               <th scope="col" width="10%">가격</th>
               <th scope="col">인원</th>
-              <th scope="col"></th>
+              <th scope="col">진행상황</th>
+              <th scope="col">수락/거절</th>
             </tr>
           </thead>
           <TableBody>
@@ -74,6 +78,7 @@ function Mypost() {
                 <td align="center">{product.post.price}원</td>
                 <td align="center">{product.post.matching}명</td>
                 <td align="center">{product.post.step}</td>
+                <td align="center">{product.step}</td>
               </TableRow>
               ))}
           </TableBody>

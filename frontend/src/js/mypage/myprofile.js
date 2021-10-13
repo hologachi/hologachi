@@ -2,49 +2,94 @@ import React, { useState, useEffect } from 'react';
 import '../../css/myprofile.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
-import { ButtonGroup,Button } from 'react-bootstrap';
-import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
+import { ButtonGroup,Button, Modal } from 'react-bootstrap';
 
-// const ImgUpload =({
-//   onChange,
-//   src,
-// })=>{
-//   return(
-//     <label htmlFor="photo-upload" className="custom-file-upload fas">
-//       <div className="img-wrap img-upload" >
-//         <img htmlFor="photo-upload" src={src} alt="profile"/>
-//       </div>
-//       <input id="photo-upload" type="file" onChange={onChange}/> 
-//     </label>
-//   );
-// }
+
 
 function location(loc) {
   window.location.href = "/mypage/" + loc
 }
 
 function Myprofile() {
-  // 요청받은 정보를 담아줄 변수 선언
   const [testStr, setTestStr] = useState('');
 
-  // 변수 초기화
   function callback(str) {
     setTestStr(str);
   }
 
-  // 첫 번째 렌더링을 마친 후 실행
   useEffect(
     () => {
       axios({
         url: '/mypage/mypage/profile',
-        method: 'GET'
+        method: 'GET',
+        params: {
+          userId: window.sessionStorage.getItem('userId')
+        },
       }).then((res) => {
         callback(res.data);
       })
     }, []
   );
+
+  function modify(nickname){
+    axios({
+        url: `/mypage/privacy/modify`,
+        method: 'post',
+        params: {
+          userId: window.sessionStorage.getItem('userId'),
+          modifyNickname: nickname
+        },
+        headers: { "Access-Control-Allow-Origin": "*" },
+      }).then(function () {
+        alert("수정이 완료되었습니다.");
+    window.location.reload();
+      }).catch(error => {
+        console.log(error.response)
+      });
+}
+
+const nick = Object.values(testStr).map(profile => profile.nickname);
+console.log(nick[0]);
+
+  function NickModal() {
+    const [show, setShow] = useState(false);
+    const [nicknameStr, setNickname] = useState(nick);
+  
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const onChangeNick = (e) => {
+      setNickname(e.target.value);
+  }
+  
+    return (
+      <>
+        <Button className="menuItems" variant="primary" onClick={handleShow}>
+          닉네임 수정
+        </Button>
+  
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>닉네임 수정하기</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+           닉네임 <input onChange={onChangeNick} value={nicknameStr || ''}/>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              닫기
+            </Button>
+            <Button variant="primary" onClick={() => modify(nicknameStr)}>
+              수정하기
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </>
+    );
+  }
+
 const rate = Object.values(testStr).map(profile => profile.dealRate)
- 
+const userImg = window.sessionStorage.getItem('image')
 
   const profiles = Object.values(testStr).map(profile => {
     return (
@@ -52,7 +97,7 @@ const rate = Object.values(testStr).map(profile => profile.dealRate)
         <h1>{profile.nickname}의 프로필</h1>
         <div className="row">
         <div className="img-wrap" >
-          <img className="proImg" src="https://i.postimg.cc/7LT6kXtR/user.png" alt="" />
+          <img className="proImg" src={userImg} alt="" />
         </div><br />
         <div className="info">
           <div className="grade">평점 <span className="dealRate">{profile.dealRate}</span></div>
@@ -61,11 +106,12 @@ const rate = Object.values(testStr).map(profile => profile.dealRate)
         </div>
         
         <div className="menu">
-            <Button className="menuItems" variant="secondary" onClick={() => { location('mywriting') }}>내가 작성한 글</Button>
-            <Button className="menuItems" variant="secondary" onClick={() => { location('applygb') }}>내가 신청한 글</Button>
-            <Button className="menuItems" variant="secondary" onClick={() => { location('commentwrite') }}>내가 댓글 남긴 글</Button>
+            <Button className="menuItems" variant="secondary" onClick={() => { location('mywriting') }}>작성한 글</Button>
+            <Button className="menuItems" variant="secondary" onClick={() => { location('applygb') }}>신청한 글</Button>
+            <Button className="menuItems" variant="secondary" onClick={() => { location('commentwrite') }}>댓글 남긴 글</Button>
             <Button className="menuItems" variant="secondary" onClick={() => { location('bookmark') }}>북마크</Button>
-            <Button className="menuItems" variant="secondary" onClick={() => { location('privacy') }}>개인정보 확인 및 수정</Button>
+            {/* <Button className="menuItems" variant="secondary" onClick={openModal}>닉네임 수정</Button> */}
+            <NickModal/>
         </div>
       </div>
     );
@@ -81,114 +127,3 @@ const rate = Object.values(testStr).map(profile => profile.dealRate)
 }
 
 export default Myprofile
-
-// const Name =({
-//   onChange,
-//   value
-// })=>{
-//   return(
-//     <div className="field">
-//       <span>홀로가치</span>
-//     </div>
-//   );
-// }
-
-// const Profile =({
-//   onSubmit,
-//   src,
-//   name,
-// })=>{
-//   return(
-//    <div className="row card">
-//     <form onSubmit={onSubmit}>
-//       <div className=" col-md-6 col-md-offset-3profileImg">
-//         <h1 >나의 프로필</h1>
-//         <label className="custom-file-upload fas">
-//           <div className="img-wrap" >
-//             <img htmlFor="photo-upload" src={src} alt="profile" />
-//           </div>
-//         </label>
-//       </div>
-//       <div className="profileEdit">
-//         <div className="name">{name}</div>
-//         <button type="submit" className="edit">Edit Nickname</button>
-//         <div className="grade"><span>제시자로서 평점 : </span>5</div>
-//         <div className="name"><span>신청자로서 평점 : </span>5.0</div>
-//       </div>
-//     </form>
-//    </div>
-//   );
-// }
-
-// const Edit =({
-//   onSubmit,
-//   children,
-// })=>{
-//   return(
-    // <div className="card">
-    //   <form onSubmit={onSubmit}>
-    //       <h1>나의 프로필</h1>
-    //       {children}
-    //     {/* <button type="submit" className="save">Save </button> */}
-    //     <div className="grade"><span>제시자로서 평점 : </span>5.0</div>
-    //     <div className="name"><span>신청자로서 평점 : </span>5.0</div>
-    //   </form>
-    // </div>
-//   );
-// }
-
-
-
-// class CardProfile extends React.Component {
-//   constructor(props) {
-//     super(props);
-//      this.state = {
-//        file: '',
-//        imagePreviewUrl: 'https://i.postimg.cc/7LT6kXtR/user.png',
-//        name:'',
-//        active: 'edit'
-//     };
-//   }
-//   photoUpload (e) {
-//     e.preventDefault();
-//     const reader = new FileReader();
-//     const file = e.target.files[0];
-//     reader.onloadend = () => {
-//       this.setState({
-//         file: file,
-//         imagePreviewUrl: reader.result
-//       });
-//     }
-//     reader.readAsDataURL(file);
-//   }
-//   editName (e) {
-//     const name = e.target.value;
-//     this.setState({
-//       name,
-//     });
-//   }
-//   handleSubmit(e) {
-//     e.preventDefault();
-//     let activeP = this.state.active === 'edit' ? 'profile' : 'edit';
-//     this.setState({
-//       active: activeP,
-//     })
-//   }
-
-//   render() {
-//     const {imagePreviewUrl, 
-//            name, 
-//            active} = this.state;
-//     return (
-//       <div>
-//         {(active === 'edit')  
-//           ?<Edit onSubmit={(e)=>this.handleSubmit(e)}>
-//               <ImgUpload onChange={(e)=>this.photoUpload(e)} src={imagePreviewUrl}/>
-//               <Name onChange={(e)=>this.editName(e)} value={name}/>
-//             </Edit>
-//           :<Profile onSubmit={(e)=>this.handleSubmit(e)} src={imagePreviewUrl} name={name}/>}
-//       </div>
-//     )
-//   }
-// }
-

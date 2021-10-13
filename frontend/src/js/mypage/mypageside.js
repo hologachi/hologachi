@@ -23,10 +23,10 @@ function mypageside() {
                         <span className="deco_dot">●</span>
                         <a href="/mypage/commentwrite" className="titleList">댓글</a>
                     </li>
-                    <li>
+                    {/* <li>
                         <span className="deco_dot">●</span>
-                        <a href="#" className="titleList">개인정보 수정</a>
-                    </li>
+                        <a href="/mypage/privacy" className="titleList">닉네임 수정</a>
+                    </li> */}
                 </ul>
             </div>
         </div>

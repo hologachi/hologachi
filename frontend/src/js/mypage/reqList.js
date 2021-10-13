@@ -88,12 +88,16 @@ function Mypost() {
     () => {
       axios({
         url: `/mypage/mypost/${productId}`,
-        method: 'GET'
+        method: 'GET',
+        params: {
+          userId: window.sessionStorage.getItem('userId')
+        },
       }).then((res) => {
         callback(res.data);
       })
     }, []
   );
+
 
   return (
     <div>

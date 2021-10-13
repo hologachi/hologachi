@@ -10,96 +10,6 @@ import DatePicker from "react-datepicker";
 import moment from 'moment';
 import CommentIcon from '@mui/icons-material/Comment';
 
-class Comment extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      comments: [
-        //  {
-        //   id: 1,
-        //   writer: "홀로가치2",
-        //   date: "2021-08-27",
-        //   content: "배송 지역이 어디인가요?"
-        // },
-        // {
-        //   id: 2,
-        //   writer: "홀로가치",
-        //   date: "2021-08-27",
-        //   content: "배송 지역이 어디인가요?"
-        // },
-      ]
-    }
-    this.addComment = this.addComment.bind(this);
-  }
-
-  addComment() {
-    let value = document.querySelector('#new-comment-content').value;
-    if (value !== '') {
-      this.setState({
-        comments: [...this.state.comments, {
-          id: this.state.comments.length + 1,
-          writer: window.sessionStorage.getItem('nickname'),
-          date: new Date().toISOString().slice(0, 10),
-          content: value
-        }]
-      })
-    } else {
-      alert('입력된 댓글이 없습니다.')
-    }
-    document.querySelector('#new-comment-content').value = '';
-  }
-
-  render() {
-    let userId=window.sessionStorage.getItem('nickname')
-    return (
-      <div id="root">
-        <div>
-          <ul id="comments">
-            {
-              this.state.comments.map(comment => {
-                return <Singcomment key={comment.id} comment={comment} />
-              })
-            }
-          </ul>
-          {userId !== null && <div id="writing-area">
-            <h5 id="nickname">{userId}</h5>
-            <textarea id="new-comment-content" placeholder="댓글을 입력하세요"></textarea>
-            <button id="submit-new-comment" onClick={this.addComment}>댓글쓰기</button>
-          </div>}
-        </div>
-      </div>
-    )
-  }
-}
-
-function removeBtn(e) {
-  e.preventDefault();
-  var answer;
-  answer = window.confirm(`댓글을 삭제하시겠습니까?`);
-  if (answer == true) {
-
-  }
-}
-
-function Singcomment({ comment }) {
-  let userId=window.sessionStorage.getItem('userId')
-  return (
-    <div className="comment">
-      <table>
-        <tr id={comment.id}>
-          <th id="writerName">{comment.writer}</th>
-          <td id="content">{comment.content}</td>
-          <td id="date">{comment.date}</td>
-          {userId == comment.id && <td><button id="removebtn" onClick={removeBtn}>삭제</button></td>}
-        </tr>
-      </table>
-    </div>
-  )
-}
-
-
-
-
 const Modal = (props) => {
   const { open, header } = props;
   return (
@@ -128,6 +38,7 @@ function Board() {
   const [testStr, setTestStr] = useState('');
   const [requestStr, setRequestStr] = useState('');
   const [bookStr, setBookedStr] = useState('');
+  const [commentStr, setCommentStr] = useState('');
 
   const [deadline, setDeadline] = useState("");
   const [title, setTitle] = useState()
@@ -168,44 +79,44 @@ function Board() {
       console.log(error.response)
     });
   }
-  
-  function handelChangeTitle(e){
+
+  function handelChangeTitle(e) {
     setTitle(e.target.value)
   }
-  function handelChangePrice(e){
+  function handelChangePrice(e) {
     setPrice(e.target.value)
   }
-  function handelChangeUrl(e){
+  function handelChangeUrl(e) {
     setUrl(e.target.value)
   }
-  function handelChangeContent(e){
+  function handelChangeContent(e) {
     setContent(e.target.value)
   }
-  function handelChangeMatching(e){
+  function handelChangeMatching(e) {
     setMatching(e.target.value)
   }
 
   const modifyContent = () => {
-      axios({
-        url: `/${productId}/update`,
-        method: 'post',
-        data: {
-          title: title,
-          content: content,
-          price: price,
-          matching: matching,
-          url: url,
-          deadline:deadline
-        },
-        baseURL: 'http://localhost:8080/post',
-        headers: { "Access-Control-Allow-Origin": "*" },
-      }).then(function () {
-        alert("수정되었습니다.")
-        window.location.reload();
-      }).catch(error => {
-        console.log(error.response)
-      });
-    
+    axios({
+      url: `/${productId}/update`,
+      method: 'post',
+      data: {
+        title: title,
+        content: content,
+        price: price,
+        matching: matching,
+        url: url,
+        deadline: deadline
+      },
+      baseURL: 'http://localhost:8080/post',
+      headers: { "Access-Control-Allow-Origin": "*" },
+    }).then(function () {
+      alert("수정되었습니다.")
+      window.location.reload();
+    }).catch(error => {
+      console.log(error.response)
+    });
+
   };
 
   function callback(str) {
@@ -247,6 +158,59 @@ function Board() {
       })
     }, []
   );
+
+  useEffect(
+    () => {
+      axios({
+        url: `/post/${productId}/comment`,
+        method: 'GET',
+      }).then((res) => {
+        setCommentStr(res.data);
+      })
+    }, []
+  );
+
+  // function Comment(){
+  //   return(
+  //   <div className="comment">
+  //   <table>
+  //     <tr id={comment.id}>
+  //       <th id="writerName">{comment.writer}</th>
+  //       <td id="content">{comment.content}</td>
+  //       <td id="date">{comment.date}</td>
+  //       {nickname == comment.writer && <td><button id="removebtn" onClick={removeBtn}>삭제</button></td>}
+  //     </tr>
+  //   </table>
+  // </div>
+  //   )
+  // }
+
+  function addComment(e) {
+    e.preventDefault();
+    let value = document.querySelector('#new-comment-content').value;
+    if (value !== '') {
+      axios({
+        url: `/${productId}/cocreate`,
+        method: 'post',
+        data: {
+          content: value
+        },
+        params: {
+          userId: window.sessionStorage.getItem('userId')
+        },
+        baseURL: 'http://localhost:8080/post',
+        headers: { "Access-Control-Allow-Origin": "*" },
+      }).then(function () {
+        window.location.reload();
+      }).catch(error => {
+        console.log(error.response)
+      });
+    } else {
+      alert('입력된 댓글이 없습니다.')
+    }
+    document.querySelector('#new-comment-content').value = '';
+
+  }
 
   function apply(e) {
     e.preventDefault();
@@ -304,6 +268,24 @@ function Board() {
     }
   }
 
+  function removeBtn(commentId) {
+    // console.log(commentId);
+    var answer;
+    answer = window.confirm(`댓글을 삭제하시겠습니까?`);
+    if (answer == true) {
+      axios({
+        url: `/${productId}/${commentId}/codelete`,
+        method: 'post',
+        baseURL: 'http://localhost:8080/post',
+        headers: { "Access-Control-Allow-Origin": "*" },
+      }).then(function () {
+        window.location.reload();
+      }).catch(error => {
+        console.log(error.response)
+      });
+    }
+  }
+
   const [modalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
@@ -336,10 +318,17 @@ function Board() {
     }, []
   );
 
-  console.log(requestStr);
+  function chatLink() {
+    window.location.href = "/chatList"
+  }
+
+
+  // console.log(requestStr);
   let arr = Object.values(requestStr).map(product => (product.post.postId));
+  let userStep = Object.values(requestStr).map(product => (product.step));
+  // console.log(userStep);
   let bookarr = Object.values(bookStr).map(product => (product.post.postId));
-  console.log(bookarr);
+  // console.log(bookarr);
 
   return (
     <div className="gbdetail">
@@ -351,28 +340,29 @@ function Board() {
                 <div className="product__details__pic">
                   <div className="product__details__pic__item">
                     <img className="product__details__pic__item--large"
-                      src={product.image} alt="" id="productImg"/>
+                      src={product.image} alt="" id="productImg" />
                   </div>
                 </div>
               </div>
               <div className="col-lg-6 col-md-6" id="productDetail">
                 <div className="product__details__text">
-                <strong className="left"></strong><div id="nicknameText" align="left">{product.user.nickname}</div>
+                  <strong className="left"></strong><div id="nicknameText" align="left">{product.user.nickname}</div>
                   <div id="titleText" >{product.title}</div><br />
                   <ul id="infoList">
                     <li align="left"><strong className="left"><span className="leftLabel">상태 </span></strong><span id="stepSta" align="left">{product.step}</span></li><br />
-                    <li  align="left"><strong className="left"><span className="leftLabel">가격 </span></strong><span id="priceText">{product.price}원</span></li><br />
+                    <li align="left"><strong className="left"><span className="leftLabel">가격 </span></strong><span id="priceText">{product.price}원</span></li><br />
                     <li align="left"><strong className="left"><span className="leftLabel">기간 </span></strong><span id="dateMoment">{moment(product.rgstAt).format('YYYY-MM-DD')} ~ {moment(product.deadline).format('YYYY-MM-DD')}</span></li><br />
                     <li align="left"><strong className="left"><span className="leftLabel">목표 </span></strong><span id="dateMoment">{product.matching}명</span></li><br />
+                    <li align="left"><strong className="left"><span className="leftLabel">지역 </span></strong><p id="location">{product.location}</p></li><br />
                     <li align="left"><button className="urlBtn" onClick={() => window.open(`https://${product.url}`, '_blank')}>구매 사이트</button></li>
                   </ul>
-                  {window.sessionStorage.getItem('nickname') == product.user.nickname && <div><button id="contentModifybtn" onClick={openModal}>수정하기</button><button id="contentDeletebtn" onClick={contentDelete}>삭제하기</button></div>}
+                  {window.sessionStorage.getItem('email') == product.user.email && <div><button id="contentModifybtn" onClick={openModal}>수정하기</button><button id="contentDeletebtn" onClick={contentDelete}>삭제하기</button></div>}
                   <Modal open={modalOpen} className="modal-body">
                     <table className="tablecss table">
                       <tr id="tableTitle">
                         <th>제목</th>
                         <td>
-                          <input type="text"  defaultValue={product.title} onChange={handelChangeTitle} placeholder="제목" />
+                          <input type="text" defaultValue={product.title} onChange={handelChangeTitle} placeholder="제목" />
                         </td>
                       </tr>
                       <tr>
@@ -422,10 +412,13 @@ function Board() {
                             }
                           </div>
                           <div id="bookmarkContainer">
-                            {!bookarr.includes(Object.values(testStr).map(product => product.postId)[0]) && <a href="#" className="heart-icon" onClick={bookmarkbtn} id="likebtn"><FavoriteBorderIcon /></a> }
+                            {!bookarr.includes(Object.values(testStr).map(product => product.postId)[0]) && <a href="#" className="heart-icon" onClick={bookmarkbtn} id="likebtn"><FavoriteBorderIcon /></a>}
                             {bookarr.includes(Object.values(testStr).map(product => product.postId)[0]) && <a href="#" className="heart-icon" onClick={bookmarkremove} id="likebtn2"><FavoriteIcon /></a>}
                           </div>
                         </div>}
+                        <div id="chatDiv">
+                          {userStep[0] == "agree" && product.step == "proceed" && arr.includes(Object.values(testStr).map(product => product.postId)[0]) && <button align="left" id="chat" value="chat" onClick={chatLink}>채팅</button>}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -435,14 +428,30 @@ function Board() {
                 <div className="product__details__tab">
                   <div>
                     <span>상품 설명</span>
-                    <p>{product.content}</p>
+                    <p id="productContent">{product.content}</p>
                   </div><hr />
-                  <div id="commentTitle"><CommentIcon/> 댓글</div><br /><br />
-                  <Comment />
                 </div>
               </div>
             </div>
           ))}
+          <div id="commentTitle"><CommentIcon /> 댓글</div><br /><br />
+          {Object.values(commentStr).map(comment => (
+            <div className="comment">
+              <table>
+                <tr id={comment.commentId}>
+                  <th id="writerName">{comment.user.nickname}</th>
+                  <td id="content">{comment.content}</td>
+                  <td id="date">{moment(comment.update_at).format('YYYY-MM-DD')}</td>
+                  {window.sessionStorage.getItem('email') == comment.user.email && <td><button id="commentModibtn" >수정</button><button id="removebtn" onClick={() => removeBtn(comment.commentId)}>삭제</button></td>}
+                </tr>
+              </table>
+            </div>
+          ))}
+          {window.sessionStorage.getItem('nickname') !== null && <div id="writing-area">
+            <h5 id="nickname">{window.sessionStorage.getItem('nickname')}</h5>
+            <textarea id="new-comment-content" placeholder="댓글을 입력하세요"></textarea>
+            <button id="submit-new-comment" onClick={addComment}>댓글쓰기</button>
+          </div>}
         </div>
       </section>
     </div>

@@ -14,6 +14,18 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import com.hologachi.backend.model.Comment;
+import com.hologachi.backend.model.Category2;
+import com.hologachi.backend.model.Post;
+import com.hologachi.backend.model.Ptcpt;
+import com.hologachi.backend.model.User;
+import com.hologachi.backend.repository.PostRepository;
+import com.hologachi.backend.repository.PtcptRepository;
+import com.hologachi.backend.repository.CommentRepository;
 
 @RequestMapping("/post")
 @RestController
@@ -28,6 +40,8 @@ public class PostController {
 	MyRequestRepository myRequestRepository;
 	@Autowired
 	MyBookmarkRepository myBookmarkRepository;
+	@Autowired
+	CommentRepository commentRepository;
 
 	// 모든 공동구매 목록
 	@GetMapping("")
@@ -136,7 +150,6 @@ public class PostController {
 		post.get(0).setCategory2(ctg);
 		postRepository.save(post.get(0));
 	}
-
 	// 공동구매 중복 신청 방지
 	@GetMapping("/requestpost")
 	public List<Ptcpt> requestPostFindByUserId(@RequestParam("userId") int userId) {
@@ -172,15 +185,45 @@ public class PostController {
 		return myBookmarkRepository.findByUser_UserId(userId);
 	}
 
+	// 공동구매 댓글 작성
+	@RequestMapping("/{postId}/cocreate")
+	@JsonProperty("comment")
+	public void createComment(@RequestBody Comment comment, @PathVariable int postId, @RequestParam("userId") int userId) {
+		Date now = new Date(System.currentTimeMillis());
+		comment.setRgst_at(now);
+		comment.setUpdate_at(now);
 
-//	@RequestMapping("/gb/gblist")
-//	public List<Post> postFindAll() {
-//		System.out.println(postRepository.findAll());
-//		return postRepository.findAll();
-//	}
-//
-//	@RequestMapping("/gb/gbdetail/{postId}")
-//	public List<Post> postFindByUserId(@PathVariable int postId) {
-//		return postRepository.findAll();
-//	}
+		User user = new User();
+		user.setUserId(userId);
+		comment.setUser(user);
+		Post post = new Post();
+		post.setPostId(postId);
+		comment.setPost(post);
+		comment.setStatus(1);
+		comment.setOnly_sgster(0);
+		commentRepository.save(comment);
+	}
+
+	// 공동구매 댓글 수정
+	@RequestMapping("/{postId}/{commentId}/coupdate")
+	public void updateComment(@RequestBody Comment newComment, @RequestParam String commentStr, @PathVariable int postId, @PathVariable int commentId) {
+		Date now = new Date(System.currentTimeMillis());
+		Comment comment = commentRepository.findByCommentId(commentId);
+		System.out.println(comment);
+		comment.setContent(newComment.getContent());
+		comment.setUpdate_at(now);
+		commentRepository.save(comment);
+	}
+
+	// 공동구매 댓글 삭제
+	@RequestMapping("/{postId}/{commentId}/codelete")
+	public void deleteComment(@PathVariable int postId, @PathVariable int commentId) {
+		commentRepository.deleteById(commentId);
+	}
+
+	// 공동구매 댓글 조회
+	@RequestMapping("/{postId}/comment")
+	public List<Comment> selectComment(@PathVariable int postId) {
+		return commentRepository.findByPost_PostId(postId);
+	}
 }

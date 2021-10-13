@@ -1,6 +1,10 @@
 package com.hologachi.backend.controller;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +38,8 @@ public class MypageController {
 	
 	// 프로필
 	@GetMapping("/mypage/profile")
-	public List<User> userFindByUserId() {
-		int userId = 3;
+	public List<User> userFindByUserId(@RequestParam("userId") int userId) {
+//		int userId = 3;
 		return profileRepository.findByUserId(userId);
 	}
 	
@@ -54,8 +58,20 @@ public class MypageController {
 	
 	// 작성한 글의 신청자 프로필
 	@RequestMapping("/mypost/{postId}/{ptcptId}")
-	public Ptcpt rqsterFindByPtcptId(@PathVariable("postId") int postId, @PathVariable("ptcptId") int ptcptId) {
-		return myRequestRepository.findByPtcptId(ptcptId);
+	public ArrayList rqsterFindByPtcptId(@PathVariable("postId") int postId, @PathVariable("ptcptId") int ptcptId) {
+		User user =  myRequestRepository.findByPtcptId(ptcptId).getUser();
+		String nickname = user.getNickname();
+		String dealRate = user.getDealRate();
+		int dealCount = user.getDealCount();
+		String image = user.getImage();
+		HashMap map = new HashMap();
+		map.put("nickname",nickname);
+		map.put("dealRate",dealRate);
+		map.put("dealCount",dealCount);
+		map.put("image",image);
+		ArrayList list = new ArrayList();
+		list.add(map);
+		return list;
 	}
 	
 	// 작성한 글 신청 수락 처리
@@ -85,8 +101,8 @@ public class MypageController {
 	
 	// 내가 신청한 글
 	@GetMapping("/myrequest")
-	public List<Ptcpt> requestFindByUserId() {
-		int userId = 3;
+	public List<Ptcpt> requestFindByUserId(@RequestParam("userId") int userId) {
+//		int userId = 3;
 		return myRequestRepository.findByUser_UserId(userId);
 	}
 
@@ -99,15 +115,15 @@ public class MypageController {
 	
 	// 내가 작성한 댓글
 	@GetMapping("/mycomment")
-	public List<Comment> commentFindByUserId() {
-		int userId = 1;
+	public List<Comment> commentFindByUserId(@RequestParam("userId") int userId) {
+//		int userId = 1;
 		return myCommentRepository.findByUser_UserId(userId);
 	}
 	
 	// 나의 북마크
 	@GetMapping("/bookmark")
-	public List<Bookmark> bookmarkFindByUserId() {
-		int userId = 1;
+	public List<Bookmark> bookmarkFindByUserId(@RequestParam("userId") int userId) {
+//		int userId = 1;
 		return myBookmarkRepository.findByUser_UserId(userId);
 	}
 

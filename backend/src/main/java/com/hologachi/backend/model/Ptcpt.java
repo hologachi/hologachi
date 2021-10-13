@@ -33,10 +33,10 @@ public class Ptcpt {
 	
 	@Column(name="DEAL_RATE", nullable=true)
 	private int dealRate;
-	
+
 //	@Column(name="RQSTR_RATE", nullable=true)
 //	private int rqstrRate;
-//	
+//
 //	@Column(name="SGSTR_RATE", nullable=true)
 //	private int sgstrRate;
 	

@@ -17,14 +17,10 @@ const items = [
   {
     id: 1,
     src: 'https://i.postimg.cc/1XxFJ8vY/image.jpg',
-    altText: 'Slide 2',
-    caption: 'Slide 2'
   },
   {
     id: 2,
     src: 'https://i.postimg.cc/1XxFJ8vY/image.jpg',
-    altText: 'Slide 3',
-    caption: 'Slide 3'
   }
 ];
 

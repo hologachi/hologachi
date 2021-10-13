@@ -15,6 +15,7 @@
     color: #fff;
     background-color: #1a63b6;
     border-radius: 5px;
+    margin-bottom: 80px;
 }
 /* #submit-new-comment:hover{
     width: 85px;
@@ -36,17 +37,34 @@
     width: 100%;
     border-radius: 5px;
 }
-table > tr > th{
+/* table > tr > th{
     width: 30%;
-}
+} */
 #writerName{
-    width: 20%;
+    padding-right: 15px;
 }
 #content{
-    width: 45%;
+    padding-right: 15px;
 } 
+#imgdeletebtn{
+    border-radius: 5px;
+    background-color: rgb(233, 233, 233);
+    border: 0.5px solid rgb(196, 196, 196);
+    margin-bottom: 3px;
+}
+#imgUpbtn{
+    border-radius: 5px;
+    background-color: rgb(233, 233, 233);
+    border: 0.5px solid gray;
+    margin-bottom: 3px;
+}
+#imgUpload{
+    border-radius: 5px;
+    background-color: rgb(233, 233, 233);
+    border: 0.5px solid rgb(196, 196, 196);
+}
 #date{
-    width: 20%;
+    padding-right: 15px;
 } 
 #commentContainer{
    margin-top: 50px;
@@ -79,12 +97,22 @@ table > tr > th{
 #removebtn{
     width: 90px;
     color: #fff;
-    background-color: #0d6efd;
+    background-color: #e62e0e;
     border-radius: 5px;
 }
 #removebtn:hover{
     box-shadow: none;
-    background-color: #163c72;
+    background-color: #571e0c;
+}
+#commentModibtn{
+    width: 90px;
+    color: #fff;
+    background-color: #f37c2d;
+    border-radius: 5px;
+}
+#commentModibtn:hover{
+    box-shadow: none;
+    background-color: #571e0c;
 }
 #contentDeletebtn{
     float: right;
@@ -104,6 +132,16 @@ table > tr > th{
     border-radius: 5px;
     border: none;
     padding:8px
+}
+#chat{
+    color: #fff;
+    background-color: #faa629;
+    border-radius: 5px;
+    border: none;
+    padding:8px
+}
+#chatDiv{
+    text-align: end;
 }
 #priceText{
     font-size: 20px;
@@ -184,4 +222,11 @@ table > tr > th{
     float: left;
     font-size: 20px;
     font-weight: 700;
+}
+#productContent{
+    color: black;
+}
+#location{
+    font-weight: 800;
+    color: black;
 }
