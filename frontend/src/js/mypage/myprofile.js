@@ -106,9 +106,9 @@ const userImg = window.sessionStorage.getItem('image')
         </div>
         
         <div className="menu">
-            <Button className="menuItems" variant="secondary" onClick={() => { location('mywriting') }}>내가 작성한 글</Button>
-            <Button className="menuItems" variant="secondary" onClick={() => { location('applygb') }}>내가 신청한 글</Button>
-            <Button className="menuItems" variant="secondary" onClick={() => { location('commentwrite') }}>내가 댓글 남긴 글</Button>
+            <Button className="menuItems" variant="secondary" onClick={() => { location('mywriting') }}>작성한 글</Button>
+            <Button className="menuItems" variant="secondary" onClick={() => { location('applygb') }}>신청한 글</Button>
+            <Button className="menuItems" variant="secondary" onClick={() => { location('commentwrite') }}>댓글 남긴 글</Button>
             <Button className="menuItems" variant="secondary" onClick={() => { location('bookmark') }}>북마크</Button>
             {/* <Button className="menuItems" variant="secondary" onClick={openModal}>닉네임 수정</Button> */}
             <NickModal/>
