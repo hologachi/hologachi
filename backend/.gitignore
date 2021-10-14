@@ -37,3 +37,4 @@ build/
 
 ### Oauth ###
 application-oauth.properties
+application.properties
