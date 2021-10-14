@@ -10,34 +10,28 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Builder;
+import lombok.Data;
 
+@Builder
+@Data
 @Entity
-@Getter
-@Setter
 @Table(name="TBL_CHAT_PTCPTS")
 public class ChatPtcpts {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="CHAT_PTCPTS_ID")
 	private int chatPtcptsId;
 	
-	@ManyToOne(optional = false)
-    @JoinTable(name = "TBL_CHATROOM"
-    		, joinColumns = @JoinColumn(name = "CHATROOM_ID")
-//    		, inverseJoinColumns = @JoinColumn(name = "CHATROOM_ID")
-    )
-    private ChatRoom chatRoom;
+//	@ManyToOne(optional = false)
+//    @JoinTable(name = "TBL_CHATROOM"
+//    		, joinColumns = @JoinColumn(name = "CHATROOM_ID")
+////    		, inverseJoinColumns = @JoinColumn(name = "CHATROOM_ID")
+//    )
+	@Column(name="CHATROOM_ID")
+    private int chatRoomId;
 	
 	@Column(name="USER_ID")
 	private int userId;
-	
-	@Column(name="NOT_READ_CHAT")
-	private String notReadChat;
-	
-	@Column(name="LAST_READ_CHAT_ID")
-	private String lastReadChatId;
 	
 }

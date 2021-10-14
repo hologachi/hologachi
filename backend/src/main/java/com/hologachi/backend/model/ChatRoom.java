@@ -16,30 +16,27 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Data
 @Entity
-@Getter
+@NoArgsConstructor
 @Table(name="TBL_CHATROOM")
 public class ChatRoom {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="CHATROOM_ID")
 	private int chatroomId;
 	
 	@Column(name="ROOM_NAME")
 	private String roomName;
 
-	@Column(name="ROOM_IMAGE")
-	private String roomImage;
-
 	@JsonFormat(pattern="yyyy-MM-dd")
 	@Column(name="CREATE_AT")
 	private Date createAt;
-	
-	@Column(name="UPDATE_AT")
-	private Date updateAt;
 	
 	@Column(name="POST_ID")
 	private int postId;
@@ -50,4 +47,9 @@ public class ChatRoom {
 			inverseJoinColumns = @JoinColumn(name = "USER_ID"))
     private List<User> users = new ArrayList<User>();
 
+	public ChatRoom(String title, Date now, int postId) {
+		roomName = title;
+		createAt = now;
+		this.postId = postId;
+	}
 }
