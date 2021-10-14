@@ -103,7 +103,7 @@ function ManageGB(){
         <div className="wrapper">
             <AdminNav />
             <div className="GBList">
-            <h2>공동구매 목록</h2>
+            <h2>공동구매 관리</h2>
             <AdminSearch />
                 {   gbs && <BootstrapTable keyField='ptcptId' data={ gbs } columns={ columns } striped hover condensed wrapperClasses="table-responsive" pagination={ paginationFactory() }/> }
            </div>

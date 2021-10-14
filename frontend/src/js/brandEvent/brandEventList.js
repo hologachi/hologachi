@@ -7,17 +7,7 @@ import BrandEventService from '../services/BrandEventService';
 
 function BrandEventList() {
 
-    const [brandEvents, setBrandEvents] = useState(
-        [{title: '1자라 신년세일', img:"", brand:'Zara', desription:"2021년 세일", duration: "2021.09.30 ~ 2021.10.05", site:"https://www.zara.com/kr/"}, 
-        {title: '2자라 신년세일', img:"",  brand:'Zara', desription:"2021년 세일", duration: "2021.09.30 ~ 2021.10.05", site:"https://www.zara.com/kr/"}, 
-        {title: '3자라 신년세일', img:"",  brand:'Zara', desription:"2021년 세일", duration: "2021.09.30 ~ 2021.10.05", site:"https://www.zara.com/kr/"}, 
-        {title: '4자라 신년세일', img:"",  brand:'Zara', desription:"2021년 세일", duration: "2021.09.30 ~ 2021.10.05", site:"https://www.zara.com/kr/"}, 
-        {title: '5자라 신년세일', img:"",  brand:'Zara', desription:"2021년 세일", duration: "2021.09.30 ~ 2021.10.05", site:"https://www.zara.com/kr/"}, 
-        {title: '6자라 신년세일', img:"",  brand:'Zara', desription:"2021년 세일", duration: "2021.09.30 ~ 2021.10.05", site:"https://www.zara.com/kr/"}, 
-        {title: '7자라 신년세일', img:"",  brand:'Zara', desription:"2021년 세일", duration: "2021.09.30 ~ 2021.10.05", site:"https://www.zara.com/kr/"}, 
-        {title: '8자라 신년세일', img:"",  brand:'Zara', desription:"2021년 세일", duration: "2021.09.30 ~ 2021.10.05", site:"https://www.zara.com/kr/"}, 
-        {title: '9자라 신년세일', img:"",  brand:'Zara', desription:"2021년 세일", duration: "2021.09.30 ~ 2021.10.05", site:"https://www.zara.com/kr/"}]
-    );
+    const [brandEvents, setBrandEvents] = useState([]);
 
     useEffect(
         () => {
@@ -42,20 +32,20 @@ function BrandEventList() {
             </div>
 
             <div className="BrandEventCard" >
-            <Grid container spacing={4}>
+            <Grid container spacing={2}>
             { brandEvents && brandEvents.length > -1 ? 
                 (brandEvents.map((event, i) => 
                     <Grid item xs={6} sm={3}>
-                    <Card style={{ margin: '0px' }}>
+                    <Card style={{ margin: '10px' }}>
                     <Card.Img variant="top" src={event.img}/>
                     <Card.Body>
+                        <Button variant="info" href={event.site} size="xxl">{event.brandName}</Button>
                         <Card.Title>{event.title}</Card.Title>
                         <Card.Text>
                         {event.description}
                         <br/>
                         {event.startEvent} ~ {event.endEvent}
                         </Card.Text>
-                        <Button variant="primary" href={event.site}>{event.brandName}</Button>
                         </Card.Body>
                     </Card> 
                     </Grid>

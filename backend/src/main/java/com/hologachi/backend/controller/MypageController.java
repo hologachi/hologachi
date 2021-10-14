@@ -1,25 +1,34 @@
 package com.hologachi.backend.controller;
 
 import java.lang.reflect.Array;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.hologachi.backend.model.Bookmark;
+import com.hologachi.backend.model.ChatPtcpts;
+import com.hologachi.backend.model.ChatRoom;
 import com.hologachi.backend.model.Comment;
 import com.hologachi.backend.model.Post;
 import com.hologachi.backend.model.Ptcpt;
 import com.hologachi.backend.model.User;
+import com.hologachi.backend.repository.ChatPtcptsRepository;
+import com.hologachi.backend.repository.ChatRoomRepository;
 import com.hologachi.backend.repository.MyBookmarkRepository;
 import com.hologachi.backend.repository.MyCommentRepository;
 import com.hologachi.backend.repository.MyPostRepository;
 import com.hologachi.backend.repository.MyRequestRepository;
 import com.hologachi.backend.repository.ProfileRepository;
+import com.hologachi.backend.service.EmailService;
 
 @RequestMapping("/mypage")
 @RestController
@@ -35,6 +44,14 @@ public class MypageController {
 	MyCommentRepository myCommentRepository;
 	@Autowired
 	MyBookmarkRepository myBookmarkRepository;
+	
+	@Autowired
+	EmailService emailService;
+	@Autowired
+	ChatRoomRepository chatRoomRepository;
+	@Autowired
+	ChatPtcptsRepository chatPtcptRepository;
+	
 	
 	// 프로필
 	@GetMapping("/mypage/profile")
@@ -77,7 +94,32 @@ public class MypageController {
 	@RequestMapping("/mypost/{postId}/{ptcptId}/agree")
 	public void updateRqstAgree(@PathVariable("postId") int postId, @PathVariable("ptcptId") int ptcptId) {
 		Ptcpt p = myRequestRepository.findByPtcptId(ptcptId);
+		
+		//채팅방 생성 
+		Date now = new Date(); // 현재 시각 
+		ChatRoom newChatRoom = chatRoomRepository.save(new ChatRoom(p.getPost().getTitle(), now, postId));
+		
+		System.out.println(newChatRoom.toString());
+		
+//		제안자 채팅방에 추가
+		Optional<Post> post = myPostRepository.findById(postId);
+		if(post.isPresent()) {
+			chatPtcptRepository.save(ChatPtcpts.builder()
+					.chatRoomId(newChatRoom.getChatroomId())
+					.userId(post.get().getUser().getUserId()).build()); 
+		}
+		
+		//요청자 채팅방에 추가
+		chatPtcptRepository.save(ChatPtcpts.builder()
+				.chatRoomId(newChatRoom.getChatroomId())
+				.userId(p.getUser().getUserId()).build());  
+		
+		//채팅방 이메일 보내기 
+		String chatRoomURL = "http://localhost:3000/chat/" + newChatRoom.getChatroomId();
+		emailService.sendChatroomAlertEmail(p.getUser().getEmail(), p.getUser().getNickname(), p.getPost().getTitle(), chatRoomURL);
+		
 		p.setStep("agree");
+		
 		myRequestRepository.save(p);
 	}
 	

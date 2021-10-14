@@ -24,7 +24,7 @@ export default function authGoogleLogout(props){
             <GoogleLogout
                 clientId={clientId}
                 render={renderProps => (
-                    <Button onClick={renderProps.onClick}>로그아웃</Button>
+                    <Button variant="info" onClick={renderProps.onClick}>로그아웃</Button>
                   )}
                 onLogoutSuccess={logout}
                 onFailure={onFailure}/>

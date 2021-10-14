@@ -165,7 +165,7 @@ function ManageGBPost() {
             <AdminNav />
             <div className="managePost_body">
                 <div className="postList">
-                    <h2>공동구매 글</h2>
+                    <h2>공동구매 글 관리</h2>
                     <AdminSearch />
                     {   gbPosts && <BootstrapTable keyField='postId' data={ gbPosts } columns={ columns } striped hover condensed wrapperClasses="table-responsive" pagination={ paginationFactory() }/> }
 
