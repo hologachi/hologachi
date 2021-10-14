@@ -170,4 +170,5 @@ $RECYCLE.BIN/
 
 #intellij
 .idea
+
 backend/src/main/resources/application.properties
