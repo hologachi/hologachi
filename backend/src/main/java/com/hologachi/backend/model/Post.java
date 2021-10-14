@@ -57,5 +57,6 @@ public class Post {
 	private String url;
 	private String image;
 	private String location;
+	private String representImg;
 	
 }

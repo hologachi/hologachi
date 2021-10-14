@@ -9,6 +9,9 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 import moment from 'moment';
 import CommentIcon from '@mui/icons-material/Comment';
+import { Slide } from 'react-slideshow-image';
+import 'react-slideshow-image/dist/styles.css'
+import s from 'react-aws-s3';
 
 const Modal = (props) => {
   const { open, header } = props;
@@ -30,7 +33,7 @@ function Board() {
   const { productId } = useParams()
   const [isLogined, setIsLogined] = useState(window.sessionStorage.getItem('userId'))
 
-  console.log(window.sessionStorage.getItem('userId'));
+  // console.log(window.sessionStorage.getItem('userId'));
 
   useEffect(() => { // useEffect 적용!
   }, [isLogined]);
@@ -170,21 +173,6 @@ function Board() {
     }, []
   );
 
-  // function Comment(){
-  //   return(
-  //   <div className="comment">
-  //   <table>
-  //     <tr id={comment.id}>
-  //       <th id="writerName">{comment.writer}</th>
-  //       <td id="content">{comment.content}</td>
-  //       <td id="date">{comment.date}</td>
-  //       {nickname == comment.writer && <td><button id="removebtn" onClick={removeBtn}>삭제</button></td>}
-  //     </tr>
-  //   </table>
-  // </div>
-  //   )
-  // }
-
   function addComment(e) {
     e.preventDefault();
     let value = document.querySelector('#new-comment-content').value;
@@ -322,6 +310,7 @@ function Board() {
     window.location.href = "/chatList"
   }
 
+  let imageArr = Object.values(testStr).map(product => (product.image.split(" ")));
 
   // console.log(requestStr);
   let arr = Object.values(requestStr).map(product => (product.post.postId));
@@ -329,6 +318,25 @@ function Board() {
   // console.log(userStep);
   let bookarr = Object.values(bookStr).map(product => (product.post.postId));
   // console.log(bookarr);
+  let imgSlide = imageArr[0];
+  // console.log(imageArr[0]);
+
+  const Slideshow = () => {
+    return (
+      <div className="slide-container">
+        <Slide>
+         {imgSlide.map((slideImage, index)=> (
+            <div key={index}>
+            {slideImage !== null && <>
+            <img className="product__details__pic__item--large" 
+                      src={slideImage} alt="" id="productImg" />
+                      <span>{slideImage.caption}</span></>}
+            </div>
+          ))} 
+        </Slide>
+      </div>
+    )
+}
 
   return (
     <div className="gbdetail">
@@ -337,12 +345,7 @@ function Board() {
           {Object.values(testStr).map(product => (
             <div className="row" id="product">
               <div className="col-lg-6 col-md-6">
-                <div className="product__details__pic">
-                  <div className="product__details__pic__item">
-                    <img className="product__details__pic__item--large"
-                      src={product.image} alt="" id="productImg" />
-                  </div>
-                </div>
+              <Slideshow/>
               </div>
               <div className="col-lg-6 col-md-6" id="productDetail">
                 <div className="product__details__text">

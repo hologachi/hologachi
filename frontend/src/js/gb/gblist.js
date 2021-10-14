@@ -79,7 +79,7 @@ function Gblist() {
     }
     setTitle(keyword);
   };
-
+  
   return (
     <Container className={classes.cardGrid} maxWidth="md">
     <div>
@@ -108,7 +108,7 @@ function Gblist() {
             <Link to={`/gb/gbdetail/${product.postId}`}>
             <CardMedia
                   className={classes.cardMedia}
-                  image={product.image}
+                  image={product.representImg}
                   title={product.name}
                 />
             </Link>

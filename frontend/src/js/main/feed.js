@@ -4,7 +4,7 @@ import {
   CarouselItem,
   CarouselControl,
   CarouselIndicators,
-  CarouselCaption
+  // CarouselCaption
 } from 'reactstrap';
 import '../../css/feed.css'
 
@@ -16,10 +16,6 @@ const items = [
   },
   {
     id: 1,
-    src: 'https://i.postimg.cc/1XxFJ8vY/image.jpg',
-  },
-  {
-    id: 2,
     src: 'https://i.postimg.cc/1XxFJ8vY/image.jpg',
   }
 ];
@@ -50,10 +46,10 @@ const Feed = () => {
       <CarouselItem
         onExiting={() => setAnimating(true)}
         onExited={() => setAnimating(false)}
-        key={item.src}
+        key={item.id}
       >
         <img className="slideImage" src={item.src} alt={item.altText}/>
-        <CarouselCaption captionText={item.caption} captionHeader={item.caption} />
+        {/* <CarouselCaption captionHeader={item.caption} /> */}
       </CarouselItem>
     );
   });

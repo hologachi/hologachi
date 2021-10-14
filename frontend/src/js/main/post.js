@@ -103,7 +103,7 @@ export default function Post() {
             <Link to={`/gb/gbdetail/${product.postId}`}>
               <CardMedia
                 className={classes.cardMedia}
-                image={product.image}
+                image={product.representImg}
                 title={product.title}
               />
             </Link>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -8,23 +8,27 @@ import moment from 'moment';
 import ImageUploading from 'react-images-uploading';
 import { PictureOutlined } from '@ant-design/icons';
 import axios from "axios";
-import { uploadFile } from 'react-s3';
+import S3 from "react-aws-s3";
 import dotenv from "dotenv";
 dotenv.config();
 
 const API_KEY = process.env.REACT_APP_API_LOC_KEY;
 
-const S3_BUCKET ='hologachi-bucket';
-const REGION ='ap-northeast-2';
-const ACCESS_KEY =process.env.REACT_APP_API_ACCESS_KEY;
-const SECRET_ACCESS_KEY =process.env.REACT_APP_API_SECRET_ACCESS_KEY;
+const S3_BUCKET = 'hologachi-bucket';
+const REGION = 'ap-northeast-2';
+const ACCESS_KEY = process.env.REACT_APP_API_ACCESS_KEY;
+const SECRET_ACCESS_KEY = process.env.REACT_APP_API_SECRET_ACCESS_KEY;
 
 const config = {
-    bucketName: S3_BUCKET,
-    region: REGION,
-    accessKeyId: ACCESS_KEY,
-    secretAccessKey: SECRET_ACCESS_KEY,
-}
+  bucketName: S3_BUCKET,
+  dirName: "postImg" /* optional */,
+  region: REGION,
+  accessKeyId: ACCESS_KEY,
+  secretAccessKey: SECRET_ACCESS_KEY
+};
+
+let imgURL="";
+let repreImg = "";
 
 function UploadImage() {
 
@@ -33,7 +37,6 @@ function UploadImage() {
 
   const onChange = (imageList, addUpdateIndex) => {
     // data for submit
-    console.log(imageList, addUpdateIndex);
     setImages(imageList);
   };
 
@@ -45,24 +48,37 @@ function UploadImage() {
   }
 
   const UploadImageToS3WithReactS3 = () => {
+    const date = new Date();
+    const handleUpload = async (fileInput) => {
+      console.log(fileInput);
+      const ReactS3Client = new S3(config);
+      let file;
+      let newFileName;
 
-    // const [selectedFile, setSelectedFile] = useState(null);
+      for (var i = 0; i < fileInput.length; i++) {
+        file = fileInput[i].file;
+        newFileName = date.getTime() + fileInput[i].file.name;
 
-    // const handleFileInput = (e) => {
-    //   setImages(e.target.files[0]);
-    // }
-  
-    const handleUpload = async (file) => {
-        uploadFile(file, config)
-            .then(data => console.log(data))
-            .catch(err => console.error(err))
+        // console.log(file, newFileName);
+        ReactS3Client.uploadFile(file, newFileName).then(data => {
+          console.log(data.location);
+          imgURL += data.location + " ";
+          repreImg = data.location;
+          if (data.status == 204) {
+            console.log("success");
+          } else {
+            console.log("fail");
+          }
+        });
+      }
     }
 
     return <div>
-        <input type="file" onChange={onChange}/>
-        <button onClick={() => handleUpload(images)}> 업로드</button>
+      <input type="file" onChange={onChange} />
+      <button id="upbtn" onClick={() => handleUpload(images)}> 업로드</button>
+      <p className="warningText">사진 선택 후 업로드를 꼭 해주셔야 합니다. </p>
     </div>
-}
+  }
 
   return (
     <div className="imageup">
@@ -102,7 +118,7 @@ function UploadImage() {
           </div>
         )}
       </ImageUploading>
-      <UploadImageToS3WithReactS3/>
+      <UploadImageToS3WithReactS3 />
     </div>
   )
 }
@@ -146,23 +162,20 @@ function Board() {
     previewURL: "",
   });
 
-  function handelChangeTitle(e){
+  function handelChangeTitle(e) {
     setTitle(e.target.value)
   }
-  function handelChangePrice(e){
+  function handelChangePrice(e) {
     setPrice(e.target.value)
   }
-  function handelChangeUrl(e){
+  function handelChangeUrl(e) {
     setUrl(e.target.value)
   }
-  function handelChangeContent(e){
+  function handelChangeContent(e) {
     setContent(e.target.value)
   }
 
   let profile_preview = null;
-  // if (postfiles.file !== null) {
-  //   profile_preview = <img src={postfiles.previewURL} alt="이미지를 등록하세요" style={{width:"50px"}}/>
-  // }
 
   const uploadFile = (e) => {
     e.preventDefault();
@@ -181,7 +194,7 @@ function Board() {
       reader.readAsDataURL(file);
     }
   };
-
+  
   function addContent() {
     axios({
       url: '/register',
@@ -193,9 +206,11 @@ function Board() {
         deadline: startDate,
         deletedBy: -1,
         price: price,
+        image: imgURL,
         url: url,
-        step:"proceed",
-        location: location
+        step: "proceed",
+        location: location,
+        representImg: repreImg
       },
       params: {
         userId: window.sessionStorage.getItem('userId')
@@ -204,137 +219,137 @@ function Board() {
       headers: { "Access-Control-Allow-Origin": "*" },
     }).then(function () {
       alert("공동구매가 등록되었습니다.")
-      window.location.href="/home"
+      window.location.href = "/home"
     }).catch(error => {
       console.log(error.response)
-  });
+    });
   };
 
 
 
   var geolocation = require('geolocation')
 
-geolocation.getCurrentPosition(function (err, position) {
-  if (err) throw err
-  let latitude = position.coords.latitude
-  let longtitude = position.coords.longitude
-  GetLoc(latitude,longtitude)
-})
+  geolocation.getCurrentPosition(function (err, position) {
+    if (err) throw err
+    let latitude = position.coords.latitude
+    let longtitude = position.coords.longitude
+    GetLoc(latitude, longtitude)
+  })
 
-function GetLoc(lat, lon){
-  fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}2&key=${API_KEY}`)
-  .then(function(response){
-      return response.json();
-  }).then(function(json){
-    const currentLoc = document.querySelector('.currentLoc')
-    const loc = json.results[4].formatted_address;
-    const locs = loc.split(' ');
-    setLocation(locs[3]);
-    // console.log(json.results[4].formatted_address);
-    let location = `<span>${loc}</span>`;
-    currentLoc.innerHTML = location
-  }).catch(error => console.log('error', error));
-}
-// console.log(location);
+  function GetLoc(lat, lon) {
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}2&key=${API_KEY}`)
+      .then(function (response) {
+        return response.json();
+      }).then(function (json) {
+        const currentLoc = document.querySelector('.currentLoc')
+        const loc = json.results[4].formatted_address;
+        const locs = loc.split(' ');
+        setLocation(locs[3]);
+        // console.log(json.results[4].formatted_address);
+        let location = `<span>${loc}</span>`;
+        currentLoc.innerHTML = location
+      }).catch(error => console.log('error', error));
+  }
+  // console.log(location);
 
-return(
-<div id="container" className="container">
-    <div id="inputform">
-    <div><br />
-      <h1 >공동구매 등록</h1><br />
-      <Form.Group align="center" as={Row} className="mb-3" controlId="exampleForm.ControlTextarea1">
-        <Form.Label  column sm="2">
-        <h5>
-        <strong>
-        글 제목
-        </strong>
-          </h5>
-        </Form.Label>
-        <Col sm="10">
-          <Form.Control type="text" placeholder="title" value={title} onChange={handelChangeTitle} style={{width:"70%"}}/>
-        </Col>
-      </Form.Group>
+  return (
+    <div id="container" className="container">
+      <div id="inputform">
+        <div><br />
+          <h1 >공동구매 등록</h1><br />
+          <Form.Group align="center" as={Row} className="mb-3" controlId="exampleForm.ControlTextarea1">
+            <Form.Label column sm="2">
+              <h5>
+                <strong>
+                  글 제목
+                </strong>
+              </h5>
+            </Form.Label>
+            <Col sm="10">
+              <Form.Control type="text" placeholder="title" value={title} onChange={handelChangeTitle} style={{ width: "70%" }} />
+            </Col>
+          </Form.Group>
 
-      <Form.Group align="center" as={Row} className="mb-3" controlId="exampleForm.ControlTextarea1">
-        <Form.Label column sm="2"><h5>
-        <strong>
-        가격
-        </strong>
-           </h5>
-        </Form.Label>
-        <Col sm="10">
-          <Form.Control type="number" placeholder="price" value={price} onChange={handelChangePrice} style={{width:"70%"}}/>
-        </Col>
-      </Form.Group><br />
-
-      <Form.Group align="center" className="mb-3" controlId="exampleForm.ControlTextarea1">
-        <Form.Label id="left" ><h5>
-        <strong>
-        카테고리
-        </strong>
-        </h5>
-        </Form.Label>
-        <Form.Control as="select" name="category" style={{width:"100px"}}>
-          {category}
-        </Form.Control>
-      </Form.Group><br />
-
-      <Form.Group align="center" as={Row} className="mb-3" controlId="exampleForm.ControlTextarea1" >
-        <Form.Label column sm="2"><h5>
-        <strong>
-        구매 링크
-        </strong>
-          </h5>
-        </Form.Label>
-        <Col sm="10">
-          <Form.Control type="text" placeholder="URL" value={url} onChange={handelChangeUrl} style={{width:"70%"}}/>
-        </Col>
-      </Form.Group><br />
-
-      <Form.Group align="center" className="mb-3" controlId="exampleForm.ControlTextarea1">
-        <Form.Label><h5>
-        <strong>
-        목표 인원 
-        </strong>
+          <Form.Group align="center" as={Row} className="mb-3" controlId="exampleForm.ControlTextarea1">
+            <Form.Label column sm="2"><h5>
+              <strong>
+                가격
+              </strong>
             </h5>
-        </Form.Label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <Button id="numbtn" onClick={minusNum}>-</Button>&nbsp;
-        <span>{joinnums}</span>&nbsp;
-        <Button id="numbtn" onClick={plusNum}>+</Button>
-      </Form.Group><br />
+            </Form.Label>
+            <Col sm="10">
+              <Form.Control type="number" placeholder="price" value={price} onChange={handelChangePrice} style={{ width: "70%" }} />
+            </Col>
+          </Form.Group><br />
 
-      <Form.Group align="center" className="mb-3">
-        <Form.Label className="date"><h5><strong>
-        공동구매 마감일
-        </strong></h5></Form.Label>
-        <DatePicker selected={startDate} minDate={moment().toDate()} onChange={(date) => setStartDate(date)} style={{width:"70%"}}/>
-      </Form.Group><br />
+          <Form.Group align="center" className="mb-3" controlId="exampleForm.ControlTextarea1">
+            <Form.Label id="left" ><h5>
+              <strong>
+                카테고리
+              </strong>
+            </h5>
+            </Form.Label>
+            <Form.Control as="select" name="category" style={{ width: "100px" }}>
+              {category}
+            </Form.Control>
+          </Form.Group><br />
 
-      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-        <input
-          id="upload-file"
-          type="file"
-          accept="image/*"
-          multiple
-          onChange={uploadFile}
-        ></input>
-        {profile_preview}
-        <UploadImage />
-      </Form.Group><br />
+          <Form.Group align="center" as={Row} className="mb-3" controlId="exampleForm.ControlTextarea1" >
+            <Form.Label column sm="2"><h5>
+              <strong>
+                구매 링크
+              </strong>
+            </h5>
+            </Form.Label>
+            <Col sm="10">
+              <Form.Control type="text" placeholder="URL" value={url} onChange={handelChangeUrl} style={{ width: "70%" }} />
+            </Col>
+          </Form.Group><br />
 
-      <Form.Group align="center" className="mb-3" controlId="exampleForm.ControlTextarea1">
-        <Form.Label id="left" ><h5><strong>
-        상품 소개 및 설명
-        </strong></h5></Form.Label>
-        <Form.Control as="textarea" cols={70} rows={5} placeholder="Content" style={{ resize: "none" }} value={content} onChange={handelChangeContent} />
-      </Form.Group>
-      <span id="locComment">현재위치로 공동구매가 등록됩니다.</span>
-      <div className="currentLoc"></div><br />
-      <Button id="submitbtn" onClick={addContent}>추가</Button>
+          <Form.Group align="center" className="mb-3" controlId="exampleForm.ControlTextarea1">
+            <Form.Label><h5>
+              <strong>
+                목표 인원
+              </strong>
+            </h5>
+            </Form.Label>&nbsp;&nbsp;&nbsp;&nbsp;
+            <Button id="numbtn" onClick={minusNum}>-</Button>&nbsp;
+            <span>{joinnums}</span>&nbsp;
+            <Button id="numbtn" onClick={plusNum}>+</Button>
+          </Form.Group><br />
+
+          <Form.Group align="center" className="mb-3">
+            <Form.Label className="date"><h5><strong>
+              공동구매 마감일
+            </strong></h5></Form.Label>
+            <DatePicker selected={startDate} minDate={moment().toDate()} onChange={(date) => setStartDate(date)} style={{ width: "70%" }} />
+          </Form.Group><br />
+
+          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+            <input
+              id="upload-file"
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={uploadFile}
+            ></input>
+            {profile_preview}
+            <UploadImage />
+          </Form.Group><br />
+
+          <Form.Group align="center" className="mb-3" controlId="exampleForm.ControlTextarea1">
+            <Form.Label id="left" ><h5><strong>
+              상품 소개 및 설명
+            </strong></h5></Form.Label>
+            <Form.Control as="textarea" cols={70} rows={5} placeholder="Content" style={{ resize: "none" }} value={content} onChange={handelChangeContent} />
+          </Form.Group>
+          <span id="locComment">현재위치로 공동구매가 등록됩니다.</span>
+          <div className="currentLoc"></div><br />
+          <Button id="submitbtn" onClick={addContent}>추가</Button>
+        </div>
+      </div>
     </div>
-  </div>
-  </div>
-)
+  )
 }
 
 function gbwrite() {

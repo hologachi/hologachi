@@ -49,7 +49,6 @@ public class MypageController {
 //		int userId = 1;
 		return myPostRepository.findByUser_UserId(userId);
 	}
-	
 	// 작성한 글의 신청자 목록
 	@RequestMapping("/mypost/{postId}")
 	public List<Ptcpt> ptcptFindByPostId(@PathVariable int postId) {

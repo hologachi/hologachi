@@ -94,6 +94,9 @@
 .product__details__text{
     margin-top: 90px;
 }
+.slide{
+    background-color: #fafafa;
+}
 #removebtn{
     width: 90px;
     color: #fff;
