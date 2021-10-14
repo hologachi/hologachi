@@ -17,6 +17,12 @@
 #upbtn{
     border-radius: 3px;
 }
+.warningText{
+    color: red;
+    font-size: 12px;
+    margin: 0;
+    font-weight: 800;
+}
 .inputform{
     display: flex;
     align-items: center;

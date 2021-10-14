@@ -12,7 +12,7 @@ export default function Header() {
     
 
     useEffect(() => { // useEffect 적용!
-        console.log(isLogined);
+        // console.log(isLogined);
         }, [isLogined]);
     
         function handleChange(e){
