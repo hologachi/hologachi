@@ -20,6 +20,7 @@ import com.hologachi.backend.repository.MyCommentRepository;
 import com.hologachi.backend.repository.MyPostRepository;
 import com.hologachi.backend.repository.MyRequestRepository;
 import com.hologachi.backend.repository.ProfileRepository;
+import com.hologachi.backend.service.EmailService;
 
 @RequestMapping("/mypage")
 @RestController
@@ -35,6 +36,8 @@ public class MypageController {
 	MyCommentRepository myCommentRepository;
 	@Autowired
 	MyBookmarkRepository myBookmarkRepository;
+	@Autowired
+	EmailService emailService;
 	
 	// 프로필
 	@GetMapping("/mypage/profile")
@@ -79,6 +82,11 @@ public class MypageController {
 	public void updateRqstAgree(@PathVariable("postId") int postId, @PathVariable("ptcptId") int ptcptId) {
 		Ptcpt p = myRequestRepository.findByPtcptId(ptcptId);
 		p.setStep("agree");
+		
+		//채팅방 이메일 보내기 
+		emailService.sendEmail();
+		
+		
 		myRequestRepository.save(p);
 	}
 	
