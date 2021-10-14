@@ -2,7 +2,7 @@ import '../../css/donation.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
-import paginationFactory from 'react-bootstrap-table2-paginator';
+// import paginationFactory from 'react-bootstrap-table2-paginator';
 import DonationService from '../services/DonationService';
 
 function MyDonation() {
@@ -60,7 +60,9 @@ function MyDonation() {
 
             <div className="myDonations">
             { myDonation && myDonation.length > 0 ?
-                (<BootstrapTable keyField='donationId' data={ myDonation } columns={ columns } striped hover condensed wrapperClasses="table-responsive" pagination={ paginationFactory() }/>)
+                (<BootstrapTable keyField='donationId' data={ myDonation } columns={ columns } striped hover condensed wrapperClasses="table-responsive" 
+                // pagination={ paginationFactory() }
+                />)
                 : ( <h1>결과가 없습니다.</h1> )
             }
             </div>
