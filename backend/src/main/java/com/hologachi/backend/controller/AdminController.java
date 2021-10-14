@@ -115,14 +115,11 @@ public class AdminController {
 	@PostMapping("/mGBPost/comment/delete")
 	public void deleteTheComment(@RequestBody Map<String, String> data) {
 //		System.out.println(data.get("commentId"));
-		Optional<Comment> foundComment = commentRepository.findByCommentId(Integer.parseInt(data.get("commentId")));
+		Comment foundComment = commentRepository.findByCommentId(Integer.parseInt(data.get("commentId")));
 		
-		if(foundComment.isPresent()) {
-			Comment deletedComment = foundComment.get();
-			deletedComment.setStatus(0);
-			
-			commentRepository.save(deletedComment);
-		}
+		foundComment.setStatus(0);
+		
+		commentRepository.save(foundComment);
 	}
 	
 //	3. 공동구매 관리 
