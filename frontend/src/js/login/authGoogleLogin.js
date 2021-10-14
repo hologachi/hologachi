@@ -67,7 +67,7 @@ class AuthGoogleLogin extends Component {
                 <GoogleLogin
                     clientId={clientId}
                     render={renderProps => (
-                        <Button onClick={renderProps.onClick}>구글로 로그인하기</Button>
+                        <Button variant="info" onClick={renderProps.onClick}>구글로 로그인하기</Button>
                       )}
                     onSuccess={this.responseGoogle}
                     onFailure={this.onFailure}
