@@ -1,15 +1,15 @@
-.myDonationList {
+.myDonation {
     display: flex;
     flex-direction: column;
     height: 100%;
-    justify-content:space-around;
-    
+    align-items: center;
+    justify-content:center
 }
 
-.myDonationListDescription, .myDonations{
-    flex: 1; /* flex: 1 1 0 */
+.myDonationDescription, .myDonationList{
+    flex: 1 1 auto; /* flex: 1 1 0 */
 }
 
-.myDonations {
-    padding-left: 38%;
+.myDonationList {
+    margin: auto auto;
 }

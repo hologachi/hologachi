@@ -6,12 +6,12 @@ function AdminSearch() {
     
     return (
         <div className="userSearch">
-            <form action="/admin/mUser" method="POST" class="float-right">
+            {/* <form action="/admin/mUser" method="POST" class="float-right">
                 <span>
                 <input type="type" placeholder="검색어를 입력하세요" name="keyword" />
                 <Button type="submit" variant="secondary" >검색</Button>
                 </span>
-            </form>
+            </form> */}
         </div>
 
     );

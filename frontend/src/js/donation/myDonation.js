@@ -1,7 +1,8 @@
 import '../../css/donation.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
-import BootstrapTable from 'react-bootstrap-table-next';
+import BootstrapTable from 'react-bootstrap-table-next'
+import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 // import paginationFactory from 'react-bootstrap-table2-paginator';
 import DonationService from '../services/DonationService';
 
@@ -30,13 +31,13 @@ function MyDonation() {
         text: '기부자 성함'
       }, {
         dataField: 'phone',
-        text: '기부자 연락처'
+        text: '연락처'
       }, {
         dataField: 'product',
-        text: '기부 물품'
+        text: '물품'
       }, {
         dataField: 'receipt',
-        text: '기부 영수증 신청 여부',
+        text: '기부 영수증',
         formatter: ReceiptFormatter	
       }
     ];	
@@ -51,16 +52,16 @@ function MyDonation() {
     }
 
     return (
-        <div className="myDonationList">
+        <div className="myDonation">
 
-            <div className="myDonationListDescription">
+            <div className="myDonationDescription">
                 <h2>나의 기부, 나의 행복</h2>
                 <p>{window.sessionStorage.getItem('nickname')}님이 현재까지 진행한 기부입니다.</p>
             </div>
 
-            <div className="myDonations">
+            <div className="myDonationList">
             { myDonation && myDonation.length > 0 ?
-                (<BootstrapTable keyField='donationId' data={ myDonation } columns={ columns } striped hover condensed wrapperClasses="table-responsive" 
+                (<BootstrapTable keyField='donationId' data={ myDonation } columns={ columns } wrapperClasses="table-responsive" 
                 // pagination={ paginationFactory() }
                 />)
                 : ( <h1>결과가 없습니다.</h1> )
