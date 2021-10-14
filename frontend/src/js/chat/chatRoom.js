@@ -10,7 +10,7 @@ const ChatRoom  = (props) => {
     useEffect (() => {
         if (props.chatrooms && props.chatrooms.length > -1) {
             setList(props.chatrooms.map((chatroom, i) => 
-                <Room key={i} chatroomId={chatroom.chatroomId} roomName={chatroom.roomName} 
+                <Room key={i} chatroomId={chatroom.chatroomId} roomName={chatroom.roomName} createAt={chatroom.createAt}
                     users={chatroom.users} postId={chatroom.postId} onClick={handleClick} endDeal={handleEndDeal}/>)
             );
         } else {

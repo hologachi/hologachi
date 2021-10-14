@@ -2,7 +2,6 @@ import '../../css/chat.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
 import ChatRoom from "./chatRoom";
-import ChatMessage from "./chatMessage";
 
 //chat
 import ChatRoomService from '../services/ChatRoomService';
@@ -11,7 +10,7 @@ const ChatList = () => {
 
     const [userId, setUserId] = useState(window.sessionStorage.getItem('userId'));
     const [chatrooms, setChatrooms] = useState(null);
-    const [focus_chatroom, setFocus_chatroom] = useState(null);
+    // const [focus_chatroom, setFocus_chatroom] = useState(null);
 
     useEffect(() => {
         if(chatrooms === null) {
@@ -22,7 +21,7 @@ const ChatList = () => {
     function loadChatrooms() {
         ChatRoomService.getChatRoomList(userId).then((res) => { // 참여하고 있는 채팅방 id 목록 가져오기 
             const promise = new Promise(() => setChatrooms(res.data));
-            // console.log(res.data);
+            console.log(res.data);
         })
     }
 

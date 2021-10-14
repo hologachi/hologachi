@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Getter;
 
 @Entity
@@ -32,6 +34,7 @@ public class ChatRoom {
 	@Column(name="ROOM_IMAGE")
 	private String roomImage;
 
+	@JsonFormat(pattern="yyyy-MM-dd")
 	@Column(name="CREATE_AT")
 	private Date createAt;
 	

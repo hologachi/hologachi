@@ -2,6 +2,7 @@ import '../../css/room.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import moment from 'moment';
 
 const Room = (props) => {
 
@@ -30,14 +31,22 @@ const Room = (props) => {
         setEndDealModal(false);
     }
 
+    function button() {
+        let result = moment().isSameOrBefore(moment(props.createAt).add(24, 'hours'));
+
+        if(result) {
+            return <button className="btn btn-info endDealBtn" onClick={() => {setEndDealModal(true);}}>거래 평점 매기기</button>;
+        }
+    }
+
 
     return (
         <div className="room" key={props.chatroomId}>
             <div onClick={click}>
-                <img className="roomImg" src="https://placeimg.com/50/50/any" alt="" />
+                {/* <img className="roomImg" src="https://placeimg.com/50/50/any" alt="" /> */}
                 <span className="roomName">{props.roomName}</span>
             </div>
-            <button className="btn btn-info endDealBtn" onClick={() => {setEndDealModal(true);}}>거래 평점 매기기</button>
+            {button()}
 
             {/* 평점 저장용 모달 */}
             <Modal show={endDealModal} onHide={() => {setEndDealModal(false);}} size="lg" aria-labelledby="example-modal-sizes-title-lg">
