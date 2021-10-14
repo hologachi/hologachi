@@ -169,7 +169,7 @@ class manageGBCategory extends Component {
                 <AdminNav />
 
                 <div className="categoryList">
-                    <h2>카테고리 목록</h2>
+                    <h2>카테고리 관리</h2>
                     <AdminSearch />
                     {/* <form onSubmit={() => {this.state.handleDelete()}}> */}
                     <Table striped bordered hover>

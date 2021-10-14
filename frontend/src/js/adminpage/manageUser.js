@@ -206,7 +206,7 @@ function ManageUser() {
             <AdminNav />
             
             <div className="userList">
-                <h2>사용자 목록</h2>
+                <h2>회원관리</h2>
                 <AdminSearch />
                 {   users && <BootstrapTable keyField='userId' data={ users } columns={ columns } striped hover condensed wrapperClasses="table-responsive" pagination={ paginationFactory() }/> }
 
