@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -8,7 +8,7 @@ import moment from 'moment';
 import ImageUploading from 'react-images-uploading';
 import { PictureOutlined } from '@ant-design/icons';
 import axios from "axios";
-import { uploadFile } from 'react-s3';
+import S3 from "react-aws-s3";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -20,11 +20,12 @@ const ACCESS_KEY =process.env.REACT_APP_API_ACCESS_KEY;
 const SECRET_ACCESS_KEY =process.env.REACT_APP_API_SECRET_ACCESS_KEY;
 
 const config = {
-    bucketName: S3_BUCKET,
-    region: REGION,
-    accessKeyId: ACCESS_KEY,
-    secretAccessKey: SECRET_ACCESS_KEY,
-}
+  bucketName: S3_BUCKET,
+  dirName: "postImg" /* optional */,
+  region: REGION,
+  accessKeyId: ACCESS_KEY,
+  secretAccessKey: SECRET_ACCESS_KEY
+};
 
 function UploadImage() {
 
@@ -33,7 +34,6 @@ function UploadImage() {
 
   const onChange = (imageList, addUpdateIndex) => {
     // data for submit
-    console.log(imageList, addUpdateIndex);
     setImages(imageList);
   };
 
@@ -52,15 +52,36 @@ function UploadImage() {
     //   setImages(e.target.files[0]);
     // }
   
-    const handleUpload = async (file) => {
-        uploadFile(file, config)
-            .then(data => console.log(data))
-            .catch(err => console.error(err))
+    const handleUpload = async (fileInput) => {
+      console.log(fileInput);
+      const ReactS3Client = new S3(config);
+      let file;
+      let newFileName;
+      for(var i=0; i<fileInput.length; i++){
+        file = fileInput[i].file;
+        newFileName = fileInput[i].file.name;
+        console.log(file, newFileName);
+        ReactS3Client.uploadFile(file, newFileName).then(data => {
+          console.log(data);
+          if(data.status == 204){
+              console.log("success");
+          } else {
+              console.log("fail");
+          }
+      });
+      }
+      // let file = fileInput[0];
+      // let newFileName = fileInput[0].file.name;
+      // const ReactS3Client = new S3(config);
+      
+        // uploadFile(file, config)
+        //     .then(data => console.log(data))
+        //     .catch(err => console.error(err))
     }
 
     return <div>
         <input type="file" onChange={onChange}/>
-        <button onClick={() => handleUpload(images)}> 업로드</button>
+        <button id="upbtn" onClick={() => handleUpload(images)}> 업로드</button>
     </div>
 }
 

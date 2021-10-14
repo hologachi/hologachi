@@ -14,6 +14,9 @@
 #submitbtn{
     margin-bottom: 50px;
 }
+#upbtn{
+    border-radius: 3px;
+}
 .inputform{
     display: flex;
     align-items: center;
