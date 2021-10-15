@@ -89,7 +89,8 @@ console.log(nick[0]);
   }
 
 const rate = Object.values(testStr).map(profile => profile.dealRate)
-const userImg = window.sessionStorage.getItem('image')
+// const userImg = window.sessionStorage.getItem('image')
+// console.log( window.sessionStorage);
 
   const profiles = Object.values(testStr).map(profile => {
     return (
@@ -97,7 +98,7 @@ const userImg = window.sessionStorage.getItem('image')
         <h1>{profile.nickname}의 프로필</h1>
         <div className="row">
         <div className="img-wrap" >
-          <img className="proImg" src={userImg} alt="" />
+          <img className="proImg" src={window.sessionStorage.getItem('image')} alt="" />
         </div><br />
         <div className="info">
           <div className="grade">평점 <span className="dealRate">{profile.dealRate}</span></div>
