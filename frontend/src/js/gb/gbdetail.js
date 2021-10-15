@@ -329,7 +329,7 @@ function Board() {
         <Slide>
          {imgSlide.map((slideImage, index)=> (
             <div key={index}>
-            {slideImage !== null && <>
+            {slideImage !== "" && <>
             <img className="product__details__pic__item--large" 
                       src={slideImage} alt="" id="productImg" />
                       <span>{slideImage.caption}</span></>}
@@ -407,7 +407,7 @@ function Board() {
                   </Modal>
                   <div className="quantity">
                     <div className="pro-qty">
-                    <button className="urlbtn" onClick={() => window.open(`https://${product.url}`, '_blank')}>구매 사이트</button>
+                    <button className="urlbtn" onClick={() => window.open(`${product.url}`, '_blank')}>구매 사이트</button>
                       <div id="applyContainer">
                         {product.step == "request" && isLogined && window.sessionStorage.getItem('email') !== product.user.email && <div>
                         
@@ -434,7 +434,7 @@ function Board() {
               <div className="col-lg-12" id="commentContainer">
                 <div className="product__details__tab">
                   <div>
-                    <span>상품 설명</span>
+                    <span>공동구매 설명</span>
                     <p id="productContent">{product.content}</p>
                   </div><hr />
                 </div>

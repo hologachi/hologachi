@@ -65,9 +65,9 @@ function UploadImage() {
           imgURL += data.location + " ";
           repreImg = data.location;
           if (data.status == 204) {
-            console.log("success");
+            alert("업로드 성공")
           } else {
-            console.log("fail");
+            alert("업로드 실패")
           }
         });
       }
