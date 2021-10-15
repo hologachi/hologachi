@@ -16,12 +16,11 @@
     background-color: #1a63b6;
     border-radius: 5px;
     margin-bottom: 80px;
+    float: right;
 }
-/* #submit-new-comment:hover{
-    width: 85px;
-    box-shadow: none;
-    background-color: #1a63b6;
-} */
+#submit-new-comment:hover{
+    background-color: #134a8a;
+}
 #writer{
     font-size: 20px;
 }
@@ -31,11 +30,13 @@
     margin-top: 60px;
 }
 #applyCancel{
-    color: #fff;
-    background-color: black;
     border: none;
-    width: 100%;
+    background-color: black;;
+    padding: 10px;
+    color: white;
     border-radius: 5px;
+    width: 40%;
+    float: right;
 }
 /* table > tr > th{
     width: 30%;
@@ -46,6 +47,9 @@
 #content{
     padding-right: 15px;
 } 
+#bookmarkContainer{
+    float: right;
+}
 #imgdeletebtn{
     border-radius: 5px;
     background-color: rgb(233, 233, 233);
@@ -82,12 +86,6 @@
 .left{
     width: 100px;
 }
-#submit-new-comment{
-    float: right;
-}
-#submit-new-comment:hover{
-    width: 88px;
-}
 .heart-icon{
     float: right;
 }
@@ -95,47 +93,65 @@
     margin-top: 90px;
 }
 .slide{
-    background-color: #fafafa;
+    background-color: #fff;
 }
 #removebtn{
-    width: 90px;
     color: #fff;
     background-color: #e62e0e;
     border-radius: 5px;
+    border: none;
+    margin-right: 3px;
 }
 #removebtn:hover{
     box-shadow: none;
     background-color: #571e0c;
 }
 #commentModibtn{
-    width: 90px;
     color: #fff;
-    background-color: #f37c2d;
+    background-color: #b1b3b6;
     border-radius: 5px;
+    border: none;
 }
 #commentModibtn:hover{
     box-shadow: none;
     background-color: #571e0c;
+    
 }
 #contentDeletebtn{
     float: right;
     color: #fff;
-    background-color: #0d6efd;
+    background-color: #f33d10;
     border-radius: 5px;
+    padding: 5px;
+    margin-right: 3px;
+    border: none;
+}
+#contentDeletebtn:hover{
+    background-color: #a83315;
 }
 #contentModifybtn{
     float: right;
     color: #fff;
-    background-color: #0d6efd;
+    background-color: #b1b3b6;
     border-radius: 5px;
-}
-.urlBtn{
-    color: #fff;
-    background-color: #009b00;
-    border-radius: 5px;
+    padding: 5px;
     border: none;
-    padding:8px
 }
+#contentModifybtn:hover{
+    background-color: #8b8d91;
+}
+/* .urlBtn{
+    color: green;
+    border: 2px solid green;
+    border-radius: 5px;
+    padding:8px;
+    float: right;
+    margin-bottom: 3px;
+}
+.urlBtn:hover{
+    color: green;
+    background-color: #dae2da;
+} */
 #chat{
     color: #fff;
     background-color: #faa629;
@@ -149,7 +165,7 @@
 #priceText{
     font-size: 20px;
     font-weight: 800;
-    color: #1a63b6;
+    color: rgb(99, 99, 99);
 }
 #nicknameText{
     font-size: 20px;
@@ -161,12 +177,17 @@
 }
 #dateMoment{
     font-size: 20px;
-    font-weight: 800;
-    color: #1a63b6;
+    font-weight: 900;
+    color: rgb(99, 99, 99);
+}
+#location{
+    font-size: 20px;
+    font-weight: 900;
+    color: rgb(99, 99, 99);
 }
 #stepSta{
     font-size: 20px;
-    font-weight: 800;
+    font-weight: 900;
     color: red
 }
 #matchingNum{
@@ -180,12 +201,29 @@
     color: rgb(0, 11, 42);
     text-align: left;
 }
-#apply{
+.urlbtn{
     border: none;
-    background-color: #0d6efd;
+    padding: 10px;
     color: white;
     border-radius: 5px;
-    width: 100%;
+    width: 55%;
+    float: left;
+    color: green;
+}
+.urlbtn:hover{
+    background-color: #cad3d4;;
+}
+#apply{
+    border: none;
+    background-color: #17a2b8;;
+    padding: 10px;
+    color: white;
+    border-radius: 5px;
+    width: 40%;
+    float: right;
+}
+#apply:hover{
+    background-color: #25818f;
 }
 .modal-body{
     height: 50%;
@@ -227,9 +265,5 @@
     font-weight: 700;
 }
 #productContent{
-    color: black;
-}
-#location{
-    font-weight: 800;
     color: black;
 }

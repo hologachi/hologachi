@@ -222,6 +222,7 @@ function Board() {
         applyContainer.innerHTML = html;
         applyContainer.style.backgroundColor = "black";
         document.getElementById('applyCancel').onclick = applyCancel;
+        window.location.reload();
       }).catch(error => {
         console.log(error.response)
       });
@@ -250,6 +251,7 @@ function Board() {
         applyContainer.innerHTML = html;
         applyContainer.style.backgroundColor = "#0b58cc";
         document.getElementById('apply').onclick = apply;
+        window.location.reload();
       }).catch(error => {
         console.log(error.response)
       });
@@ -350,16 +352,15 @@ function Board() {
               <div className="col-lg-6 col-md-6" id="productDetail">
                 <div className="product__details__text">
                   <strong className="left"></strong><div id="nicknameText" align="left">{product.user.nickname}</div>
-                  <div id="titleText" >{product.title}</div><br />
+                  <div id="titleText" >{product.title}</div>{window.sessionStorage.getItem('email') == product.user.email && <div><button id="contentModifybtn" onClick={openModal}>수정</button><button id="contentDeletebtn" onClick={contentDelete}>삭제</button></div>}<br />
                   <ul id="infoList">
                     <li align="left"><strong className="left"><span className="leftLabel">상태 </span></strong><span id="stepSta" align="left">{product.step}</span></li><br />
                     <li align="left"><strong className="left"><span className="leftLabel">가격 </span></strong><span id="priceText">{product.price}원</span></li><br />
                     <li align="left"><strong className="left"><span className="leftLabel">기간 </span></strong><span id="dateMoment">{moment(product.rgstAt).format('YYYY-MM-DD')} ~ {moment(product.deadline).format('YYYY-MM-DD')}</span></li><br />
                     <li align="left"><strong className="left"><span className="leftLabel">목표 </span></strong><span id="dateMoment">{product.matching}명</span></li><br />
-                    <li align="left"><strong className="left"><span className="leftLabel">지역 </span></strong><p id="location">{product.location}</p></li><br />
-                    <li align="left"><button className="urlBtn" onClick={() => window.open(`https://${product.url}`, '_blank')}>구매 사이트</button></li>
+                    <li align="left"><strong className="left"><span className="leftLabel">지역 </span></strong><span id="location">{product.location}</span></li><br />
                   </ul>
-                  {window.sessionStorage.getItem('email') == product.user.email && <div><button id="contentModifybtn" onClick={openModal}>수정하기</button><button id="contentDeletebtn" onClick={contentDelete}>삭제하기</button></div>}
+                  
                   <Modal open={modalOpen} className="modal-body">
                     <table className="tablecss table">
                       <tr id="tableTitle">
@@ -406,14 +407,17 @@ function Board() {
                   </Modal>
                   <div className="quantity">
                     <div className="pro-qty">
+                    <button className="urlbtn" onClick={() => window.open(`https://${product.url}`, '_blank')}>구매 사이트</button>
                       <div id="applyContainer">
-                        {product.step == "request" && isLogined && window.sessionStorage.getItem('nickname') !== product.user.nickname && <div>
+                        {product.step == "request" && isLogined && window.sessionStorage.getItem('email') !== product.user.email && <div>
+                        
                           <div id="applybtn">
                             {arr.includes(Object.values(testStr).map(product => product.postId)[0]) && <button id="applyCancel" value="applyCancel" onClick={applyCancel} >신청취소</button>
                             }
-                            {!arr.includes(Object.values(testStr).map(product => product.postId)[0]) && <button id="apply" value="apply" onClick={apply} >신청하기</button>
+                            
+                            {!arr.includes(Object.values(testStr).map(product => product.postId)[0]) &&  <button id="apply" value="apply" onClick={apply} >신청하기</button>
                             }
-                          </div>
+                          </div><br /><br />
                           <div id="bookmarkContainer">
                             {!bookarr.includes(Object.values(testStr).map(product => product.postId)[0]) && <a href="#" className="heart-icon" onClick={bookmarkbtn} id="likebtn"><FavoriteBorderIcon /></a>}
                             {bookarr.includes(Object.values(testStr).map(product => product.postId)[0]) && <a href="#" className="heart-icon" onClick={bookmarkremove} id="likebtn2"><FavoriteIcon /></a>}
@@ -445,7 +449,7 @@ function Board() {
                   <th id="writerName">{comment.user.nickname}</th>
                   <td id="content">{comment.content}</td>
                   <td id="date">{moment(comment.update_at).format('YYYY-MM-DD')}</td>
-                  {window.sessionStorage.getItem('email') == comment.user.email && <td><button id="commentModibtn" >수정</button><button id="removebtn" onClick={() => removeBtn(comment.commentId)}>삭제</button></td>}
+                  {window.sessionStorage.getItem('email') == comment.user.email && <td><button id="removebtn" onClick={() => removeBtn(comment.commentId)}>삭제</button><button id="commentModibtn" >수정</button></td>}
                 </tr>
               </table>
             </div>
