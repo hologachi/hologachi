@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../../css/myprofile.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
-import { ButtonGroup,Button, Modal } from 'react-bootstrap';
-
-
+import { Button, Modal } from 'react-bootstrap';
 
 function location(loc) {
   window.location.href = "/mypage/" + loc

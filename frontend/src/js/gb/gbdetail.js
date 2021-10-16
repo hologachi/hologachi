@@ -6,28 +6,13 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import '../../css/detail.css'
 import axios from "axios";
-import DatePicker from "react-datepicker";
 import moment from 'moment';
 import CommentIcon from '@mui/icons-material/Comment';
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
-import s from 'react-aws-s3';
+import { Button, Modal } from 'react-bootstrap';
 
-const Modal = (props) => {
-  const { open, header } = props;
-  return (
-    <div className={open ? 'openModal modal' : 'modal'}>
-      {open ? (
-        <section>
-          {header}
-          <main id="modalMain">
-            {props.children}
-          </main>
-        </section>
-      ) : null}
-    </div>
-  )
-}
+
 
 function Board() {
   const { productId } = useParams()
@@ -49,6 +34,7 @@ function Board() {
   const [url, setUrl] = useState()
   const [content, setContent] = useState()
   const [matching, setMatching] = useState();
+
 
 
   function bookmarkbtn() {
@@ -275,16 +261,6 @@ function Board() {
       });
     }
   }
-
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const openModal = () => {
-    setModalOpen(true);
-  }
-  const closeModal = () => {
-    setModalOpen(false);
-  }
-
   function contentDelete(e) {
     e.preventDefault();
     var answer;
@@ -329,7 +305,7 @@ function Board() {
         <Slide>
          {imgSlide.map((slideImage, index)=> (
             <div key={index}>
-            {slideImage !== null && <>
+            {slideImage !== "" && <>
             <img className="product__details__pic__item--large" 
                       src={slideImage} alt="" id="productImg" />
                       <span>{slideImage.caption}</span></>}
@@ -352,7 +328,7 @@ function Board() {
               <div className="col-lg-6 col-md-6" id="productDetail">
                 <div className="product__details__text">
                   <strong className="left"></strong><div id="nicknameText" align="left">{product.user.nickname}</div>
-                  <div id="titleText" >{product.title}</div>{window.sessionStorage.getItem('email') == product.user.email && <div><button id="contentModifybtn" onClick={openModal}>수정</button><button id="contentDeletebtn" onClick={contentDelete}>삭제</button></div>}<br />
+                  <div id="titleText" >{product.title}</div>{window.sessionStorage.getItem('email') == product.user.email && <div><button id="contentModifybtn">수정</button><button id="contentDeletebtn" onClick={contentDelete}>삭제</button></div>}<br />
                   <ul id="infoList">
                     <li align="left"><strong className="left"><span className="leftLabel">상태 </span></strong><span id="stepSta" align="left">{product.step}</span></li><br />
                     <li align="left"><strong className="left"><span className="leftLabel">가격 </span></strong><span id="priceText">{product.price}원</span></li><br />
@@ -361,53 +337,9 @@ function Board() {
                     <li align="left"><strong className="left"><span className="leftLabel">지역 </span></strong><span id="location">{product.location}</span></li><br />
                   </ul>
                   
-                  <Modal open={modalOpen} className="modal-body">
-                    <table className="tablecss table">
-                      <tr id="tableTitle">
-                        <th>제목</th>
-                        <td>
-                          <input type="text" defaultValue={product.title} onChange={handelChangeTitle} placeholder="제목" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <th>마감일</th>
-                        <td>
-                          <DatePicker type="date" selected={deadline} minDate={moment().toDate()} onChange={(date) => setDeadline(date)} style={{ width: "70%" }} placeholderText="마감일을 선택해주세요" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <th>가격</th>
-                        <td>
-                          <input type="number" defaultValue={product.price} onChange={handelChangePrice} placeholder="가격" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <th>인원</th>
-                        <td>
-                          <input type="number" defaultValue={product.matching} onChange={handelChangeMatching} placeholder="인원" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <th>상품 구매 주소</th>
-                        <td>
-                          <input type="text" defaultValue={product.url} onChange={handelChangeUrl} placeholder="URL" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <th>설명</th>
-                        <td>
-                          <textarea type="text" defaultValue={product.content} onChange={handelChangeContent} placeholder="설명" />
-                        </td>
-                      </tr>
-                    </table>
-                    <footer id="modalFooter">
-                      <button id="close" onClick={closeModal}>취소</button>
-                      <button id="modalModifybtn" onClick={modifyContent}> 수정하기 </button>
-                    </footer>
-                  </Modal>
                   <div className="quantity">
                     <div className="pro-qty">
-                    <button className="urlbtn" onClick={() => window.open(`https://${product.url}`, '_blank')}>구매 사이트</button>
+                    <button className="urlbtn" onClick={() => window.open(`${product.url}`, '_blank')}>구매 사이트</button>
                       <div id="applyContainer">
                         {product.step == "request" && isLogined && window.sessionStorage.getItem('email') !== product.user.email && <div>
                         
@@ -434,7 +366,7 @@ function Board() {
               <div className="col-lg-12" id="commentContainer">
                 <div className="product__details__tab">
                   <div>
-                    <span>상품 설명</span>
+                    <span>공동구매 설명</span>
                     <p id="productContent">{product.content}</p>
                   </div><hr />
                 </div>
@@ -449,7 +381,9 @@ function Board() {
                   <th id="writerName">{comment.user.nickname}</th>
                   <td id="content">{comment.content}</td>
                   <td id="date">{moment(comment.update_at).format('YYYY-MM-DD')}</td>
+                  <div id="commentCont">
                   {window.sessionStorage.getItem('email') == comment.user.email && <td><button id="removebtn" onClick={() => removeBtn(comment.commentId)}>삭제</button><button id="commentModibtn" >수정</button></td>}
+                  </div>
                 </tr>
               </table>
             </div>
