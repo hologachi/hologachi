@@ -71,8 +71,7 @@ function Mypost() {
         <Table size="small" aria-label="a dense table">
           <thead className="thead-light" id="mywriteTitle">
             <tr>
-              <th scope="col" width="20%">기간</th>
-              <th scope="col" width="10%">카테고리</th>
+            <th scope="col" width="20%">기간</th>
               <th scope="col" width="25%">제목</th>
               <th scope="col" width="10%">목표</th>
               <th scope="col">신청자</th>
@@ -85,13 +84,12 @@ function Mypost() {
             {Object.values(testStr).map(product => (
               <TableRow key={product.postId} hover>
                 <td align="center" >{moment(product.rgstAt).format('YYYY-MM-DD')} ~ {moment(product.deadline).format('MM-DD')}</td>
-                <td align="center">{product.category2.name}</td>
                 <a href={`/gb/gbdetail/${product.postId}`}><td align="center" id="titleTexts">{product.title}</td></a>
                 <td align="center">{product.matching}명</td>
                 <Link to={`/mypage/reqList/${product.postId}`}>
                   <td align="center"><button className="reqListCheck">확인하기</button></td>
                 </Link>
-                <td align="right">{product.step} <button className="reqRate">평점</button></td>
+                <td align="right">{product.step} {product.step == "finish" && <button className="reqRate">평점</button>}</td>
                 <td align="right">{product.step == "request" && <button className="reqRate" id="goGb" onClick={() => goGb(product.postId)}>공구 진행하기</button>}</td>
               </TableRow>
             ))}

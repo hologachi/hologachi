@@ -54,39 +54,3 @@ export default function ReqUserProfile() {
     </div>
   )
 }
-
-  // export default function ReqUserProfile() {
-  //   const { postId, ptcptId } = useParams();
-
-  //   const [ testStr, setTestStr ] = useState('');
-    
-  //   function callback(str) {
-  //     setTestStr(str);
-  //   }
-
-  //   useEffect(
-  //       () => {
-  //         axios({
-  //             url: `/mypage/mypost/${postId}/${ptcptId}`,
-  //             method: 'GET'
-  //         }).then((res) => {
-  //             callback(res.data);
-  //         })
-  //       }, []
-  //   );
-  //   const profiles = Object.values(testStr).map(profile => {
-  //   return (
-  //     <div>
-  //     <h1>{profile.nickname}의 프로필</h1>
-  //     {/* <div className="row">
-  //     <div className="img-wrap" >
-  //       <img className="proImg" src={testStr[0].image} alt="" />
-  //     </div><br />
-  //     <div className="info">
-  //       <div className="grade">평점 <span className="dealRate">{testStr[0].dealRate}</span></div>
-  //       <div className="deal">거래수 <span className="dealRate">{testStr[0].dealCount}번</span></div>
-  //     </div>
-  //     </div> */}
-  //   </div>
-  //     )})
-  // };
