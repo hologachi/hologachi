@@ -1,3 +1,6 @@
+# 홀로가치
+2021 ICT 멘토링 한이음 프로젝트 "1인 가구를 위한 공동구매 플랫폼" (홀로가치 팀)
+
 ![홀로가치README 26](https://user-images.githubusercontent.com/40953167/144036666-318f41d9-def3-4ba2-8d30-289415ce0982.jpeg)
 ![홀로가치README 27](https://user-images.githubusercontent.com/40953167/144036673-6971d1aa-80de-4b1c-81ed-aadb9a1b443d.jpeg)
 ![홀로가치README 28](https://user-images.githubusercontent.com/40953167/144036677-170f3558-dba4-432b-b934-367ca272add2.jpeg)
@@ -23,5 +26,4 @@
 ![홀로가치README 48](https://user-images.githubusercontent.com/40953167/144036735-3bca7cc6-5783-4961-9705-26f8e57f3a78.jpeg)
 ![홀로가치README 49](https://user-images.githubusercontent.com/40953167/144036736-0eba90c3-da3e-4c8d-8fa3-d226b80e5763.jpeg)
 ![홀로가치README 50](https://user-images.githubusercontent.com/40953167/144036740-a613f2ce-5c31-4b18-9bc1-cafa9500562a.jpeg)
-# 홀로가치
-2021 ICT 멘토링 한이음 프로젝트 "1인 가구를 위한 공동구매 플랫폼" (홀로가치 팀)
+
